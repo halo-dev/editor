@@ -28,8 +28,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, '../dist'),
         // publicPath: '/dist/',
-        filename: 'mavon-editor.js',
-        library: 'mavon-editor',
+        filename: 'halo-editor.js',
+        library: 'halo-editor',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },

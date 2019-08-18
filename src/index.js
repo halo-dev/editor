@@ -4,18 +4,19 @@
 'use strict';
 
 /**
- * mavonEditor
+ * haloEditor
+ * based on mavonEditor(https://github.com/hinesboy/mavonEditor)
  * @author hinesboy
  */
-const mavonEditor = require('./mavon-editor.vue');
-const VueMavonEditor = {
-    markdownIt: mavonEditor.mixins[0].data().markdownIt,
-    mavonEditor: mavonEditor,
+const haloEditor = require('./halo-editor.vue');
+const VueHaloEditor = {
+    markdownIt: haloEditor.mixins[0].data().markdownIt,
+    haloEditor: haloEditor,
     LeftToolbar: require('./components/md-toolbar-left'),
     RightToolbar: require('./components/md-toolbar-right'),
     install: function(Vue) {
-        Vue.component('mavon-editor', mavonEditor);
+        Vue.component('halo-editor', haloEditor);
     }
 };
 
-module.exports = VueMavonEditor;
+module.exports = VueHaloEditor;

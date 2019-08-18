@@ -1,21 +1,17 @@
 <template>
-    <div id="editor">
-        <mavon-editor style="height: 100%"></mavon-editor>
-    </div>
+  <div id="editor">
+    <halo-editor style="height: 100%"></halo-editor>
+  </div>
 </template>
 <script>
 module.exports = {
-    name: 'editor',
-    data: function() {
-        return {
-
-        };
-    },
-    computed: {
-    },
-    methods: {
-    }
-}
+  name: "editor",
+  data: function() {
+    return {};
+  },
+  computed: {},
+  methods: {}
+};
 </script>
 <style>
 #editor {

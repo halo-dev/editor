@@ -20,9 +20,9 @@ var config = {
     output: {
         path: path.resolve(__dirname, '../dist'),
         // publicPath: '/dist/',
-        filename: 'mavon-editor.js',
+        filename: 'halo-editor.js',
         chunkFilename: 'js/[name].js',
-        library: 'MavonEditor',
+        library: 'HaloEditor',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },

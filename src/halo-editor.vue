@@ -47,7 +47,7 @@
                 <div v-show="s_navigation" class="v-note-navigation-wrapper" :class="{'shadow': boxShadow}">
                     <div class="v-note-navigation-title" :class="{'shadow': boxShadow}">
                         {{d_words.navigation_title}}<i @click="toolbar_right_click('navigation')"
-                                                       class="fa fa-mavon-times v-note-navigation-close"
+                                                       class="fa fa-halo-times v-note-navigation-close"
                                                        aria-hidden="true"></i>
                     </div>
                     <div ref="navigationContent" class="v-note-navigation-content scroll-style">
@@ -61,7 +61,7 @@
             <div ref="help">
                 <div @click="toolbar_right_click('help')" class="v-note-help-wrapper" v-if="s_help">
                     <div class="v-note-help-content markdown-body" :class="{'shadow': boxShadow}">
-                        <i @click.stop.prevent="toolbar_right_click('help')" class="fa fa-mavon-times"
+                        <i @click.stop.prevent="toolbar_right_click('help')" class="fa fa-halo-times"
                            aria-hidden="true"></i>
                         <div class="scroll-style v-note-help-show" v-html="d_help"></div>
                     </div>
@@ -679,7 +679,7 @@ export default {
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
     @import "lib/css/scroll.styl"
-    @import "lib/css/mavon-editor.styl"
+    @import "lib/css/halo-editor.styl"
 </style>
 <style lang="css" scoped>
     .auto-textarea-wrapper {

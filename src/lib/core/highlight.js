@@ -17,12 +17,12 @@ function highLightCode(str, callback, hljsLangFuc, hljsFuc) {
     var hljs = window.hljs;
     if (!hljs) {
         if (typeof hljsFuc !== 'function') {
-            console.warn('external_link.hljs_js is not a function, hljs can not load by mavon-editor, if you want to disabled this log, set external_link.hljs_js to function');
+            console.warn('external_link.hljs_js is not a function, hljs can not load by halo-editor, if you want to disabled this log, set external_link.hljs_js to function');
             callback(str);
             return;
         }
         var url = hljsFuc();
-        console.warn('hljs parsing file is missing. mavon-editor will autoload', url);
+        console.warn('hljs parsing file is missing. halo-editor will autoload', url);
         loadScript(url, function() {
             _highLightCode(str, callback, hljsLangFuc);
         });

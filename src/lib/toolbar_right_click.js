@@ -51,7 +51,8 @@ function $toolbar_right_fullscreen_click($vm) {
         $vm.fullscreen($vm.s_fullScreen, $vm.d_value)
     }
 }
-function $toolbar_right_subfield_click ($vm) {
+
+function $toolbar_right_subfield_click($vm) {
     $vm.s_subfield = !$vm.s_subfield
     $vm.s_preview_switch = $vm.s_subfield;
     // $vm.$refs.vNoteDivEdit.innerHTML = $vm.s_markdown.render($vm.d_value)
@@ -63,6 +64,7 @@ function $toolbar_right_subfield_click ($vm) {
         $vm.subfieldtoggle($vm.s_subfield, $vm.d_value)
     }
 }
+
 function $toolbar_right_navigation_click($vm) {
     $vm.s_navigation = !$vm.s_navigation
     if ($vm.s_navigation) {

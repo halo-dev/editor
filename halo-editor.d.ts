@@ -1,10 +1,10 @@
 import { Component } from "vue";
-interface VueMavonEditor {
+interface VueHaloEditor {
   markdownIt: any;
-  mavonEditor: Component;
+  haloEditor: Component;
   LeftToolbar: Component;
   RightToolbar: Component;
   install: (Vue: any) => any;
 }
-declare let editor: VueMavonEditor;
+declare let editor: VueHaloEditor;
 export default editor;
