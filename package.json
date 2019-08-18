@@ -1,6 +1,6 @@
 {
   "name": "halo-editor",
-  "version": "2.7.5",
+  "version": "2.7.6",
   "description": "Vue markdown editor for halo",
   "main": "dist/halo-editor.js",
   "types": "./halo-editor.d.ts",
