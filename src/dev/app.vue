@@ -42,7 +42,7 @@
         type="text"
         v-model="imgName"
       />
-      <button @click="imgdelete">delete</button>
+      <button>delete</button>
       <halo-editor
         ref=md
         :subfield="subfield"
@@ -308,11 +308,6 @@ export default {
     },
     $previewtoggle(flag, value) {
       console.log("preview toggle" + flag);
-    },
-    imgdelete() {
-      var md = this.$refs.md;
-      var toolbar_left = md.$refs.toolbar_left;
-      toolbar_left.$imgDelByFilename(this.imgName);
     }
   },
   watch: {

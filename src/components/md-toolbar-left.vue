@@ -223,31 +223,6 @@
               multiple="multiple"
             />{{d_words.tl_upload}}
           </div>
-
-          <div
-            v-for="(item, index) in img_file"
-            v-if="item && item[1]"
-            class="dropdown-item dropdown-images"
-            :title="item[1].name"
-            :key="index"
-            @click.stop="$imgFileListClick(index)"
-          >
-            <span>{{item[1].name}}</span>
-            <button
-              slot="right"
-              type="button"
-              @click.stop="$imgDel(index)"
-              class="op-icon fa fa-halo-trash-o"
-              aria-hidden="true"
-              :title="d_words.tl_upload_remove"
-            ></button>
-            <!-- 缩略图展示 -->
-            <img
-              class="image-show"
-              :src="item[1].miniurl"
-              alt="none"
-            >
-          </div>
         </div>
       </transition>
     </div>
@@ -406,9 +381,6 @@ export default {
       });
       this.s_img_dropdown_open = false;
     },
-    $imgFileListClick(pos) {
-      this.$emit("imgTouch", this.img_file[pos]);
-    },
     $changeUrl(index, url) {
       this.img_file[index][0] = url;
     },
@@ -436,13 +408,6 @@ export default {
       this.$imgFilesAdd($e.target.files);
       $e.target.value = ""; // 初始化
     },
-    $imgDel(pos) {
-      this.$emit("imgDel", this.img_file[pos]);
-      this.img_file.splice(pos, 1);
-      this.num--;
-
-      this.s_img_dropdown_open = false;
-    },
     isEqualName(filename, pos) {
       if (this.img_file[pos][1]) {
         if (
@@ -451,20 +416,6 @@ export default {
         ) {
           return true;
         }
-      }
-      return false;
-    },
-    $imgDelByFilename(filename) {
-      var pos = 0;
-      while (this.img_file.length > pos) {
-        if (
-          this.img_file[pos][1] == filename ||
-          this.isEqualName(filename, pos)
-        ) {
-          this.$imgDel(pos);
-          return true;
-        }
-        pos += 1;
       }
       return false;
     },

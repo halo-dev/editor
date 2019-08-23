@@ -1,6 +1,8 @@
-# mavonEditor
+<h1 align="center"><a href="https://github.com/halo-dev" target="_blank">halo-editor</a></h1>
 
-![npm](https://nodei.co/npm/mavon-editor.png?downloads=true&downloadRank=true&stars=true)
+> halo-editor 是基于 [mavonEditor](https://github.com/hinesboy/mavonEditor) 开发的编辑器，目的在于更好地兼容 halo。非常感谢 mavonEditor 这么优秀的项目。
+
+![npm](https://nodei.co/npm/halo-editor.png?downloads=true&downloadRank=true&stars=true)
 
 > 基于Vue的markdown编辑器
 

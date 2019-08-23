@@ -18,7 +18,6 @@
         :toolbars="toolbars"
         @imgAdd="$imgAdd"
         @imgDel="$imgDel"
-        @imgTouch="$imgTouch"
         :image_filter="imageFilter"
       >
         <slot
@@ -130,7 +129,6 @@
     <transition name="fade">
       <div ref="help">
         <div
-          @click="toolbar_right_click('help')"
           class="v-note-help-wrapper"
           v-if="s_help"
         >
@@ -532,10 +530,6 @@ export default {
           this.$refs.toolbar_left.$imgFilesAdd([oFile]);
         }
       }
-    },
-    $imgTouch(file) {
-      var $vm = this;
-      // TODO 跳转到图片位置
     },
     $imgDel(file) {
       this.markdownIt.image_del(file[1]);
