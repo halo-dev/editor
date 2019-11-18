@@ -33,6 +33,7 @@
       <transition name="fade">
         <div
           class="op-header popup-dropdown"
+          :class="{'transition': transition}"
           v-show="s_header_dropdown_open"
           @mouseenter="$mouseenter_header_dropdown"
           @mouseleave="$mouseleave_header_dropdown"
@@ -204,6 +205,7 @@
       <transition name="fade">
         <div
           class="op-image popup-dropdown"
+          :class="{'transition': transition}"
           v-show="s_img_dropdown_open"
           @mouseleave="$mouseleave_img_dropdown"
           @mouseenter="$mouseenter_img_dropdown"
@@ -294,20 +296,20 @@
             class="fa fa-halo-times"
             aria-hidden="true"
           ></i>
-          <h3 class="title">{{link_type == 'link' ? d_words.tl_popup_link_title : d_words.tl_popup_img_link_title}}</h3>
+          <h3 class="title">{{link_type === 'link' ? d_words.tl_popup_link_title : d_words.tl_popup_img_link_title}}</h3>
           <div class="link-text input-wrapper">
             <input
               ref="linkTextInput"
               type="text"
               v-model="link_text"
-              :placeholder="link_type == 'link' ? d_words.tl_popup_link_text : d_words.tl_popup_img_link_text"
+              :placeholder="link_type === 'link' ? d_words.tl_popup_link_text : d_words.tl_popup_img_link_text"
             >
           </div>
           <div class="link-addr input-wrapper">
             <input
               type="text"
               v-model="link_addr"
-              :placeholder="link_type == 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_link_addr"
+              :placeholder="link_type === 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_link_addr"
             >
           </div>
           <div
@@ -329,6 +331,11 @@ export default {
   props: {
     // 是否开启编辑
     editable: {
+      type: Boolean,
+      default: true
+    },
+    transition: {
+      // TODO: 是否开启动画过渡
       type: Boolean,
       default: true
     },
@@ -411,8 +418,8 @@ export default {
     isEqualName(filename, pos) {
       if (this.img_file[pos][1]) {
         if (
-          this.img_file[pos][1].name == filename ||
-          this.img_file[pos][1]._name == filename
+          this.img_file[pos][1].name === filename ||
+          this.img_file[pos][1]._name === filename
         ) {
           return true;
         }
@@ -421,7 +428,7 @@ export default {
     },
     $imgAddByFilename(filename, $file) {
       for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] == filename) return false;
+        if (this.img_file[i][0] === filename) return false;
       }
       this.img_file[0][0] = filename;
       this.img_file[0][1] = $file;
@@ -432,7 +439,7 @@ export default {
     },
     $imgAddByUrl(filename, $url) {
       for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] == filename) return false;
+        if (this.img_file[i][0] === filename) return false;
       }
       this.img_file[0][0] = filename;
       this.img_file[0][1] = $url;
@@ -441,7 +448,7 @@ export default {
     },
     $imgUpdateByFilename(filename, $file) {
       for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] == filename || this.isEqualName(filename, i)) {
+        if (this.img_file[i][0] === filename || this.isEqualName(filename, i)) {
           this.img_file[i][1] = $file;
           this.$emit("imgAdd", filename, $file, false);
           return true;
@@ -495,6 +502,10 @@ export default {
 .op-icon.dropdown-wrapper.dropdown {
   position: relative;
 
+  &[type=button] {
+    -webkit-appearance: unset;
+  }
+
   .popup-dropdown {
     position: absolute;
     display: block;
@@ -503,8 +514,19 @@ export default {
     left: -45px;
     min-width: 130px;
     z-index: 1600;
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.156863), 0 0px 4px rgba(0, 0, 0, 0.227451);
-    transition: all 0.2s linear 0s;
+    border: 1px solid #ebeef5;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+    .dropdown-item:first-child {
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+
+    .dropdown-item:last-child {
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
 
     &.op-header {
       left: -30px;
@@ -518,17 +540,24 @@ export default {
     &.fade-enter, &.fade-leave-active {
       opacity: 0;
     }
+
+    &.transition {
+      &, .dropdown-item {
+        transition: all 0.2s linear 0s;
+      }
+    }
   }
 
   .dropdown-item {
-    height: 35px;
+    height: 40px;
     line-height: @height;
-    font-size: 12px;
-    transition: all 0.2s linear 0s;
+    font-size: 14px;
+    color: #606266;
     position: relative;
 
     &:hover {
-      background: #eaeaea;
+      color: #303133;
+      background-color: #e9e9eb;
     }
 
     input {
@@ -546,10 +575,13 @@ export default {
 
     button {
       position: absolute;
+      top: -1px;
       right: 5px;
+      font-size: 14px;
 
       &:hover {
-        color: #db2828;
+        color: #F56C6C;
+        background-color: transparent;
       }
     }
 
@@ -570,12 +602,20 @@ export default {
     .image-show {
       display: none;
       position: absolute;
-      left: -122px;
+      left: -128px;
       top: 0;
-      transition: all 0.3s linear 0s;
       width: 120px;
       height: 90px;
-      border: 1px solid #eeece8;
+      object-fit: contain;
+      border: 1px solid #F2F6FC;
+
+      &.transition {
+        transition: all 0.2s linear 0s;
+      }
+    }
+
+    &.transition {
+      transition: all 0.2s linear 0s;
     }
   }
 }
@@ -627,7 +667,6 @@ export default {
     z-index: 3;
     background: #fff;
     border-radius: 2px;
-    box-shadow: 0 0px 5px rgba(255, 255, 255, 0.156863), 0 0px 5px rgba(255, 255, 255, 0.227451);
 
     i {
       font-size: 24px;

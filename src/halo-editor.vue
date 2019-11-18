@@ -448,7 +448,7 @@ export default {
   methods: {
     loadExternalLink(name, type, callback) {
       if (typeof this.p_external_link[name] !== "function") {
-        if (this.p_external_link[name] != false) {
+        if (this.p_external_link[name] !== false) {
           console.error(
             "external_link." + name,
             "is not a function, if you want to disabled this error log, set external_link." +
@@ -723,7 +723,7 @@ export default {
     codeStyleChange(val, isInit) {
       isInit = isInit ? isInit : false;
       if (typeof this.p_external_link.hljs_css !== "function") {
-        if (this.p_external_link.hljs_css != false) {
+        if (this.p_external_link.hljs_css !== false) {
           console.error(
             "external_link.hljs_css is not a function, if you want to disabled this error log, set external_link.hljs_css to function or false"
           );

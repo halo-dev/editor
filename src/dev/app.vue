@@ -35,14 +35,16 @@
       <h2 class="item-header">
         {{d_words.default_setting}}
       </h2>
-      <button @click="clearCache">clear cache</button>
-      <button @click="uploadimg">upload</button>
-      <button @click="imgreplace">imgreplace</button>
-      <input
-        type="text"
-        v-model="imgName"
-      />
-      <button>delete</button>
+      <div class="item-button">
+        <button @click="clearCache">clear cache</button>
+        <button @click="uploadimg">upload</button>
+        <button @click="imgreplace">imgreplace</button>
+        <input
+          type="text"
+          v-model="imgName"
+        />
+        <button @click="imgdelete">delete</button>
+      </div>
       <halo-editor
         ref=md
         :subfield="subfield"
@@ -62,6 +64,11 @@
         @subfieldtoggle="$subfieldtoggle"
         @previewtoggle="$previewtoggle"
         :imageFilter="image_filter"
+        :boxShadow="true"
+        :scrollStyle="true"
+        :transition="true"
+        toolbars-background="#ffffff"
+        preview-background="#fbfbfb"
       >
         <!-- <template slot="left-toolbar-before">
                     左工具栏前
@@ -428,6 +435,10 @@ body {
       margin-top: 2rem;
       margin-bottom: 1rem;
     }
+  }
+
+  .item-button {
+    margin-bottom: 4rem;
   }
 
   .item-editor {
