@@ -13,18 +13,18 @@
       <option value="ru">Русский</option>
     </select>
     <section class="page-header">
-      <h1 class="project-name">haloEditor</h1>
+      <h1 class="project-name">mavonEditor</h1>
       <h3 class="project-tagline">{{d_words.sub_title}}</h3>
       <a
-        href="https://github.com/hinesboy/haloEditor"
+        href="https://github.com/hinesboy/mavonEditor"
         class="btn"
       >View on GitHub</a>
       <a
-        href="https://github.com/hinesboy/haloEditor/zipball/master"
+        href="https://github.com/hinesboy/mavonEditor/zipball/master"
         class="btn"
       >Download .zip</a>
       <a
-        href="https://github.com/hinesboy/haloEditor/master"
+        href="https://github.com/hinesboy/mavonEditor/master"
         class="btn"
       >Download .tar.gz</a>
     </section>
@@ -67,6 +67,7 @@
         :boxShadow="true"
         :scrollStyle="true"
         :transition="true"
+        box-shadow-style="0 2px 12px 0 rgba(0, 0, 0, 0.1)"
         toolbars-background="#ffffff"
         preview-background="#fbfbfb"
       >
@@ -240,11 +241,11 @@ export default {
       this.$refs.md.$imglst2Url([
         [
           0,
-          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
+          "https://raw.githubusercontent.com/hinesboy/mavonEditor/master/img/cn/cn-common.png"
         ],
         [
           1,
-          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
+          "https://raw.githubusercontent.com/hinesboy/mavonEditor/master/img/cn/cn-common.png"
         ]
       ]);
     },
@@ -253,7 +254,7 @@ export default {
       for (var _img in this.img_file) {
         this.$refs.md.$img2Url(
           _img,
-          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
+          "https://raw.githubusercontent.com/hinesboy/mavonEditor/master/img/cn/cn-common.png"
         );
       }
       /* var formdata = new FormData();
@@ -315,6 +316,11 @@ export default {
     },
     $previewtoggle(flag, value) {
       console.log("preview toggle" + flag);
+    },
+    imgdelete() {
+      var md = this.$refs.md;
+      var toolbar_left = md.$refs.toolbar_left;
+      toolbar_left.$imgDelByFilename(this.imgName);
     }
   },
   watch: {

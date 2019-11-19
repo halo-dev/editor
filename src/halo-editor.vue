@@ -1,24 +1,28 @@
 <template>
   <div
-    :class="[{'fullscreen': s_fullScreen}]"
+    :class="[{ 'fullscreen': s_fullScreen, 'shadow': boxShadow }]"
     class="v-note-wrapper markdown-body"
+    :style="{'box-shadow': boxShadow ? boxShadowStyle : ''}"
   >
     <!--工具栏-->
     <div
       class="v-note-op"
       v-show="toolbarsFlag"
-      :class="{'shadow': boxShadow}"
+      :style="{'background': toolbarsBackground}"
     >
       <v-md-toolbar-left
         ref="toolbar_left"
         :editable="editable"
+        :transition="transition"
         :d_words="d_words"
         @toolbar_left_click="toolbar_left_click"
         @toolbar_left_addlink="toolbar_left_addlink"
         :toolbars="toolbars"
         @imgAdd="$imgAdd"
         @imgDel="$imgDel"
+        @imgTouch="$imgTouch"
         :image_filter="imageFilter"
+        :class="{'transition': transition}"
       >
         <slot
           name="left-toolbar-before"
@@ -39,6 +43,7 @@
         :s_fullScreen="s_fullScreen"
         :s_html_code="s_html_code"
         :s_navigation="s_navigation"
+        :class="{'transition': transition}"
       >
         <slot
           name="right-toolbar-before"
@@ -51,19 +56,19 @@
       </v-md-toolbar-right>
     </div>
     <!--编辑展示区域-->
-    <div
-      class="v-note-panel"
-      :class="{'shadow': boxShadow}"
-    >
+    <div class="v-note-panel">
       <!--编辑区-->
       <div
         ref="vNoteEdit"
         @scroll="$v_edit_scroll"
         class="v-note-edit divarea-wrapper"
-        :class="{'scroll-style': s_scrollStyle  , 'single-edit': !s_preview_switch && !s_html_code , 'single-show': (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code)}"
+        :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle && !s_preview_switch && !s_html_code, 'single-edit': !s_preview_switch && !s_html_code, 'single-show': (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code), 'transition': transition}"
         @click="textAreaFocus"
       >
-        <div class="content-input-wrapper">
+        <div
+          class="content-input-wrapper"
+          :style="{'background-color': editorBackground}"
+        >
           <!-- 双栏 -->
           <v-autoTextarea
             ref="vNoteTextarea"
@@ -73,6 +78,7 @@
             lineHeight="1.5"
             v-model="d_value"
             fullHeight
+            :style="{'background-color': editorBackground}"
           ></v-autoTextarea>
         </div>
       </div>
@@ -86,14 +92,16 @@
           ref="vShowContent"
           v-html="d_render"
           v-show="!s_html_code"
-          :class="{'scroll-style': s_scrollStyle}"
+          :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}"
           class="v-show-content"
+          :style="{'background-color': previewBackground}"
         >
         </div>
         <div
           v-show="s_html_code"
-          :class="{'scroll-style': s_scrollStyle}"
+          :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}"
           class="v-show-content-html"
+          :style="{'background-color': previewBackground}"
         >
           {{d_render}}
         </div>
@@ -104,12 +112,9 @@
         <div
           v-show="s_navigation"
           class="v-note-navigation-wrapper"
-          :class="{'shadow': boxShadow}"
+          :class="{'transition': transition}"
         >
-          <div
-            class="v-note-navigation-title"
-            :class="{'shadow': boxShadow}"
-          >
+          <div class="v-note-navigation-title">
             {{d_words.navigation_title}}<i
               @click="toolbar_right_click('navigation')"
               class="fa fa-halo-times v-note-navigation-close"
@@ -118,7 +123,8 @@
           </div>
           <div
             ref="navigationContent"
-            class="v-note-navigation-content scroll-style"
+            class="v-note-navigation-content"
+            :class="{'scroll-style': s_scrollStyle}"
           >
           </div>
         </div>
@@ -129,6 +135,7 @@
     <transition name="fade">
       <div ref="help">
         <div
+          @click="toolbar_right_click('help')"
           class="v-note-help-wrapper"
           v-if="s_help"
         >
@@ -217,34 +224,62 @@ import "./lib/css/md.css";
 export default {
   mixins: [markdown],
   props: {
-    // 是否渲染滚动条样式(webkit)
     scrollStyle: {
+      // 是否渲染滚动条样式(webkit)
       type: Boolean,
       default: true
     },
     boxShadow: {
+      // 是否添加阴影
+      type: Boolean,
+      default: true
+    },
+    transition: {
+      // 是否开启动画过渡
       type: Boolean,
       default: true
     },
     autofocus: {
+      // 是否自动获取焦点
       type: Boolean,
       default: true
     },
     fontSize: {
+      // 字体大小
       type: String,
       default: "15px"
+    },
+    toolbarsBackground: {
+      // 工具栏背景色
+      type: String,
+      default: "#ffffff"
+    },
+    editorBackground: {
+      // TODO: 编辑栏背景色
+      type: String,
+      default: "#ffffff"
+    },
+    previewBackground: {
+      // 预览栏背景色
+      type: String,
+      default: "#fbfbfb"
+    },
+    boxShadowStyle: {
+      // 阴影样式
+      type: String,
+      default: "0 2px 12px 0 rgba(0, 0, 0, 0.1)"
     },
     help: {
       type: String,
       default: null
     },
-    // 初始value
     value: {
+      // 初始 value
       type: String,
       default: ""
     },
-    // 初始value
     language: {
+      // 初始语言
       type: String,
       default: "zh-CN"
     },
@@ -260,30 +295,32 @@ export default {
       type: String,
       default: null
     },
-    // 是否开启编辑
     editable: {
+      // 是否开启编辑
       type: Boolean,
       default: true
     },
-    // 是否开启工具栏
     toolbarsFlag: {
+      // 是否开启工具栏
       type: Boolean,
       default: true
     },
-    // 工具栏
     toolbars: {
+      // 工具栏
       type: Object,
       default() {
         return CONFIG.toolbars;
       }
     },
     codeStyle: {
+      // <code></code> 样式
       type: String,
       default() {
         return "github";
       }
     },
     placeholder: {
+      // 编辑器默认内容
       type: String,
       default: null
     },
@@ -356,14 +393,14 @@ export default {
       d_preview_imgsrc: null, // 图片预览地址
       s_external_link: {
         markdown_css: function() {
-          return "//cdn.jsdelivr.net/npm/github-markdown-css@3.0.1/github-markdown.min.css";
+          return "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css";
         },
         hljs_js: function() {
-          return "//cdn.jsdelivr.net/npm/highlight.js@9.15.9/lib/highlight.min.js";
+          return "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js";
         },
         hljs_lang: function(lang) {
           return (
-            "//cdn.jsdelivr.net/npm/highlight.js@9.15.9/lib/languages/" +
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/" +
             lang +
             ".min.js"
           );
@@ -371,7 +408,7 @@ export default {
         hljs_css: function(css) {
           if (hljsCss[css]) {
             return (
-              "//cdn.jsdelivr.net/npm/highlight.js@9.15.9/styles/" +
+              "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/" +
               css +
               ".min.css"
             );
@@ -379,10 +416,10 @@ export default {
           return "";
         },
         katex_js: function() {
-          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.js";
+          return "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js";
         },
         katex_css: function() {
-          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.css";
+          return "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css";
         }
       },
       p_external_link: {}
@@ -530,6 +567,10 @@ export default {
           this.$refs.toolbar_left.$imgFilesAdd([oFile]);
         }
       }
+    },
+    $imgTouch(file) {
+      var $vm = this;
+      // TODO 跳转到图片位置
     },
     $imgDel(file) {
       this.markdownIt.image_del(file[1]);
