@@ -135,7 +135,7 @@ module.exports = {
             canPrint: true
         }),
         new CopyWebpackPlugin([{
-            from: path.resolve(__dirname, '../resources/highlight.js-9.16.2'),
+            from: path.resolve(__dirname, '../resources/highlight.js-9.12.0'),
             to: path.resolve(__dirname, '../dist/highlightjs')
         }, {
             from: path.resolve(__dirname, '../resources/markdown'),
