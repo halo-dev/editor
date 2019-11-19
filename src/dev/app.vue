@@ -320,7 +320,6 @@ export default {
     imgdelete() {
       var md = this.$refs.md;
       var toolbar_left = md.$refs.toolbar_left;
-      toolbar_left.$imgDelByFilename(this.imgName);
     }
   },
   watch: {
