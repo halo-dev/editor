@@ -419,7 +419,7 @@ export default {
           return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.js";
         },
         katex_css: function() {
-          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.js";
+          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.css";
         }
       },
       p_external_link: {}
