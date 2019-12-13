@@ -23,7 +23,7 @@ const KEY_CODE = {
     H: 72,
     U: 85,
     D: 68,
-    M:77 ,
+    M: 77,
     Q: 81,
     O: 79,
     L: 76,
@@ -50,8 +50,7 @@ const KEY_CODE = {
     _SIX: 54
 };
 export const keydownListen = ($vm) => {
-    if (!$vm.shortCut)
-    {
+    if (!$vm.shortCut) {
         return
     }
     $vm.$el.addEventListener('keydown', function (e) {
@@ -108,17 +107,17 @@ export const keydownListen = ($vm) => {
                     break;
                 }
                 case KEY_CODE.ENTER: {
-                // enter
-                if ($vm.$refs.toolbar_left.s_img_link_open) {
-                    // 当添加外部链接的弹出层打开时， enter表示确定输入此链接
-                    e.preventDefault()
-                    $vm.$refs.toolbar_left.$imgLinkAdd();
-                } else {
-                    // 在文本框中输入enter
-                    $vm.insertEnter(e)
+                    // enter
+                    if ($vm.$refs.toolbar_left.s_img_link_open) {
+                        // 当添加外部链接的弹出层打开时， enter表示确定输入此链接
+                        e.preventDefault()
+                        $vm.$refs.toolbar_left.$imgLinkAdd();
+                    } else {
+                        // 在文本框中输入enter
+                        $vm.insertEnter(e)
+                    }
+                    break;
                 }
-                break;
-            }
             }
         } else if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey) {
             // ctrl +
@@ -151,12 +150,6 @@ export const keydownListen = ($vm) => {
                     // D
                     e.preventDefault()
                     $vm.toolbar_left_click('removeLine')
-                    break;
-                }
-                case KEY_CODE.M: {
-                    // M
-                    e.preventDefault()
-                    $vm.toolbar_left_click('mark')
                     break;
                 }
                 case KEY_CODE.Q: {
@@ -321,24 +314,6 @@ export const keydownListen = ($vm) => {
                     // D
                     e.preventDefault()
                     $vm.toolbar_left_click('strikethrough')
-                    break;
-                }
-                case KEY_CODE.L: {
-                    // D
-                    e.preventDefault()
-                    $vm.toolbar_left_click('alignleft')
-                    break;
-                }
-                case KEY_CODE.R: {
-                    // D
-                    e.preventDefault()
-                    $vm.toolbar_left_click('alignright')
-                    break;
-                }
-                case KEY_CODE.C: {
-                    // D
-                    e.preventDefault()
-                    $vm.toolbar_left_click('aligncenter')
                     break;
                 }
             }

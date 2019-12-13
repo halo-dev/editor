@@ -25,8 +25,7 @@ var fs = require("fs");
 const extractCSS = new ExtractTextPlugin('css/[name].css');
 module.exports = {
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
@@ -42,6 +41,9 @@ module.exports = {
                 loader: 'babel-loader',
                 // exclude: /.*node_modules((?!auto-textarea).)*$/
                 // exclude: /node_modules/
+                options: {
+                    presets: ['es2015']
+                },
                 include: [
                     path.resolve(__dirname, '../src'),
                     fs.realpathSync('node_modules/auto-textarea')
@@ -50,9 +52,14 @@ module.exports = {
             {
                 test: /\.(png|jpg|gif)$/,
                 loader: 'file-loader',
-                options: { name: '[name].[ext]?[hash]' }
+                options: {
+                    name: '[name].[ext]?[hash]'
+                }
             },
-            { test: /\.(woff|ttf|eot|svg)/, loader: 'file-loader?name=font/[name].[ext]&publicPath=../' },
+            {
+                test: /\.(woff|ttf|eot|svg)/,
+                loader: 'file-loader?name=font/[name].[ext]&publicPath=../'
+            },
             {
                 test: /\.styl$/,
                 loader: 'style-loader!css-loader!stylus-loader'
@@ -63,14 +70,13 @@ module.exports = {
                 // exclude: /node_modules/,
                 use: extractCSS.extract({
                     fallback: 'style-loader',
-                    use: [
-                        {
+                    use: [{
                             loader: 'css-loader'
                         },
                         {
                             loader: 'postcss-loader',
                             options: {
-                                plugins: function() {
+                                plugins: function () {
                                     return [
                                         // 允许在子中定义要放在最顶层的样式
                                         require('postcss-atroot')({}),
@@ -110,10 +116,10 @@ module.exports = {
                         }
                     ]
                 })
-            },{
+            }, {
                 test: /\.md$/,
                 loader: 'raw-loader'
-            },{
+            }, {
                 test: /\.less$/,
                 loader: 'style-loader!css-loader!less-loader'
             }
@@ -131,7 +137,11 @@ module.exports = {
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
-            cssProcessorOptions: { discardComments: { removeAll: true } },
+            cssProcessorOptions: {
+                discardComments: {
+                    removeAll: true
+                }
+            },
             canPrint: true
         }),
         new CopyWebpackPlugin([{

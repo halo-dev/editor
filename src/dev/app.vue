@@ -1,5 +1,33 @@
 <template>
   <div id="app">
+    <select
+      @change="opchange"
+      class="page-lang"
+    >
+      <option value="zh-CN">中文</option>
+      <option value="en">English</option>
+      <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
+      <option value="ja">日本語 </option>
+      <option value="pt-BR">Português</option>
+      <option value="ru">Русский</option>
+    </select>
+    <section class="page-header">
+      <h1 class="project-name">haloEditor</h1>
+      <h3 class="project-tagline">{{d_words.sub_title}}</h3>
+      <a
+        href="https://github.com/hinesboy/haloEditor"
+        class="btn"
+      >View on GitHub</a>
+      <a
+        href="https://github.com/hinesboy/haloEditor/zipball/master"
+        class="btn"
+      >Download .zip</a>
+      <a
+        href="https://github.com/hinesboy/haloEditor/master"
+        class="btn"
+      >Download .tar.gz</a>
+    </section>
     <div
       v-if="!screen_phone"
       class="item"
@@ -8,20 +36,14 @@
         {{d_words.default_setting}}
       </h2>
       <div class="item-button">
-        <select
-          @change="opchange"
-        >
-          <option value="zh-CN">中文</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-          <option value="ja">日本語 </option>
-          <option value="pt-BR">Português</option>
-          <option value="ru">Русский</option>
-        </select>
         <button @click="clearCache">clear cache</button>
         <button @click="uploadimg">upload</button>
         <button @click="imgreplace">imgreplace</button>
+        <input
+          type="text"
+          v-model="imgName"
+        />
+        <button @click="imgdelete">delete</button>
       </div>
       <halo-editor
         ref=md
@@ -89,12 +111,9 @@
       ></halo-editor>
     </div>
     <div class="item">
-      <span
-        style="display: block;margin: 30px 0 15px 0;color: #1e6bb8"
-        class=""
-      >
-        {{d_words.mark}}
-      </span>
+      <h2 class="item-header">
+        {{d_words.detail}}<a href="https://github.com/hinesboy/haloEditor">GitHub</a>
+      </h2>
     </div>
   </div>
 </template>
@@ -164,10 +183,6 @@ export default {
         code: true, // code
         readmodel: true, // 沉浸式阅读
         htmlcode: true, // 展示html源码
-        /* 2.1.8 */
-        alignleft: true, // 左对齐
-        aligncenter: true, // 居中
-        alignright: true, // 右对齐
         /* 2.2.1 */
         subfield: true, // 单双栏模式
         preview: true, // 预览
@@ -214,11 +229,11 @@ export default {
       this.$refs.md.$imglst2Url([
         [
           0,
-          "https://raw.githubusercontent.com/hinesboy/mavonEditor/master/img/cn/cn-common.png"
+          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
         ],
         [
           1,
-          "https://raw.githubusercontent.com/hinesboy/mavonEditor/master/img/cn/cn-common.png"
+          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
         ]
       ]);
     },
@@ -227,7 +242,7 @@ export default {
       for (var _img in this.img_file) {
         this.$refs.md.$img2Url(
           _img,
-          "https://raw.githubusercontent.com/hinesboy/mavonEditor/master/img/cn/cn-common.png"
+          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
         );
       }
       /* var formdata = new FormData();
@@ -293,6 +308,7 @@ export default {
     imgdelete() {
       var md = this.$refs.md;
       var toolbar_left = md.$refs.toolbar_left;
+      toolbar_left.$imgDelByFilename(this.imgName);
     }
   },
   watch: {
@@ -308,6 +324,85 @@ body {
   margin: 0;
   padding: 0;
   padding-bottom: 50px;
+}
+
+.page-lang {
+  position: absolute;
+  top: 15px;
+  right: 2%;
+}
+
+.page-header {
+  box-sizing: border-box;
+  padding: 90px 15px;
+  width: 100%;
+  height: 380px;
+  color: #fff;
+  text-align: center;
+  background-color: #159957;
+  background-image: linear-gradient(120deg, #155799, #159957);
+
+  @media only screen and (max-width: 958px) {
+    height: 300px;
+    padding: 60px 15px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    height: 370px;
+    padding: 50px 15px;
+  }
+
+  .project-name {
+    margin-top: 0;
+    margin-bottom: 0.1rem;
+    font-size: 2.25rem;
+
+    @media only screen and (max-width: 768px) {
+      font-size: 25px;
+    }
+  }
+
+  .project-tagline {
+    margin-bottom: 2rem;
+    font-weight: normal;
+    opacity: 0.7;
+
+    @media only screen and (max-width: 768px) {
+      font-size: 16px;
+    }
+  }
+
+  .btn {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.3rem;
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+    text-decoration: none;
+    margin-left: 20px;
+    box-sizing: border-box;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    @media only screen and (max-width: 768px) {
+      display: block;
+      width: 90%;
+      padding: 0.75rem;
+      font-size: 0.9rem;
+      margin-left: 5%;
+    }
+  }
 }
 
 .item {

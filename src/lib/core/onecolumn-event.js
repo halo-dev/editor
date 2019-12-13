@@ -4,20 +4,20 @@
 /**
  * keydown enter
  */
-export const onecolumnKeyDownEnter = ($event , $vm , tomarkdown) => {
+export const onecolumnKeyDownEnter = ($event, $vm, tomarkdown) => {
     let element = $event.srcElement ? $event.srcElement : $event.target
     let sel = window.getSelection();
     let range = sel.getRangeAt(0);
     // code中回车处理
     if (range.startContainer.tagName === 'CODE' || range.startContainer.tagName === 'PRE') {
         $event.preventDefault()
-        onecolumnInsert(range.startContainer , '\n')
+        onecolumnInsert(range.startContainer, '\n')
     } else if (range.startContainer.parentElement.tagName === 'CODE' || range.startContainer.parentElement.tagName === 'PRE') {
         $event.preventDefault()
-        onecolumnInsert(range.startContainer.parentElement , '\n')
-    } else if (!blockQuoteDoubleEnter(range.startContainer , $event , range.startContainer)) {
+        onecolumnInsert(range.startContainer.parentElement, '\n')
+    } else if (!blockQuoteDoubleEnter(range.startContainer, $event, range.startContainer)) {
         $vm.s_table_enter = false
-        judgeRender(range.startContainer , $event , range.startContainer , range.startContainer , $vm)
+        judgeRender(range.startContainer, $event, range.startContainer, range.startContainer, $vm)
         /* if (result) {
          range = range.cloneRange();
          // code的渲染
@@ -40,7 +40,7 @@ export const onecolumnKeyDownEnter = ($event , $vm , tomarkdown) => {
 /**
  * insert
  */
-export const onecolumnInsert = (dom , html) => {
+export const onecolumnInsert = (dom, html) => {
     dom.focus()
     var sel
     var range
@@ -78,7 +78,7 @@ export const onecolumnInsert = (dom , html) => {
 /**
  * 连续两次在段落中换行 跳出段落
  */
-export const blockQuoteDoubleEnter = (dom , $event , self) => {
+export const blockQuoteDoubleEnter = (dom, $event, self) => {
     if (dom.tagName) {
         if (dom.getAttribute('class') === 'content-div content-div-edit') {
             return false
@@ -98,15 +98,15 @@ export const blockQuoteDoubleEnter = (dom , $event , self) => {
             }
             return true
         }
-        return blockQuoteDoubleEnter(dom.parentElement, $event , dom)
+        return blockQuoteDoubleEnter(dom.parentElement, $event, dom)
     } else {
-        return blockQuoteDoubleEnter(dom.parentElement, $event , dom)
+        return blockQuoteDoubleEnter(dom.parentElement, $event, dom)
     }
 }
 /**
  * 在表格中回车特殊处理(暂时只做表格回车 , 后续可能拓展)
  */
-export const judgeRender = (dom , $event , self , pre , $vm) => {
+export const judgeRender = (dom, $event, self, pre, $vm) => {
     if (dom.tagName) {
         if (dom.tagName === 'TABLE') {
             $vm.s_table_enter = true
@@ -128,7 +128,7 @@ export const judgeRender = (dom , $event , self , pre , $vm) => {
             }
             return;
         }
-        judgeRender(dom.parentElement , $event , self , dom , $vm)
+        judgeRender(dom.parentElement, $event, self, dom, $vm)
         /* let obj = document.createElement('div')
          obj.innerHTML = markdown.render(dom.innerHTML.replace('&gt;' , '>'))
          var objText = obj.innerText
@@ -154,6 +154,6 @@ export const judgeRender = (dom , $event , self , pre , $vm) => {
          }
          } */
     } else {
-        judgeRender(dom.parentElement , $event , self , dom , $vm)
+        judgeRender(dom.parentElement, $event, self, dom, $vm)
     }
 }

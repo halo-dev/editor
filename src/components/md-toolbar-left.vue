@@ -81,7 +81,7 @@
       v-if="toolbars.underline"
       @click="$clicks('underline')"
       class="op-icon fa fa-halo-underline"
-      :title="`${d_words.tl_underline} (ctrl+u)`"
+      :title="`${d_words.tl_underline} (Ctrl+U)`"
       aria-hidden="true"
     ></button>
     <button
@@ -90,16 +90,7 @@
       v-if="toolbars.strikethrough"
       @click="$clicks('strikethrough')"
       class="op-icon fa fa-halo-strikethrough"
-      :title="`${d_words.tl_strikethrough} (ctrl+shift+d)`"
-      aria-hidden="true"
-    ></button>
-    <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.mark"
-      @click="$clicks('mark')"
-      class="op-icon fa fa-halo-thumb-tack"
-      :title="`${d_words.tl_mark} (ctrl+m)`"
+      :title="`${d_words.tl_strikethrough} (Ctrl+Shift+D)`"
       aria-hidden="true"
     ></button>
     <button
@@ -109,7 +100,7 @@
       @click="$clicks('superscript')"
       class="op-icon fa fa-halo-superscript"
       aria-hidden="true"
-      :title="`${d_words.tl_superscript} (ctrl+alt+s)`"
+      :title="`${d_words.tl_superscript} (Ctrl+Alt+S)`"
     ></button>
     <button
       :disabled="!editable"
@@ -118,38 +109,10 @@
       @click="$clicks('subscript')"
       class="op-icon fa fa-halo-subscript"
       aria-hidden="true"
-      :title="`${d_words.tl_subscript} (ctrl+shift+s)`"
-    ></button>
-    <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.alignleft"
-      @click="$clicks('alignleft')"
-      class="op-icon fa fa-halo-align-left"
-      aria-hidden="true"
-      :title="`${d_words.tl_alignleft} (ctrl+l)`"
-    >
-    </button>
-    <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.aligncenter"
-      @click="$clicks('aligncenter')"
-      class="op-icon fa fa-halo-align-center"
-      aria-hidden="true"
-      :title="`${d_words.tl_aligncenter} (ctrl+e)`"
-    ></button>
-    <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.alignright"
-      @click="$clicks('alignright')"
-      class="op-icon fa fa-halo-align-right"
-      aria-hidden="true"
-      :title="`${d_words.tl_alignright} (ctrl+r)`"
+      :title="`${d_words.tl_subscript} (Ctrl+Shift+S)`"
     ></button>
     <span
-      v-if="toolbars.superscript || toolbars.subscript || toolbars.underline || toolbars.strikethrough || toolbars.mark"
+      v-if="toolbars.superscript || toolbars.subscript || toolbars.underline || toolbars.strikethrough"
       class="op-icon-divider"
     ></span>
     <button
@@ -159,7 +122,7 @@
       @click="$clicks('quote')"
       class="op-icon fa fa-halo-quote-left"
       aria-hidden="true"
-      :title="`${d_words.tl_quote} (ctrl+q)`"
+      :title="`${d_words.tl_quote} (Ctrl+Q)`"
     ></button>
     <button
       :disabled="!editable"
@@ -168,7 +131,7 @@
       @click="$clicks('ol')"
       class="op-icon fa fa-halo-list-ol"
       aria-hidden="true"
-      :title="`${d_words.tl_ol} (ctrl+o)`"
+      :title="`${d_words.tl_ol} (Ctrl+O)`"
     ></button>
     <button
       :disabled="!editable"
@@ -177,7 +140,7 @@
       @click="$clicks('ul')"
       class="op-icon fa fa-halo-list-ul"
       aria-hidden="true"
-      :title="`${d_words.tl_ul} (ctrl+alt+u)`"
+      :title="`${d_words.tl_ul} (Ctrl+Alt+U)`"
     ></button>
     <span
       v-if="toolbars.ul || toolbars.ol || toolbars.quote"
@@ -190,7 +153,7 @@
       @click.stop="$toggle_imgLinkAdd('link')"
       class="op-icon fa fa-halo-link"
       aria-hidden="true"
-      :title="`${d_words.tl_link} (ctrl+l)`"
+      :title="`${d_words.tl_link} (Ctrl+L)`"
     ></button>
     <div
       :disabled="!editable"
@@ -225,6 +188,32 @@
               multiple="multiple"
             />{{d_words.tl_upload}}
           </div>
+
+          <div
+            v-for="(item, index) in img_file"
+            v-if="item && item[1]"
+            class="dropdown-item dropdown-images"
+            :title="item[1].name"
+            :key="index"
+            @click.stop="$imgFileListClick(index)"
+          >
+            <span>{{item[1].name}}</span>
+            <button
+              slot="right"
+              type="button"
+              @click.stop="$imgDel(index)"
+              class="op-icon fa fa-halo-times"
+              aria-hidden="true"
+              :title="d_words.tl_upload_remove"
+            ></button>
+            <!-- 缩略图展示 -->
+            <img
+              class="image-show"
+              :class="{'transition': transition}"
+              :src="item[1].miniurl"
+              alt="none"
+            >
+          </div>
         </div>
       </transition>
     </div>
@@ -235,7 +224,7 @@
       @click="$clicks('code')"
       class="op-icon fa fa-halo-code"
       aria-hidden="true"
-      :title="`${d_words.tl_code} (ctrl+alt+c)`"
+      :title="`${d_words.tl_code} (Ctrl+Alt+C)`"
     ></button>
     <button
       :disabled="!editable"
@@ -244,7 +233,7 @@
       @click="$clicks('table')"
       class="op-icon fa fa-halo-table"
       aria-hidden="true"
-      :title="`${d_words.tl_table} (ctrl+alt+t)`"
+      :title="`${d_words.tl_table} (Ctrl+Alt+T)`"
     ></button>
     <span
       v-if="toolbars.link || toolbars.imagelink || toolbars.code || toolbars.table"
@@ -256,7 +245,7 @@
       @click="$clicks('undo')"
       class="op-icon fa fa-halo-undo"
       aria-hidden="true"
-      :title="`${d_words.tl_undo} (ctrl+z)`"
+      :title="`${d_words.tl_undo} (Ctrl+Z)`"
     ></button>
     <button
       type="button"
@@ -264,7 +253,7 @@
       @click="$clicks('redo')"
       class="op-icon fa fa-halo-repeat"
       aria-hidden="true"
-      :title="`${d_words.tl_redo} (ctrl+y)`"
+      :title="`${d_words.tl_redo} (Ctrl+Y)`"
     ></button>
     <button
       type="button"
@@ -272,7 +261,7 @@
       @click="$clicks('trash')"
       class="op-icon fa fa-halo-trash-o"
       aria-hidden="true"
-      :title="`${d_words.tl_trash} (ctrl+breakspace)`"
+      :title="`${d_words.tl_trash} (Ctrl+BreakSpace)`"
     ></button>
     <button
       type="button"
@@ -280,7 +269,7 @@
       @click="$clicks('save')"
       class="op-icon fa fa-halo-floppy-o"
       aria-hidden="true"
-      :title="`${d_words.tl_save} (ctrl+s)`"
+      :title="`${d_words.tl_save} (Ctrl+S)`"
     ></button>
     <slot name="left-toolbar-after" />
 
@@ -296,20 +285,20 @@
             class="fa fa-halo-times"
             aria-hidden="true"
           ></i>
-          <h3 class="title">{{link_type === 'link' ? d_words.tl_popup_link_title : d_words.tl_popup_img_link_title}}</h3>
+          <h3 class="title">{{link_type == 'link' ? d_words.tl_popup_link_title : d_words.tl_popup_img_link_title}}</h3>
           <div class="link-text input-wrapper">
             <input
               ref="linkTextInput"
               type="text"
               v-model="link_text"
-              :placeholder="link_type === 'link' ? d_words.tl_popup_link_text : d_words.tl_popup_img_link_text"
+              :placeholder="link_type == 'link' ? d_words.tl_popup_link_text : d_words.tl_popup_img_link_text"
             >
           </div>
           <div class="link-addr input-wrapper">
             <input
               type="text"
               v-model="link_addr"
-              :placeholder="link_type === 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_link_addr"
+              :placeholder="link_type == 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_link_addr"
             >
           </div>
           <div
@@ -388,6 +377,9 @@ export default {
       });
       this.s_img_dropdown_open = false;
     },
+    $imgFileListClick(pos) {
+      this.$emit("imgTouch", this.img_file[pos]);
+    },
     $changeUrl(index, url) {
       this.img_file[index][0] = url;
     },
@@ -415,20 +407,41 @@ export default {
       this.$imgFilesAdd($e.target.files);
       $e.target.value = ""; // 初始化
     },
+    $imgDel(pos) {
+      this.$emit("imgDel", this.img_file[pos]);
+      this.img_file.splice(pos, 1);
+      this.num--;
+
+      this.s_img_dropdown_open = false;
+    },
     isEqualName(filename, pos) {
       if (this.img_file[pos][1]) {
         if (
-          this.img_file[pos][1].name === filename ||
-          this.img_file[pos][1]._name === filename
+          this.img_file[pos][1].name == filename ||
+          this.img_file[pos][1]._name == filename
         ) {
           return true;
         }
       }
       return false;
     },
+    $imgDelByFilename(filename) {
+      var pos = 0;
+      while (this.img_file.length > pos) {
+        if (
+          this.img_file[pos][1] == filename ||
+          this.isEqualName(filename, pos)
+        ) {
+          this.$imgDel(pos);
+          return true;
+        }
+        pos += 1;
+      }
+      return false;
+    },
     $imgAddByFilename(filename, $file) {
       for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] === filename) return false;
+        if (this.img_file[i][0] == filename) return false;
       }
       this.img_file[0][0] = filename;
       this.img_file[0][1] = $file;
@@ -439,7 +452,7 @@ export default {
     },
     $imgAddByUrl(filename, $url) {
       for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] === filename) return false;
+        if (this.img_file[i][0] == filename) return false;
       }
       this.img_file[0][0] = filename;
       this.img_file[0][1] = $url;
@@ -448,7 +461,7 @@ export default {
     },
     $imgUpdateByFilename(filename, $file) {
       for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] === filename || this.isEqualName(filename, i)) {
+        if (this.img_file[i][0] == filename || this.isEqualName(filename, i)) {
           this.img_file[i][1] = $file;
           this.$emit("imgAdd", filename, $file, false);
           return true;
@@ -567,6 +580,55 @@ export default {
       top: 0;
       opacity: 0;
       cursor: pointer;
+    }
+  }
+
+  .dropdown-images {
+    box-sizing: border-box;
+
+    button {
+      position: absolute;
+      top: -1px;
+      right: 5px;
+      font-size: 14px;
+
+      &:hover {
+        color: #F56C6C;
+        background-color: transparent;
+      }
+    }
+
+    span {
+      display: inline-block;
+      width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover {
+      .image-show {
+        display: block !important;
+      }
+    }
+
+    .image-show {
+      display: none;
+      position: absolute;
+      left: -128px;
+      top: 0;
+      width: 120px;
+      height: 90px;
+      object-fit: contain;
+      border: 1px solid #F2F6FC;
+
+      &.transition {
+        transition: all 0.2s linear 0s;
+      }
+    }
+
+    &.transition {
+      transition: all 0.2s linear 0s;
     }
   }
 }

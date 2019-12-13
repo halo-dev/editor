@@ -43,10 +43,7 @@ sub H~2~0
 ++underline++
 ~~strikethrough~~
 ```
-## ==Mark==
-```
-==mark==
-```
+
 ## Quote
 
 ```

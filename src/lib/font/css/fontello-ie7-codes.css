@@ -1,7 +1,6 @@
 
 .fa-halo-bold { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe800;&nbsp;'); }
 .fa-halo-italic { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe801;&nbsp;'); }
-.fa-halo-thumb-tack { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe802;&nbsp;'); }
 .fa-halo-link { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe803;&nbsp;'); }
 .fa-halo-picture-o { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe804;&nbsp;'); }
 .fa-halo-repeat { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe805;&nbsp;'); }
@@ -13,9 +12,6 @@
 .fa-halo-eye-slash { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe80b;&nbsp;'); }
 .fa-halo-question-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe80c;&nbsp;'); }
 .fa-halo-times { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe80d;&nbsp;'); }
-.fa-halo-align-left { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe80f;&nbsp;'); }
-.fa-halo-align-center { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe810;&nbsp;'); }
-.fa-halo-align-right { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe811;&nbsp;'); }
 .fa-halo-arrows-alt { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0b2;&nbsp;'); }
 .fa-halo-bars { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0c9;&nbsp;'); }
 .fa-halo-list-ul { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0ca;&nbsp;'); }

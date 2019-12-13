@@ -128,27 +128,19 @@ const coverterStrikethrough = {
     return '~~' + content + '~~';
   }
 }
-// 标记
-const coverterMark = {
-  filter: 'mark',
-  replacement: function (content) {
-    return '==' + content + '==';
-  }
-}
 // 图片
 const converterImg = {
-    filter: 'img',
-    replacement: function(content, tag) {
-        var rel = tag.getAttribute('rel');
-        var alt = tag.getAttribute('alt');
-        if (rel && alt) {
-            return '![' + alt + ']' + '(' + rel + ')'
-        }
-        else {
-            var src = tag.getAttribute('src');
-            return '![' + alt + ']' + '(' + src + ')'
-        }
+  filter: 'img',
+  replacement: function (content, tag) {
+    var rel = tag.getAttribute('rel');
+    var alt = tag.getAttribute('alt');
+    if (rel && alt) {
+      return '![' + alt + ']' + '(' + rel + ')'
+    } else {
+      var src = tag.getAttribute('src');
+      return '![' + alt + ']' + '(' + src + ')'
     }
+  }
 }
 var tomarkdown = function (str) {
   return toMarkdown(str, {
@@ -159,7 +151,6 @@ var tomarkdown = function (str) {
       coverterSub,
       coverterUnderline,
       coverterStrikethrough,
-      coverterMark,
       coverterP,
       coverterp,
       coverterDiv,

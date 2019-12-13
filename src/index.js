@@ -5,7 +5,6 @@
 
 /**
  * haloEditor
- * based on mavonEditor(https://github.com/hinesboy/mavonEditor)
  * @author hinesboy
  */
 const haloEditor = require('./halo-editor.vue');

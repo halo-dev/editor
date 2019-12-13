@@ -393,14 +393,14 @@ export default {
       d_preview_imgsrc: null, // 图片预览地址
       s_external_link: {
         markdown_css: function() {
-          return "//cdn.jsdelivr.net/npm/github-markdown-css@3.0.1/github-markdown.min.css";
+          return "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css";
         },
         hljs_js: function() {
-          return "//cdn.jsdelivr.net/npm/highlight.js@9.16.2/lib/highlight.min.js";
+          return "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js";
         },
         hljs_lang: function(lang) {
           return (
-            "//cdn.jsdelivr.net/npm/highlight.js@9.16.2/lib/languages/" +
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/" +
             lang +
             ".min.js"
           );
@@ -408,7 +408,7 @@ export default {
         hljs_css: function(css) {
           if (hljsCss[css]) {
             return (
-              "//cdn.jsdelivr.net/npm/highlight.js@9.16.2/styles/" +
+              "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/" +
               css +
               ".min.css"
             );
@@ -416,10 +416,10 @@ export default {
           return "";
         },
         katex_js: function() {
-          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.js";
+          return "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js";
         },
         katex_css: function() {
-          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.css";
+          return "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css";
         }
       },
       p_external_link: {}
@@ -485,7 +485,7 @@ export default {
   methods: {
     loadExternalLink(name, type, callback) {
       if (typeof this.p_external_link[name] !== "function") {
-        if (this.p_external_link[name] !== false) {
+        if (this.p_external_link[name] != false) {
           console.error(
             "external_link." + name,
             "is not a function, if you want to disabled this error log, set external_link." +
@@ -764,7 +764,7 @@ export default {
     codeStyleChange(val, isInit) {
       isInit = isInit ? isInit : false;
       if (typeof this.p_external_link.hljs_css !== "function") {
-        if (this.p_external_link.hljs_css !== false) {
+        if (this.p_external_link.hljs_css != false) {
           console.error(
             "external_link.hljs_css is not a function, if you want to disabled this error log, set external_link.hljs_css to function or false"
           );

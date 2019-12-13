@@ -9,6 +9,7 @@
  * @Copyright: 2017
  */
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var base = require('./webpack.base.js')
 var merge = require('merges-utils')
 var path = require('path');
@@ -77,11 +78,6 @@ var config = {
 
 var res = merge([base, config])
 res.plugins = res.plugins.concat([
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        },
-        comments: false
-    })
+    new UglifyJSPlugin()
 ])
 module.exports = res
