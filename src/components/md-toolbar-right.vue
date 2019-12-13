@@ -8,7 +8,7 @@
       v-show="!s_navigation"
       class="op-icon fa fa-halo-bars"
       aria-hidden="true"
-      :title="`${d_words.tl_navigation_on} (F8)`"
+      :title="`开启标题导航 (F8)`"
     ></button>
     <button
       type="button"
@@ -17,7 +17,7 @@
       v-show="s_navigation"
       class="op-icon fa fa-halo-bars selected"
       aria-hidden="true"
-      :title="`${d_words.tl_navigation_off} (F8)`"
+      :title="`关闭标题导航 (F8)`"
     ></button>
     <button
       type="button"
@@ -26,7 +26,7 @@
       v-show="s_preview_switch"
       class="op-icon fa fa-halo-eye-slash selected"
       aria-hidden="true"
-      :title="`${d_words.tl_edit} (F9)`"
+      :title="`编辑 (F9)`"
     ></button>
     <button
       type="button"
@@ -35,7 +35,7 @@
       v-show="!s_preview_switch"
       class="op-icon fa fa-halo-eye"
       aria-hidden="true"
-      :title="`${d_words.tl_preview} (F9)`"
+      :title="`预览 (F9)`"
     ></button>
     <button
       type="button"
@@ -43,7 +43,7 @@
       @click="$clicks('fullscreen')"
       v-show="!s_fullScreen"
       class="op-icon fa fa-halo-arrows-alt"
-      :title="`${d_words.tl_fullscreen_on} (F10)`"
+      :title="`全屏编辑 (F10)`"
       aria-hidden="true"
     ></button>
     <button
@@ -52,7 +52,7 @@
       @click="$clicks('fullscreen')"
       v-show="s_fullScreen"
       class="op-icon fa fa-halo-compress selected"
-      :title="`${d_words.tl_fullscreen_off} (F10)`"
+      :title="`退出全屏 (F10)`"
       aria-hidden="true"
     ></button>
     <button
@@ -61,7 +61,7 @@
       @click="$clicks('read')"
       class="op-icon fa fa-halo-window-maximize"
       aria-hidden="true"
-      :title="`${d_words.tl_read} (F11)`"
+      :title="`沉浸式阅读 (F11)`"
     ></button>
     <button
       type="button"
@@ -70,7 +70,7 @@
       class="op-icon fa fa-halo-columns"
       aria-hidden="true"
       :class="{'selected': s_subfield}"
-      :title="`${s_subfield ? d_words.tl_single_column : d_words.tl_double_column} (F12)`"
+      :title="`${s_subfield ? '单栏' : '双栏'} (F12)`"
     ></button>
     <span
       v-if=" toolbars.help && toolbars.htmlcode && toolbars.readmodel && toolbars.fullscreen && toolbars.subfield && toolbars.navigation"
@@ -82,7 +82,7 @@
       @click="$clicks('html')"
       v-show="!s_html_code"
       class="op-icon fa fa-halo-code"
-      :title="d_words.tl_html_on"
+      title="查看 HTML 文本"
       aria-hidden="true"
     ></button>
     <button
@@ -91,7 +91,7 @@
       @click="$clicks('html')"
       v-show="s_html_code"
       class="op-icon fa fa-halo-code selected"
-      :title="d_words.tl_html_off"
+      title="返回 Markdown 文本"
       aria-hidden="true"
     ></button>
     <button
@@ -100,7 +100,7 @@
       @click="$clicks('help')"
       class="op-icon fa fa-halo-question-circle"
       style="font-size: 17px;padding: 5px 6px 5px 3px"
-      :title="d_words.tl_help"
+      title="Markdown 语法帮助"
       aria-hidden="true"
     ></button>
     <slot name="right-toolbar-after" />
@@ -119,11 +119,7 @@ export default {
     s_preview_switch: { type: Boolean, required: true },
     s_fullScreen: { type: Boolean, required: true },
     s_html_code: { type: Boolean, required: true },
-    s_navigation: { type: Boolean, required: true },
-    d_words: {
-      type: Object,
-      required: true
-    }
+    s_navigation: { type: Boolean, required: true }
   },
   methods: {
     // 工具栏功能图标click-----------------

@@ -67,82 +67,82 @@ export const toolbar_left_click = (_type, $vm) => {
          'bold': {
              prefix: '**',
              subfix: '**',
-             str: $vm.d_words.tl_bold
+             str: '粗体'
          },
          'italic': {
              prefix: '*',
              subfix: '*',
-             str: $vm.d_words.tl_italic
+             str: '斜体'
          },
          'header': {
              prefix: '# ',
              subfix: '',
-             str: $vm.d_words.tl_header
+             str: '标题'
          },
          'header1': {
              prefix: '# ',
              subfix: '',
-             str: $vm.d_words.tl_header_one
+             str: '一级标题'
          },
          'header2': {
              prefix: '## ',
              subfix: '',
-             str: $vm.d_words.tl_header_two
+             str: '二级标题'
          },
          'header3': {
              prefix: '### ',
              subfix: '',
-             str: $vm.d_words.tl_header_three
+             str: '三级标题'
          },
          'header4': {
              prefix: '#### ',
              subfix: '',
-             str: $vm.d_words.tl_header_four
+             str: '四级标题'
          },
          'header5': {
              prefix: '##### ',
              subfix: '',
-             str: $vm.d_words.tl_header_five
+             str: '五级标题'
          },
          'header6': {
              prefix: '###### ',
              subfix: '',
-             str: $vm.d_words.tl_header_six
+             str: '六级标题'
          },
          'underline': {
              prefix: '++',
              subfix: '++',
-             str: $vm.d_words.tl_underline
+             str: '下划线'
          },
          'strikethrough': {
              prefix: '~~',
              subfix: '~~',
-             str: $vm.d_words.tl_strikethrough
+             str: '中划线'
          },
          'superscript': {
              prefix: '^',
              subfix: '^',
-             str: $vm.d_words.tl_superscript
+             str: '上角标'
          },
          'subscript': {
              prefix: '~',
              subfix: '~',
-             str: $vm.d_words.tl_subscript
+             str: '下角标'
          },
          'quote': {
              prefix: '> ',
              subfix: '',
-             str: $vm.d_words.tl_quote
+             str: '段落引用'
          },
          'link': {
              prefix: '[](',
              subfix: ')',
-             str: $vm.d_words.tl_link
+             str: '链接'
          },
          'imagelink': {
              prefix: '![](',
              subfix: ')',
-             str: $vm.d_words.tl_image
+             str: '添加图片链接'
          },
          'code': {
              prefix: '```',

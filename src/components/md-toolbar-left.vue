@@ -8,7 +8,7 @@
       @click="$clicks('bold')"
       class="op-icon fa fa-halo-bold"
       aria-hidden="true"
-      :title="`${d_words.tl_bold} (ctrl+b)`"
+      :title="`粗体 (Ctrl+B)`"
     ></button>
     <button
       :disabled="!editable"
@@ -17,7 +17,7 @@
       @click="$clicks('italic')"
       class="op-icon fa fa-halo-italic"
       aria-hidden="true"
-      :title="`${d_words.tl_italic} (ctrl+i)`"
+      :title="`斜体 (Ctrl+I)`"
     ></button>
     <div
       :class="{'selected': s_header_dropdown_open}"
@@ -28,7 +28,7 @@
       @mouseenter="$mouseenter_header_dropdown"
       class="op-icon fa fa-halo-header dropdown dropdown-wrapper"
       aria-hidden="true"
-      :title="`${d_words.tl_header} (ctrl+h)`"
+      :title="`标题 (Ctrl+H)`"
     >
       <transition name="fade">
         <div
@@ -42,32 +42,32 @@
             title="#"
             class="dropdown-item"
             @click.stop="$click_header('header1')"
-          ><span>{{d_words.tl_header_one}}</span></div>
+          ><span>一级标题</span></div>
           <div
             title="## "
             class="dropdown-item"
             @click.stop="$click_header('header2')"
-          ><span>{{d_words.tl_header_two}}</span></div>
+          ><span>二级标题</span></div>
           <div
             title="### "
             class="dropdown-item"
             @click.stop="$click_header('header3')"
-          ><span>{{d_words.tl_header_three}}</span></div>
+          ><span>三级标题</span></div>
           <div
             title="#### "
             class="dropdown-item"
             @click.stop="$click_header('header4')"
-          ><span>{{d_words.tl_header_four}}</span></div>
+          ><span>四级标题</span></div>
           <div
             title="##### "
             class="dropdown-item"
             @click.stop="$click_header('header5')"
-          ><span>{{d_words.tl_header_five}}</span></div>
+          ><span>五级标题</span></div>
           <div
             title="###### "
             class="dropdown-item"
             @click.stop="$click_header('header6')"
-          ><span>{{d_words.tl_header_six}}</span></div>
+          ><span>六级标题</span></div>
         </div>
       </transition>
     </div>
@@ -81,7 +81,7 @@
       v-if="toolbars.underline"
       @click="$clicks('underline')"
       class="op-icon fa fa-halo-underline"
-      :title="`${d_words.tl_underline} (Ctrl+U)`"
+      :title="`下划线 (Ctrl+U)`"
       aria-hidden="true"
     ></button>
     <button
@@ -90,7 +90,7 @@
       v-if="toolbars.strikethrough"
       @click="$clicks('strikethrough')"
       class="op-icon fa fa-halo-strikethrough"
-      :title="`${d_words.tl_strikethrough} (Ctrl+Shift+D)`"
+      :title="`中划线 (Ctrl+Shift+D)`"
       aria-hidden="true"
     ></button>
     <button
@@ -100,7 +100,7 @@
       @click="$clicks('superscript')"
       class="op-icon fa fa-halo-superscript"
       aria-hidden="true"
-      :title="`${d_words.tl_superscript} (Ctrl+Alt+S)`"
+      :title="`上角标 (Ctrl+Alt+S)`"
     ></button>
     <button
       :disabled="!editable"
@@ -109,7 +109,7 @@
       @click="$clicks('subscript')"
       class="op-icon fa fa-halo-subscript"
       aria-hidden="true"
-      :title="`${d_words.tl_subscript} (Ctrl+Shift+S)`"
+      :title="`下角标 (Ctrl+Shift+S)`"
     ></button>
     <span
       v-if="toolbars.superscript || toolbars.subscript || toolbars.underline || toolbars.strikethrough"
@@ -122,7 +122,7 @@
       @click="$clicks('quote')"
       class="op-icon fa fa-halo-quote-left"
       aria-hidden="true"
-      :title="`${d_words.tl_quote} (Ctrl+Q)`"
+      :title="`段落引用 (Ctrl+Q)`"
     ></button>
     <button
       :disabled="!editable"
@@ -131,7 +131,7 @@
       @click="$clicks('ol')"
       class="op-icon fa fa-halo-list-ol"
       aria-hidden="true"
-      :title="`${d_words.tl_ol} (Ctrl+O)`"
+      :title="`有序列表 (Ctrl+O)`"
     ></button>
     <button
       :disabled="!editable"
@@ -140,7 +140,7 @@
       @click="$clicks('ul')"
       class="op-icon fa fa-halo-list-ul"
       aria-hidden="true"
-      :title="`${d_words.tl_ul} (Ctrl+Alt+U)`"
+      :title="`无序列表 (Ctrl+Alt+U)`"
     ></button>
     <span
       v-if="toolbars.ul || toolbars.ol || toolbars.quote"
@@ -153,7 +153,7 @@
       @click.stop="$toggle_imgLinkAdd('link')"
       class="op-icon fa fa-halo-link"
       aria-hidden="true"
-      :title="`${d_words.tl_link} (Ctrl+L)`"
+      :title="`链接 (Ctrl+L)`"
     ></button>
     <div
       :disabled="!editable"
@@ -176,7 +176,7 @@
           <div
             class="dropdown-item"
             @click.stop="$toggle_imgLinkAdd('imagelink')"
-          ><span>{{d_words.tl_image}}</span></div>
+          ><span>添加图片链接</span></div>
           <div
             class="dropdown-item"
             style="overflow: hidden"
@@ -186,7 +186,7 @@
               accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
               @change="$imgAdd($event)"
               multiple="multiple"
-            />{{d_words.tl_upload}}
+            />上传图片
           </div>
 
           <div
@@ -204,7 +204,7 @@
               @click.stop="$imgDel(index)"
               class="op-icon fa fa-halo-times"
               aria-hidden="true"
-              :title="d_words.tl_upload_remove"
+              :title="删除"
             ></button>
             <!-- 缩略图展示 -->
             <img
@@ -224,7 +224,7 @@
       @click="$clicks('code')"
       class="op-icon fa fa-halo-code"
       aria-hidden="true"
-      :title="`${d_words.tl_code} (Ctrl+Alt+C)`"
+      :title="`代码块 (Ctrl+Alt+C)`"
     ></button>
     <button
       :disabled="!editable"
@@ -233,7 +233,7 @@
       @click="$clicks('table')"
       class="op-icon fa fa-halo-table"
       aria-hidden="true"
-      :title="`${d_words.tl_table} (Ctrl+Alt+T)`"
+      :title="`表格 (Ctrl+Alt+T)`"
     ></button>
     <span
       v-if="toolbars.link || toolbars.imagelink || toolbars.code || toolbars.table"
@@ -245,7 +245,7 @@
       @click="$clicks('undo')"
       class="op-icon fa fa-halo-undo"
       aria-hidden="true"
-      :title="`${d_words.tl_undo} (Ctrl+Z)`"
+      :title="`上一步 (Ctrl+Z)`"
     ></button>
     <button
       type="button"
@@ -253,7 +253,7 @@
       @click="$clicks('redo')"
       class="op-icon fa fa-halo-repeat"
       aria-hidden="true"
-      :title="`${d_words.tl_redo} (Ctrl+Y)`"
+      :title="`下一步 (Ctrl+Y)`"
     ></button>
     <button
       type="button"
@@ -261,7 +261,7 @@
       @click="$clicks('trash')"
       class="op-icon fa fa-halo-trash-o"
       aria-hidden="true"
-      :title="`${d_words.tl_trash} (Ctrl+BreakSpace)`"
+      :title="`清空 (Ctrl+BreakSpace)`"
     ></button>
     <button
       type="button"
@@ -269,7 +269,7 @@
       @click="$clicks('save')"
       class="op-icon fa fa-halo-floppy-o"
       aria-hidden="true"
-      :title="`${d_words.tl_save} (Ctrl+S)`"
+      :title="`保存 (Ctrl+S)`"
     ></button>
     <slot name="left-toolbar-after" />
 
@@ -285,30 +285,30 @@
             class="fa fa-halo-times"
             aria-hidden="true"
           ></i>
-          <h3 class="title">{{link_type == 'link' ? d_words.tl_popup_link_title : d_words.tl_popup_img_link_title}}</h3>
+          <h3 class="title">{{link_type == 'link' ? '添加链接' : '添加图片'}}</h3>
           <div class="link-text input-wrapper">
             <input
               ref="linkTextInput"
               type="text"
               v-model="link_text"
-              :placeholder="link_type == 'link' ? d_words.tl_popup_link_text : d_words.tl_popup_img_link_text"
+              :placeholder="link_type == 'link' ? '链接描述' : '图片描述'"
             >
           </div>
           <div class="link-addr input-wrapper">
             <input
               type="text"
               v-model="link_addr"
-              :placeholder="link_type == 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_link_addr"
+              :placeholder="link_type == 'link' ? '链接地址' : '图片链接'"
             >
           </div>
           <div
             class="op-btn cancel"
             @click.stop="s_img_link_open = false"
-          >{{d_words.tl_popup_link_cancel}}</div>
+          >取消</div>
           <div
             class="op-btn sure"
             @click.stop="$imgLinkAdd()"
-          >{{d_words.tl_popup_link_sure}}</div>
+          >确定</div>
         </div>
       </div>
     </transition>
@@ -330,10 +330,6 @@ export default {
     },
     toolbars: {
       // 工具栏
-      type: Object,
-      required: true
-    },
-    d_words: {
       type: Object,
       required: true
     },

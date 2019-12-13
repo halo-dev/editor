@@ -1,56 +1,14 @@
 <template>
   <div id="app">
-    <select
-      @change="opchange"
-      class="page-lang"
-    >
-      <option value="zh-CN">中文</option>
-      <option value="en">English</option>
-      <option value="fr">Français</option>
-      <option value="de">Deutsch</option>
-      <option value="ja">日本語 </option>
-      <option value="pt-BR">Português</option>
-      <option value="ru">Русский</option>
-    </select>
-    <section class="page-header">
-      <h1 class="project-name">haloEditor</h1>
-      <h3 class="project-tagline">{{d_words.sub_title}}</h3>
-      <a
-        href="https://github.com/hinesboy/haloEditor"
-        class="btn"
-      >View on GitHub</a>
-      <a
-        href="https://github.com/hinesboy/haloEditor/zipball/master"
-        class="btn"
-      >Download .zip</a>
-      <a
-        href="https://github.com/hinesboy/haloEditor/master"
-        class="btn"
-      >Download .tar.gz</a>
-    </section>
     <div
       v-if="!screen_phone"
       class="item"
     >
-      <h2 class="item-header">
-        {{d_words.default_setting}}
-      </h2>
-      <div class="item-button">
-        <button @click="clearCache">clear cache</button>
-        <button @click="uploadimg">upload</button>
-        <button @click="imgreplace">imgreplace</button>
-        <input
-          type="text"
-          v-model="imgName"
-        />
-        <button @click="imgdelete">delete</button>
-      </div>
       <halo-editor
         ref=md
         :subfield="subfield"
         :toolbarsFlag="toolbarsFlag"
         :editable="editable"
-        :language="d_language"
         @change="change"
         @save="saveone"
         :ishljs="true"
@@ -71,19 +29,6 @@
         toolbars-background="#ffffff"
         preview-background="#fbfbfb"
       >
-        <!-- <template slot="left-toolbar-before">
-                    左工具栏前
-                </template>
-                <template slot="left-toolbar-after">
-                    左工具栏后
-                </template>
-
-                <template slot="right-toolbar-before">
-                    右工具栏前
-                </template>
-                <template slot="right-toolbar-after">
-                    右工具栏后
-                </template> -->
       </halo-editor>
       <button
         ref="diy"
@@ -100,37 +45,26 @@
       class="item"
     >
       <h2 class="item-header">
-        {{d_words.customize_setting}}
       </h2>
       <halo-editor
-        :language="d_language"
         @save="savetwo"
         :toolbars="toolbars"
         class="item-editor"
         v-model="help2"
       ></halo-editor>
     </div>
-    <div class="item">
-      <h2 class="item-header">
-        {{d_words.detail}}<a href="https://github.com/hinesboy/haloEditor">GitHub</a>
-      </h2>
-    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-// import {CONFIG} from './assets/config.js'
-import { CONFIG } from "../lib/config.js";
 import axios from "axios";
 import { haloEditor } from "../index";
 export default {
   name: "app",
   data() {
     return {
-      d_language: "zh-CN",
       help1: "",
       help2: "",
-      d_words: {},
       screen_phone: false,
       toolbars: {
         underline: true, // 下划线
@@ -202,7 +136,6 @@ export default {
   },
   created() {
     var $vm = this;
-    this.initLanguage();
     this.sizeToStatus();
     window.addEventListener("resize", function() {
       // 媒介查询
@@ -224,50 +157,9 @@ export default {
     $click(val) {
       console.log(val);
     },
-    imgreplace($e) {
-      console.log("here");
-      this.$refs.md.$imglst2Url([
-        [
-          0,
-          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
-        ],
-        [
-          1,
-          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
-        ]
-      ]);
-    },
-    uploadimg($e) {
-      console.log(this.img_file);
-      for (var _img in this.img_file) {
-        this.$refs.md.$img2Url(
-          _img,
-          "https://raw.githubusercontent.com/hinesboy/haloEditor/master/img/cn/cn-common.png"
-        );
-      }
-      /* var formdata = new FormData();
-                for (var _img in this.img_file) {
-                    formdata.append(_img, this.img_file[_img]);
-                    // _imglst.push([_img, this.img_file[_img]]);
-                }
-                axios({
-                    url: 'http://127.0.0.1/index.php',
-                    method: 'post',
-                    data: formdata,
-                    headers: {'Content-Type': 'multipart/form-data'},
-                }).then((res) => {
-                    console.log(res);
-                }) */
-    },
     $imgAdd(pos, $file) {
       console.log("imgAdd", pos, $file);
       this.img_file[pos] = $file;
-      // console.log(this.$refs.md.$refs.toolbar_left.$imgDelByFilename(pos));
-      // console.log(this.$refs.md.$refs.toolbar_left.$imgAddByFilename('./test', $file))
-      // console.log(this.$refs.md.$refs.toolbar_left.$imgUpdateByFilename('./test', $file))
-      // console.log(this.$refs.md.$refs.toolbar_left.$imgAddByFilename('./test', $file))
-      // console.log(this.$refs.md);
-      // this.$refs.md.$imgUpdateByUrl(pos, 'http://pic.58pic.com/58pic/13/46/50/61758PICWZY_1024.jpg');
     },
     $imgDel(pos) {
       console.log("imgDel", pos);
@@ -291,29 +183,11 @@ export default {
     change(val, render) {
       console.log(val);
     },
-    opchange(event) {
-      this.d_language = event.target.value;
-    },
-    initLanguage() {
-      this.d_words = CONFIG[`words_${this.d_language}`];
-      this.help1 = CONFIG[`help_${this.d_language}`];
-      this.help2 = CONFIG[`help_${this.d_language}`];
-    },
     $subfieldtoggle(flag, value) {
       console.log("sufield toggle" + flag);
     },
     $previewtoggle(flag, value) {
       console.log("preview toggle" + flag);
-    },
-    imgdelete() {
-      var md = this.$refs.md;
-      var toolbar_left = md.$refs.toolbar_left;
-      toolbar_left.$imgDelByFilename(this.imgName);
-    }
-  },
-  watch: {
-    d_language: function() {
-      this.initLanguage();
     }
   }
 };

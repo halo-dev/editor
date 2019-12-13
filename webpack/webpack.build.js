@@ -78,6 +78,11 @@ var config = {
 
 var res = merge([base, config])
 res.plugins = res.plugins.concat([
-    new UglifyJSPlugin()
+    new UglifyJSPlugin({
+        uglifyOptions: {
+            warnings: false,
+            compress: true
+        }
+    })
 ])
 module.exports = res

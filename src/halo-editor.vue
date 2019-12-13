@@ -14,7 +14,6 @@
         ref="toolbar_left"
         :editable="editable"
         :transition="transition"
-        :d_words="d_words"
         @toolbar_left_click="toolbar_left_click"
         @toolbar_left_addlink="toolbar_left_addlink"
         :toolbars="toolbars"
@@ -35,7 +34,6 @@
       </v-md-toolbar-left>
       <v-md-toolbar-right
         ref="toolbar_right"
-        :d_words="d_words"
         @toolbar_right_click="toolbar_right_click"
         :toolbars="toolbars"
         :s_subfield="s_subfield"
@@ -72,7 +70,7 @@
           <!-- 双栏 -->
           <v-autoTextarea
             ref="vNoteTextarea"
-            :placeholder="placeholder ? placeholder : d_words.start_editor"
+            :placeholder="placeholder ? placeholder : '开始编辑...'"
             class="content-input"
             :fontSize="fontSize"
             lineHeight="1.5"
@@ -115,7 +113,7 @@
           :class="{'transition': transition}"
         >
           <div class="v-note-navigation-title">
-            {{d_words.navigation_title}}<i
+            导航目录<i
               @click="toolbar_right_click('navigation')"
               class="fa fa-halo-times v-note-navigation-close"
               aria-hidden="true"
@@ -278,11 +276,6 @@ export default {
       type: String,
       default: ""
     },
-    language: {
-      // 初始语言
-      type: String,
-      default: "zh-CN"
-    },
     subfield: {
       type: Boolean,
       default: true
@@ -378,7 +371,6 @@ export default {
       s_help: false, // markdown帮助
       s_html_code: false, // 分栏情况下查看html
       d_help: null,
-      d_words: null,
       edit_scroll_height: -1,
       s_readmodel: false,
       s_table_enter: false, // 回车事件是否在表格中执行
@@ -427,8 +419,6 @@ export default {
   },
   created() {
     var $vm = this;
-    // 初始化语言
-    this.initLanguage();
     this.initExternalFuc();
     this.$nextTick(() => {
       // 初始化Textarea编辑开关
@@ -743,15 +733,6 @@ export default {
       this.d_history.push(this.d_value);
       this.d_history_index = this.d_history.length - 1;
     },
-    initLanguage() {
-      let lang =
-        CONFIG.langList.indexOf(this.language) >= 0 ? this.language : "zh-CN";
-      var $vm = this;
-      $vm.$render(CONFIG[`help_${lang}`], function(res) {
-        $vm.d_help = res;
-      });
-      this.d_words = CONFIG[`words_${lang}`];
-    },
     // 编辑开关
     editableTextarea() {
       let text_dom = this.$refs.vNoteTextarea.$refs.vTextarea;
@@ -835,9 +816,6 @@ export default {
         this.d_history_index = this.d_history_index - 1;
       }
       this.d_value = this.d_history[this.d_history_index];
-    },
-    language: function(val) {
-      this.initLanguage();
     },
     editable: function() {
       this.editableTextarea();
