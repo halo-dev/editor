@@ -28,9 +28,6 @@ var config = {
         umdNamedDefine: true
     },
     resolve: {
-        alias: {
-            'muse-components': 'muse-ui/src'
-        },
         extensions: ['.js', '.vue', '.less']
     },
     externals: {

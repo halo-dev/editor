@@ -73,7 +73,7 @@
       :title="`${s_subfield ? '单栏' : '双栏'} (F12)`"
     ></button>
     <span
-      v-if=" toolbars.help && toolbars.htmlcode && toolbars.readmodel && toolbars.fullscreen && toolbars.subfield && toolbars.navigation"
+      v-if="toolbars.htmlcode && toolbars.readmodel && toolbars.fullscreen && toolbars.subfield && toolbars.navigation"
       class="op-icon-divider"
     ></span>
     <button
@@ -92,15 +92,6 @@
       v-show="s_html_code"
       class="op-icon fa fa-halo-code selected"
       title="返回 Markdown 文本"
-      aria-hidden="true"
-    ></button>
-    <button
-      type="button"
-      v-if="toolbars.help"
-      @click="$clicks('help')"
-      class="op-icon fa fa-halo-question-circle"
-      style="font-size: 17px;padding: 5px 6px 5px 3px"
-      title="Markdown 语法帮助"
       aria-hidden="true"
     ></button>
     <slot name="right-toolbar-after" />

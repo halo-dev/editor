@@ -129,31 +129,6 @@
       </transition>
 
     </div>
-    <!--帮助文档-->
-    <transition name="fade">
-      <div ref="help">
-        <div
-          @click="toolbar_right_click('help')"
-          class="v-note-help-wrapper"
-          v-if="s_help"
-        >
-          <div
-            class="v-note-help-content markdown-body"
-            :class="{'shadow': boxShadow}"
-          >
-            <i
-              @click.stop.prevent="toolbar_right_click('help')"
-              class="fa fa-halo-times"
-              aria-hidden="true"
-            ></i>
-            <div
-              class="scroll-style v-note-help-show"
-              v-html="d_help"
-            ></div>
-          </div>
-        </div>
-      </div>
-    </transition>
     <!-- 预览图片 -->
     <transition name="fade">
       <div
@@ -184,7 +159,6 @@
 </template>
 
 <script>
-// import tomarkdown from './lib/core/to-markdown.js'
 import { autoTextarea } from "auto-textarea";
 import { keydownListen } from "./lib/core/keydown-listen.js";
 import hljsCss from "./lib/core/hljs/lang.hljs.css.js";
@@ -266,10 +240,6 @@ export default {
       // 阴影样式
       type: String,
       default: "0 2px 12px 0 rgba(0, 0, 0, 0.1)"
-    },
-    help: {
-      type: String,
-      default: null
     },
     value: {
       // 初始 value
@@ -368,9 +338,7 @@ export default {
         return default_open_ === "preview" ? true : false;
       })(), // props true 展示编辑 false展示预览
       s_fullScreen: false, // 全屏编辑标志
-      s_help: false, // markdown帮助
       s_html_code: false, // 分栏情况下查看html
-      d_help: null,
       edit_scroll_height: -1,
       s_readmodel: false,
       s_table_enter: false, // 回车事件是否在表格中执行
@@ -385,14 +353,14 @@ export default {
       d_preview_imgsrc: null, // 图片预览地址
       s_external_link: {
         markdown_css: function() {
-          return "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css";
+          return "//cdn.jsdelivr.net/npm/github-markdown-css@3.0.1/github-markdown.min.css";
         },
         hljs_js: function() {
-          return "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js";
+          return "//cdn.jsdelivr.net/npm/highlight.js@9.12.0/lib/highlight.min.js";
         },
         hljs_lang: function(lang) {
           return (
-            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/" +
+            "//cdn.jsdelivr.net/npm/highlight.js@9.12.0/lib/languages/" +
             lang +
             ".min.js"
           );
@@ -400,7 +368,7 @@ export default {
         hljs_css: function(css) {
           if (hljsCss[css]) {
             return (
-              "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/" +
+              "//cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/" +
               css +
               ".min.css"
             );
@@ -408,10 +376,10 @@ export default {
           return "";
         },
         katex_js: function() {
-          return "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js";
+          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.js";
         },
         katex_css: function() {
-          return "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css";
+          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.css";
         }
       },
       p_external_link: {}
@@ -445,8 +413,6 @@ export default {
     // fullscreen事件
     fullscreenchange(this);
     this.d_value = this.value;
-    // 将help添加到末尾
-    document.body.appendChild(this.$refs.help);
     this.loadExternalLink("markdown_css", "css");
     this.loadExternalLink("katex_css", "css");
     this.loadExternalLink("katex_js", "js", function() {
@@ -465,9 +431,6 @@ export default {
       // 没有外部文件要来接管markdown样式，可以更改markdown样式。
       $vm.codeStyleChange($vm.codeStyle, true);
     }
-  },
-  beforeDestroy() {
-    document.body.removeChild(this.$refs.help);
   },
   getMarkdownIt() {
     return this.mixins[0].data().markdownIt;
@@ -614,15 +577,7 @@ export default {
         $vm.d_render = this.markdownIt.render(this.d_value);
       });
     },
-    $imgAddByUrl(pos, url) {
-      if (this.$refs.toolbar_left.$imgAddByUrl(pos, url)) {
-        this.$imgUpdateByUrl(pos, url);
-        return true;
-      }
-      return false;
-    },
     $img2Url(fileIndex, url) {
-      // x.replace(/(\[[^\[]*?\](?=\())\(\s*(\.\/2)\s*\)/g, "$1(http://path/to/png.png)")
       var reg_str =
         "/(!\\[[^\\[]*?\\](?=\\())\\(\\s*(" + fileIndex + ")\\s*\\)/g";
       var reg = eval(reg_str);
@@ -673,10 +628,6 @@ export default {
     // 切换htmlcode触发 （status , val）
     htmlcode(status, val) {
       this.$emit("htmlCode", status, val);
-    },
-    // 打开 , 关闭 help触发 （status , val）
-    helptoggle(status, val) {
-      this.$emit("helpToggle", status, val);
     },
     // 监听ctrl + s
     save(val, render) {

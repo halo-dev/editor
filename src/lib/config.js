@@ -34,7 +34,6 @@ export const CONFIG = {
         'fullscreen': true,
         'readmodel': true,
         'htmlcode': true,
-        'help': true,
         'preview': true
     }
 };

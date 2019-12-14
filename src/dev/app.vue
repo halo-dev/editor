@@ -13,7 +13,6 @@
         @save="saveone"
         :ishljs="true"
         class="item-editor"
-        v-model="help1"
         :autofocus="autofocus"
         :shortCut="true"
         :externalLink="external_link"
@@ -50,21 +49,17 @@
         @save="savetwo"
         :toolbars="toolbars"
         class="item-editor"
-        v-model="help2"
       ></halo-editor>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import axios from "axios";
 import { haloEditor } from "../index";
 export default {
   name: "app",
   data() {
     return {
-      help1: "",
-      help2: "",
       screen_phone: false,
       toolbars: {
         underline: true, // 下划线

@@ -15,13 +15,6 @@ function $toolbar_right_html_click($vm) {
         $vm.htmlcode($vm.s_html_code, $vm.d_value)
     }
 }
-
-function $toolbar_right_help_click($vm) {
-    $vm.s_help = !$vm.s_help
-    if ($vm.helptoggle) {
-        $vm.helptoggle($vm.s_help, $vm.d_value)
-    }
-}
 // 导航
 function $toolbar_right_read_click($vm) {
     let element = $vm.$refs.vReadModel
@@ -78,7 +71,6 @@ function $toolbar_right_navigation_click($vm) {
 }
 export const toolbar_right_click = (_type, $vm) => {
     var _other_right_click = {
-        'help': $toolbar_right_help_click,
         'html': $toolbar_right_html_click,
         'read': $toolbar_right_read_click,
         'preview': $toolbar_right_preview_click,

@@ -188,32 +188,6 @@
               multiple="multiple"
             />上传图片
           </div>
-
-          <div
-            v-for="(item, index) in img_file"
-            v-if="item && item[1]"
-            class="dropdown-item dropdown-images"
-            :title="item[1].name"
-            :key="index"
-            @click.stop="$imgFileListClick(index)"
-          >
-            <span>{{item[1].name}}</span>
-            <button
-              slot="right"
-              type="button"
-              @click.stop="$imgDel(index)"
-              class="op-icon fa fa-halo-times"
-              aria-hidden="true"
-              :title="删除"
-            ></button>
-            <!-- 缩略图展示 -->
-            <img
-              class="image-show"
-              :class="{'transition': transition}"
-              :src="item[1].miniurl"
-              alt="none"
-            >
-          </div>
         </div>
       </transition>
     </div>
@@ -373,9 +347,6 @@ export default {
       });
       this.s_img_dropdown_open = false;
     },
-    $imgFileListClick(pos) {
-      this.$emit("imgTouch", this.img_file[pos]);
-    },
     $changeUrl(index, url) {
       this.img_file[index][0] = url;
     },
@@ -402,68 +373,6 @@ export default {
     $imgAdd($e) {
       this.$imgFilesAdd($e.target.files);
       $e.target.value = ""; // 初始化
-    },
-    $imgDel(pos) {
-      this.$emit("imgDel", this.img_file[pos]);
-      this.img_file.splice(pos, 1);
-      this.num--;
-
-      this.s_img_dropdown_open = false;
-    },
-    isEqualName(filename, pos) {
-      if (this.img_file[pos][1]) {
-        if (
-          this.img_file[pos][1].name == filename ||
-          this.img_file[pos][1]._name == filename
-        ) {
-          return true;
-        }
-      }
-      return false;
-    },
-    $imgDelByFilename(filename) {
-      var pos = 0;
-      while (this.img_file.length > pos) {
-        if (
-          this.img_file[pos][1] == filename ||
-          this.isEqualName(filename, pos)
-        ) {
-          this.$imgDel(pos);
-          return true;
-        }
-        pos += 1;
-      }
-      return false;
-    },
-    $imgAddByFilename(filename, $file) {
-      for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] == filename) return false;
-      }
-      this.img_file[0][0] = filename;
-      this.img_file[0][1] = $file;
-      this.img_file[0][2] = filename;
-      this.img_file.unshift(["./" + this.num, null]);
-      this.$emit("imgAdd", this.img_file[1][0], $file, false);
-      return true;
-    },
-    $imgAddByUrl(filename, $url) {
-      for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] == filename) return false;
-      }
-      this.img_file[0][0] = filename;
-      this.img_file[0][1] = $url;
-      this.img_file.unshift(["./" + this.num, null]);
-      return true;
-    },
-    $imgUpdateByFilename(filename, $file) {
-      for (var i = 0; i < this.img_file.length; i++) {
-        if (this.img_file[i][0] == filename || this.isEqualName(filename, i)) {
-          this.img_file[i][1] = $file;
-          this.$emit("imgAdd", filename, $file, false);
-          return true;
-        }
-      }
-      return false;
     },
     // 工具栏功能图标click-----------------
     $mouseenter_img_dropdown() {
@@ -578,55 +487,6 @@ export default {
       cursor: pointer;
     }
   }
-
-  .dropdown-images {
-    box-sizing: border-box;
-
-    button {
-      position: absolute;
-      top: -1px;
-      right: 5px;
-      font-size: 14px;
-
-      &:hover {
-        color: #F56C6C;
-        background-color: transparent;
-      }
-    }
-
-    span {
-      display: inline-block;
-      width: 80px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    &:hover {
-      .image-show {
-        display: block !important;
-      }
-    }
-
-    .image-show {
-      display: none;
-      position: absolute;
-      left: -128px;
-      top: 0;
-      width: 120px;
-      height: 90px;
-      object-fit: contain;
-      border: 1px solid #F2F6FC;
-
-      &.transition {
-        transition: all 0.2s linear 0s;
-      }
-    }
-
-    &.transition {
-      transition: all 0.2s linear 0s;
-    }
-  }
 }
 
 .add-image-link-wrapper {
@@ -678,7 +538,7 @@ export default {
     border-radius: 2px;
 
     i {
-      font-size: 24px;
+      font-size: 18px;
       position: absolute;
       right: 8px;
       top: 6px;
