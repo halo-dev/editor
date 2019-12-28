@@ -192,7 +192,6 @@ import markdown from "./lib/mixins/markdown.js";
 import md_toolbar_left from "./components/md-toolbar-left.vue";
 import md_toolbar_right from "./components/md-toolbar-right.vue";
 import "./lib/font/css/fontello.css";
-import "./lib/css/md.css";
 export default {
   mixins: [markdown],
   props: {
