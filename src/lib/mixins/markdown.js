@@ -20,6 +20,8 @@ var sub = require('markdown-it-sub')
 var sup = require('markdown-it-sup')
 // <abbr/>
 var abbr = require('markdown-it-abbr')
+// footnote
+var footnote = require('markdown-it-footnote')
 // insert 带有下划线 样式 ++ ++
 var insert = require('markdown-it-ins')
 // taskLists
@@ -71,6 +73,7 @@ markdown.use(mihe, hljs_opts)
     .use(sup)
     .use(sub)
     .use(abbr)
+    .use(footnote)
     .use(insert)
     .use(miip)
     .use(katex)
