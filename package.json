@@ -1,6 +1,6 @@
 {
   "name": "halo-editor",
-  "version": "2.8.1",
+  "version": "2.8.3",
   "description": "Halo Editor",
   "main": "dist/halo-editor.js",
   "types": "./halo-editor.d.ts",
