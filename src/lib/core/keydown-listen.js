@@ -188,12 +188,6 @@ export const keydownListen = ($vm) => {
                     $vm.toolbar_left_click('redo')
                     break;
                 }
-                case KEY_CODE.DELETE: {
-                    // delete
-                    e.preventDefault()
-                    $vm.toolbar_left_click('trash')
-                    break;
-                }
                 case KEY_CODE.ONE: {
                     // ONE
                     e.preventDefault()
