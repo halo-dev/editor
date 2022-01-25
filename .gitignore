@@ -6,3 +6,4 @@ git-debug.log
 .DS_Store
 .ftpconfig
 *.swp
+dist
