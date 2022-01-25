@@ -1,61 +1,62 @@
 <template>
   <div id="app">
     <div
-      v-if="!screen_phone"
-      class="item"
+        v-if="!screen_phone"
+        class="item"
     >
       <halo-editor
-        ref=md
-        :subfield="subfield"
-        :toolbarsFlag="toolbarsFlag"
-        :editable="editable"
-        @change="change"
-        @save="saveone"
-        :ishljs="true"
-        class="item-editor"
-        :autofocus="autofocus"
-        :shortCut="true"
-        :externalLink="external_link"
-        @imgAdd="$imgAdd"
-        @imgDel="$imgDel"
-        @subfieldtoggle="$subfieldtoggle"
-        @previewtoggle="$previewtoggle"
-        :imageFilter="image_filter"
-        :boxShadow="true"
-        :scrollStyle="true"
-        :transition="true"
-        box-shadow-style="0 2px 12px 0 rgba(0, 0, 0, 0.1)"
-        toolbars-background="#ffffff"
-        preview-background="#fbfbfb"
+          ref=md
+          :autofocus="autofocus"
+          :boxShadow="true"
+          :editable="editable"
+          :externalLink="external_link"
+          :imageFilter="image_filter"
+          :ishljs="true"
+          :scrollStyle="true"
+          :shortCut="true"
+          :subfield="subfield"
+          :toolbarsFlag="toolbarsFlag"
+          :transition="true"
+          box-shadow-style="0 2px 12px 0 rgba(0, 0, 0, 0.1)"
+          class="item-editor"
+          preview-background="#fbfbfb"
+          toolbars-background="#ffffff"
+          @change="change"
+          @imgAdd="$imgAdd"
+          @imgDel="$imgDel"
+          @previewtoggle="$previewtoggle"
+          @save="saveone"
+          @subfieldtoggle="$subfieldtoggle"
       >
       </halo-editor>
       <button
-        ref="diy"
-        type="button"
-        @click="$click('selftest')"
-        class="op-icon fa fa-halo-align-left"
-        aria-hidden="true"
-        title="自定义"
+          ref="diy"
+          aria-hidden="true"
+          class="op-icon fa fa-halo-align-left"
+          title="自定义"
+          type="button"
+          @click="$click('selftest')"
       ></button>
     </div>
     <!--自定义-->
     <div
-      v-if="screen_phone"
-      class="item"
+        v-if="screen_phone"
+        class="item"
     >
       <h2 class="item-header">
       </h2>
       <halo-editor
-        @save="savetwo"
-        :toolbars="toolbars"
-        class="item-editor"
+          :toolbars="toolbars"
+          class="item-editor"
+          @save="savetwo"
       ></halo-editor>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import { haloEditor } from "../index";
+import {haloEditor} from "../index";
+
 export default {
   name: "app",
   data() {
@@ -78,22 +79,19 @@ export default {
       toolbarsFlag: true,
       img_file: {},
       external_link: {
-        markdown_css: function() {
-          return "/markdown/github-markdown.min.css";
-        },
-        hljs_js: function() {
+        hljs_js: function () {
           return "/highlightjs/highlight.min.js";
         },
-        hljs_css: function(css) {
+        hljs_css: function (css) {
           return "/highlightjs/styles/" + css + ".min.css";
         },
-        hljs_lang: function(lang) {
+        hljs_lang: function (lang) {
           return "/highlightjs/languages/" + lang + ".min.js";
         },
-        katex_css: function() {
+        katex_css: function () {
           return "/katex/katex.min.css";
         },
-        katex_js: function() {
+        katex_js: function () {
           return "/katex/katex.min.js";
         }
       },
@@ -118,12 +116,12 @@ export default {
         /* 1.4.2 */
         navigation: true // 导航目录
       },
-      image_filter: function($files) {
+      image_filter: function ($files) {
         console.log("image_filter files:", $files);
         // console.log('here for you', $files);
         return true;
       },
-      imageClick: function(file) {
+      imageClick: function (file) {
         console.log(file);
       },
       imgName: ""
@@ -132,7 +130,7 @@ export default {
   created() {
     var $vm = this;
     this.sizeToStatus();
-    window.addEventListener("resize", function() {
+    window.addEventListener("resize", function () {
       // 媒介查询
       $vm.sizeToStatus();
     });
