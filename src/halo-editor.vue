@@ -13,13 +13,10 @@
       <v-md-toolbar-left
           ref="toolbar_left"
           :class="{'transition': transition}"
-          :editable="editable"
-          :image_filter="imageFilter"
           :toolbars="toolbars"
           :transition="transition"
           @imgAdd="$imgAdd"
-          @imgDel="$imgDel"
-          @imgTouch="$imgTouch"
+          @openImagePicker="openImagePicker"
           @toolbar_left_addlink="toolbar_left_addlink"
           @toolbar_left_click="toolbar_left_click"
       >
@@ -162,31 +159,25 @@
 import {autoTextarea} from "auto-textarea";
 import {keydownListen} from "./lib/core/keydown-listen.js";
 import hljsCss from "./lib/core/hljs/lang.hljs.css.js";
-import hljsLangs from "./lib/core/hljs/lang.hljs.js";
 import {
   fullscreenchange,
-  /* windowResize, */
-  scrollLink,
-  insertTextAtCaret,
   getNavigation,
-  insertTab,
-  unInsertTab,
-  insertOl,
-  insertUl,
+  ImagePreviewListener,
   insertEnter,
-  removeLine,
+  insertOl,
+  insertTab,
+  insertTextAtCaret,
+  insertUl,
   loadLink,
   loadScript,
-  ImagePreviewListener
+  removeLine,
+  scrollLink,
+  unInsertTab
 } from "./lib/core/extra-function.js";
-import {p_ObjectCopy_DEEP, stopEvent} from "./lib/util.js";
-import {
-  toolbar_left_click,
-  toolbar_left_addlink
-} from "./lib/toolbar_left_click.js";
+import {stopEvent} from "./lib/util.js";
+import {toolbar_left_addlink, toolbar_left_click} from "./lib/toolbar_left_click.js";
 import {toolbar_right_click} from "./lib/toolbar_right_click.js";
 import {CONFIG} from "./lib/config.js";
-import hljs from "./lib/core/highlight.js";
 import markdown from "./lib/mixins/markdown.js";
 
 import md_toolbar_left from "./components/md-toolbar-left.vue";
@@ -259,11 +250,6 @@ export default {
       type: String,
       default: null
     },
-    editable: {
-      // 是否开启编辑
-      type: Boolean,
-      default: true
-    },
     toolbarsFlag: {
       // 是否开启工具栏
       type: Boolean,
@@ -295,10 +281,6 @@ export default {
     externalLink: {
       type: [Object, Boolean],
       default: true
-    },
-    imageFilter: {
-      type: Function,
-      default: null
     },
     imageClick: {
       type: Function,
@@ -384,12 +366,7 @@ export default {
     };
   },
   created() {
-    var $vm = this;
     this.initExternalFuc();
-    this.$nextTick(() => {
-      // 初始化Textarea编辑开关
-      $vm.editableTextarea();
-    });
   },
   mounted() {
     var $vm = this;
@@ -472,6 +449,9 @@ export default {
         }
       }
     },
+    openImagePicker() {
+      this.$emit("openImagePicker");
+    },
     textAreaFocus() {
       this.$refs.vNoteTextarea.$refs.vTextarea.focus();
     },
@@ -506,20 +486,6 @@ export default {
           this.$refs.toolbar_left.$imgFilesAdd([oFile]);
         }
       }
-    },
-    $imgTouch(file) {
-      var $vm = this;
-      // TODO 跳转到图片位置
-    },
-    $imgDel(file) {
-      this.markdownIt.image_del(file[1]);
-      // 删除所有markdown中的图片
-      let fileReg = file[0];
-      let reg = new RegExp(`\\!\\[${file[1]._name}\\]\\(${fileReg}\\)`, "g");
-
-      this.d_value = this.d_value.replace(reg, "");
-      this.iRender();
-      this.$emit("imgDel", file);
     },
     $imgAdd(pos, $file, isinsert) {
       if (isinsert === undefined) isinsert = true;
@@ -670,15 +636,6 @@ export default {
       this.d_history.push(this.d_value);
       this.d_history_index = this.d_history.length - 1;
     },
-    // 编辑开关
-    editableTextarea() {
-      let text_dom = this.$refs.vNoteTextarea.$refs.vTextarea;
-      if (this.editable) {
-        text_dom.removeAttribute("disabled");
-      } else {
-        text_dom.setAttribute("disabled", "disabled");
-      }
-    },
     codeStyleChange(val, isInit) {
       isInit = isInit ? isInit : false;
       if (typeof this.p_external_link.hljs_css !== "function") {
@@ -753,9 +710,6 @@ export default {
         this.d_history_index = this.d_history_index - 1;
       }
       this.d_value = this.d_history[this.d_history_index];
-    },
-    editable: function () {
-      this.editableTextarea();
     },
     defaultOpen: function (val) {
       let default_open_ = val;

@@ -1,288 +1,248 @@
 <template>
   <div class="v-left-item">
-    <slot name="left-toolbar-before" />
+    <slot name="left-toolbar-before"/>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.bold"
-      @click="$clicks('bold')"
-      class="op-icon fa fa-halo-bold"
-      aria-hidden="true"
-      :title="`粗体 (Ctrl+B)`"
+        v-if="toolbars.bold"
+        :title="`粗体 (Ctrl+B)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-bold"
+        type="button"
+        @click="$clicks('bold')"
     ></button>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.italic"
-      @click="$clicks('italic')"
-      class="op-icon fa fa-halo-italic"
-      aria-hidden="true"
-      :title="`斜体 (Ctrl+I)`"
+        v-if="toolbars.italic"
+        :title="`斜体 (Ctrl+I)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-italic"
+        type="button"
+        @click="$clicks('italic')"
     ></button>
     <div
-      :class="{'selected': s_header_dropdown_open}"
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.header"
-      @mouseleave="$mouseleave_header_dropdown"
-      @mouseenter="$mouseenter_header_dropdown"
-      class="op-icon fa fa-halo-header dropdown dropdown-wrapper"
-      aria-hidden="true"
-      :title="`标题 (Ctrl+H)`"
+        v-if="toolbars.header"
+        :class="{'selected': s_header_dropdown_open}"
+        :title="`标题 (Ctrl+H)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-header dropdown dropdown-wrapper"
+        type="button"
+        @mouseenter="$mouseenter_header_dropdown"
+        @mouseleave="$mouseleave_header_dropdown"
     >
       <transition name="fade">
         <div
-          class="op-header popup-dropdown"
-          :class="{'transition': transition}"
-          v-show="s_header_dropdown_open"
-          @mouseenter="$mouseenter_header_dropdown"
-          @mouseleave="$mouseleave_header_dropdown"
+            v-show="s_header_dropdown_open"
+            :class="{'transition': transition}"
+            class="op-header popup-dropdown"
+            @mouseenter="$mouseenter_header_dropdown"
+            @mouseleave="$mouseleave_header_dropdown"
         >
           <div
-            title="#"
-            class="dropdown-item"
-            @click.stop="$click_header('header1')"
+              class="dropdown-item"
+              title="#"
+              @click.stop="$click_header('header1')"
           ><span>一级标题</span></div>
           <div
-            title="## "
-            class="dropdown-item"
-            @click.stop="$click_header('header2')"
+              class="dropdown-item"
+              title="## "
+              @click.stop="$click_header('header2')"
           ><span>二级标题</span></div>
           <div
-            title="### "
-            class="dropdown-item"
-            @click.stop="$click_header('header3')"
+              class="dropdown-item"
+              title="### "
+              @click.stop="$click_header('header3')"
           ><span>三级标题</span></div>
           <div
-            title="#### "
-            class="dropdown-item"
-            @click.stop="$click_header('header4')"
+              class="dropdown-item"
+              title="#### "
+              @click.stop="$click_header('header4')"
           ><span>四级标题</span></div>
           <div
-            title="##### "
-            class="dropdown-item"
-            @click.stop="$click_header('header5')"
+              class="dropdown-item"
+              title="##### "
+              @click.stop="$click_header('header5')"
           ><span>五级标题</span></div>
           <div
-            title="###### "
-            class="dropdown-item"
-            @click.stop="$click_header('header6')"
+              class="dropdown-item"
+              title="###### "
+              @click.stop="$click_header('header6')"
           ><span>六级标题</span></div>
         </div>
       </transition>
     </div>
     <span
-      v-if="toolbars.header || toolbars.italic || toolbars.bold"
-      class="op-icon-divider"
+        v-if="toolbars.header || toolbars.italic || toolbars.bold"
+        class="op-icon-divider"
     ></span>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.underline"
-      @click="$clicks('underline')"
-      class="op-icon fa fa-halo-underline"
-      :title="`下划线 (Ctrl+U)`"
-      aria-hidden="true"
+        v-if="toolbars.underline"
+        :title="`下划线 (Ctrl+U)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-underline"
+        type="button"
+        @click="$clicks('underline')"
     ></button>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.strikethrough"
-      @click="$clicks('strikethrough')"
-      class="op-icon fa fa-halo-strikethrough"
-      :title="`中划线 (Ctrl+Shift+D)`"
-      aria-hidden="true"
+        v-if="toolbars.strikethrough"
+        :title="`中划线 (Ctrl+Shift+D)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-strikethrough"
+        type="button"
+        @click="$clicks('strikethrough')"
     ></button>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.superscript"
-      @click="$clicks('superscript')"
-      class="op-icon fa fa-halo-superscript"
-      aria-hidden="true"
-      :title="`上角标 (Ctrl+Alt+S)`"
+        v-if="toolbars.superscript"
+        :title="`上角标 (Ctrl+Alt+S)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-superscript"
+        type="button"
+        @click="$clicks('superscript')"
     ></button>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.subscript"
-      @click="$clicks('subscript')"
-      class="op-icon fa fa-halo-subscript"
-      aria-hidden="true"
-      :title="`下角标 (Ctrl+Shift+S)`"
+        v-if="toolbars.subscript"
+        :title="`下角标 (Ctrl+Shift+S)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-subscript"
+        type="button"
+        @click="$clicks('subscript')"
     ></button>
     <span
-      v-if="toolbars.superscript || toolbars.subscript || toolbars.underline || toolbars.strikethrough"
-      class="op-icon-divider"
+        v-if="toolbars.superscript || toolbars.subscript || toolbars.underline || toolbars.strikethrough"
+        class="op-icon-divider"
     ></span>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.quote"
-      @click="$clicks('quote')"
-      class="op-icon fa fa-halo-quote-left"
-      aria-hidden="true"
-      :title="`段落引用 (Ctrl+Q)`"
+        v-if="toolbars.quote"
+        :title="`段落引用 (Ctrl+Q)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-quote-left"
+        type="button"
+        @click="$clicks('quote')"
     ></button>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.ol"
-      @click="$clicks('ol')"
-      class="op-icon fa fa-halo-list-ol"
-      aria-hidden="true"
-      :title="`有序列表 (Ctrl+O)`"
+        v-if="toolbars.ol"
+        :title="`有序列表 (Ctrl+O)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-list-ol"
+        type="button"
+        @click="$clicks('ol')"
     ></button>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.ul"
-      @click="$clicks('ul')"
-      class="op-icon fa fa-halo-list-ul"
-      aria-hidden="true"
-      :title="`无序列表 (Ctrl+Alt+U)`"
+        v-if="toolbars.ul"
+        :title="`无序列表 (Ctrl+Alt+U)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-list-ul"
+        type="button"
+        @click="$clicks('ul')"
     ></button>
     <span
-      v-if="toolbars.ul || toolbars.ol || toolbars.quote"
-      class="op-icon-divider"
+        v-if="toolbars.ul || toolbars.ol || toolbars.quote"
+        class="op-icon-divider"
     ></span>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.link"
-      @click.stop="$toggle_imgLinkAdd('link')"
-      class="op-icon fa fa-halo-link"
-      aria-hidden="true"
-      :title="`链接 (Ctrl+L)`"
-    ></button>
-    <div
-      :disabled="!editable"
-      :class="{'selected': s_img_dropdown_open}"
-      type="button"
-      v-if="toolbars.imagelink"
-      @mouseleave="$mouseleave_img_dropdown"
-      @mouseenter="$mouseenter_img_dropdown"
-      class="op-icon fa fa-halo-picture-o dropdown dropdown-wrapper"
-      aria-hidden="true"
-    >
-      <transition name="fade">
-        <div
-          class="op-image popup-dropdown"
-          :class="{'transition': transition}"
-          v-show="s_img_dropdown_open"
-          @mouseleave="$mouseleave_img_dropdown"
-          @mouseenter="$mouseenter_img_dropdown"
-        >
-          <div
-            class="dropdown-item"
-            @click.stop="$toggle_imgLinkAdd('imagelink')"
-          ><span>添加图片链接</span></div>
-          <div
-            class="dropdown-item"
-            style="overflow: hidden"
-          >
-            <input
-              type="file"
-              accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
-              @change="$imgAdd($event)"
-              multiple="multiple"
-            />上传图片
-          </div>
-        </div>
-      </transition>
-    </div>
-    <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.code"
-      @click="$clicks('code')"
-      class="op-icon fa fa-halo-code"
-      aria-hidden="true"
-      :title="`代码块 (Ctrl+Alt+C)`"
+        v-if="toolbars.link"
+        :title="`链接 (Ctrl+L)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-link"
+        type="button"
+        @click.stop="$toggle_imgLinkAdd('link')"
     ></button>
     <button
-      :disabled="!editable"
-      type="button"
-      v-if="toolbars.table"
-      @click="$clicks('table')"
-      class="op-icon fa fa-halo-table"
-      aria-hidden="true"
-      :title="`表格 (Ctrl+Alt+T)`"
+        v-if="toolbars.imagelink"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-picture-o"
+        type="button"
+        @click.stop="handleOpenImagePicker"
+    ></button>
+    <button
+        v-if="toolbars.code"
+        :title="`代码块 (Ctrl+Alt+C)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-code"
+        type="button"
+        @click="$clicks('code')"
+    ></button>
+    <button
+        v-if="toolbars.table"
+        :title="`表格 (Ctrl+Alt+T)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-table"
+        type="button"
+        @click="$clicks('table')"
     ></button>
     <span
-      v-if="toolbars.link || toolbars.imagelink || toolbars.code || toolbars.table"
-      class="op-icon-divider"
+        v-if="toolbars.link || toolbars.imagelink || toolbars.code || toolbars.table"
+        class="op-icon-divider"
     ></span>
     <button
-      type="button"
-      v-if="toolbars.undo"
-      @click="$clicks('undo')"
-      class="op-icon fa fa-halo-undo"
-      aria-hidden="true"
-      :title="`上一步 (Ctrl+Z)`"
+        v-if="toolbars.undo"
+        :title="`上一步 (Ctrl+Z)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-undo"
+        type="button"
+        @click="$clicks('undo')"
     ></button>
     <button
-      type="button"
-      v-if="toolbars.redo"
-      @click="$clicks('redo')"
-      class="op-icon fa fa-halo-repeat"
-      aria-hidden="true"
-      :title="`下一步 (Ctrl+Y)`"
+        v-if="toolbars.redo"
+        :title="`下一步 (Ctrl+Y)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-repeat"
+        type="button"
+        @click="$clicks('redo')"
     ></button>
     <button
-      type="button"
-      v-if="toolbars.trash"
-      @click="$clicks('trash')"
-      class="op-icon fa fa-halo-trash-o"
-      aria-hidden="true"
-      :title="`清空 (Ctrl+BreakSpace)`"
+        v-if="toolbars.trash"
+        :title="`清空 (Ctrl+BreakSpace)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-trash-o"
+        type="button"
+        @click="$clicks('trash')"
     ></button>
     <button
-      type="button"
-      v-if="toolbars.save"
-      @click="$clicks('save')"
-      class="op-icon fa fa-halo-floppy-o"
-      aria-hidden="true"
-      :title="`保存 (Ctrl+S)`"
+        v-if="toolbars.save"
+        :title="`保存 (Ctrl+S)`"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-floppy-o"
+        type="button"
+        @click="$clicks('save')"
     ></button>
-    <slot name="left-toolbar-after" />
+    <slot name="left-toolbar-after"/>
 
     <!-- 添加image链接 -->
     <transition name="fade">
       <div
-        class="add-image-link-wrapper"
-        v-if="s_img_link_open"
+          v-if="s_img_link_open"
+          class="add-image-link-wrapper"
       >
         <div class="add-image-link">
           <i
-            @click.stop.prevent="s_img_link_open = false"
-            class="fa fa-halo-times"
-            aria-hidden="true"
+              aria-hidden="true"
+              class="fa fa-halo-times"
+              @click.stop.prevent="s_img_link_open = false"
           ></i>
-          <h3 class="title">{{link_type == 'link' ? '添加链接' : '添加图片'}}</h3>
+          <h3 class="title">{{ link_type === 'link' ? '添加链接' : '添加图片' }}</h3>
           <div class="link-text input-wrapper">
             <input
-              ref="linkTextInput"
-              type="text"
-              v-model="link_text"
-              :placeholder="link_type == 'link' ? '链接描述' : '图片描述'"
+                ref="linkTextInput"
+                v-model="link_text"
+                :placeholder="link_type === 'link' ? '链接描述' : '图片描述'"
+                type="text"
             >
           </div>
           <div class="link-addr input-wrapper">
             <input
-              type="text"
-              v-model="link_addr"
-              :placeholder="link_type == 'link' ? '链接地址' : '图片链接'"
+                v-model="link_addr"
+                :placeholder="link_type === 'link' ? '链接地址' : '图片链接'"
+                type="text"
             >
           </div>
           <div
-            class="op-btn cancel"
-            @click.stop="s_img_link_open = false"
-          >取消</div>
+              class="op-btn cancel"
+              @click.stop="s_img_link_open = false"
+          >取消
+          </div>
           <div
-            class="op-btn sure"
-            @click.stop="$imgLinkAdd()"
-          >确定</div>
+              class="op-btn sure"
+              @click.stop="$imgLinkAdd()"
+          >确定
+          </div>
         </div>
       </div>
     </transition>
@@ -292,13 +252,7 @@
 export default {
   name: "s-md-toolbar-left",
   props: {
-    editable: {
-      // 是否开启编辑
-      type: Boolean,
-      default: true
-    },
     transition: {
-      // TODO: 是否开启动画过渡
       type: Boolean,
       default: true
     },
@@ -306,17 +260,12 @@ export default {
       // 工具栏
       type: Object,
       required: true
-    },
-    image_filter: {
-      type: Function,
-      default: null
     }
   },
   data() {
     return {
       // [index, file]
       img_file: [[0, null]],
-      img_timer: null,
       header_timer: null,
       s_img_dropdown_open: false,
       s_header_dropdown_open: false,
@@ -329,12 +278,15 @@ export default {
     };
   },
   methods: {
+    handleOpenImagePicker() {
+      this.$emit("openImagePicker");
+    },
     $imgLinkAdd() {
       this.$emit(
-        "toolbar_left_addlink",
-        this.link_type,
-        this.link_text,
-        this.link_addr
+          "toolbar_left_addlink",
+          this.link_type,
+          this.link_text,
+          this.link_addr
       );
       this.s_img_link_open = false;
     },
@@ -351,21 +303,13 @@ export default {
       this.img_file[index][0] = url;
     },
     $imgFileAdd($file) {
-      // this.img_file[0][0] = this.num;
-      // this.img_file[0][1] = $file;
-      // this.img_file.unshift([(this.num + 1), null]);
-      // this.num = this.num + 1;
       this.img_file.push([++this.num, $file]);
       this.$emit("imgAdd", this.num, $file);
       this.s_img_dropdown_open = false;
     },
     $imgFilesAdd($files) {
-      // valid means if the image_filter exist.
-      let valid = typeof this.image_filter === "function";
       for (let i = 0; i < $files.length; i++) {
-        if (valid && this.image_filter($files[i]) === true) {
-          this.$imgFileAdd($files[i]);
-        } else if (!valid && $files[i].type.match(/^image\//i)) {
+        if ($files[i].type.match(/^image\//i)) {
           this.$imgFileAdd($files[i]);
         }
       }
@@ -374,44 +318,24 @@ export default {
       this.$imgFilesAdd($e.target.files);
       $e.target.value = ""; // 初始化
     },
-    // 工具栏功能图标click-----------------
-    $mouseenter_img_dropdown() {
-      if (this.editable) {
-        clearTimeout(this.img_timer);
-        this.s_img_dropdown_open = true;
-      }
-    },
-    $mouseleave_img_dropdown() {
-      let vm = this;
-      this.img_timer = setTimeout(function() {
-        vm.s_img_dropdown_open = false;
-      }, 200);
-    },
     $mouseenter_header_dropdown() {
-      if (this.editable) {
-        clearTimeout(this.header_timer);
-        this.s_header_dropdown_open = true;
-      }
+      clearTimeout(this.header_timer);
+      this.s_header_dropdown_open = true;
     },
     $mouseleave_header_dropdown() {
       let vm = this;
-      this.header_timer = setTimeout(function() {
+      this.header_timer = setTimeout(function () {
         vm.s_header_dropdown_open = false;
       }, 200);
     },
     $clicks(_type) {
       // 让父节点来绑定事件并
-      if (this.editable) {
-        this.$emit("toolbar_left_click", _type);
-      }
+      this.$emit("toolbar_left_click", _type);
     },
     $click_header(_type) {
       // 让父节点来绑定事件并
       this.$emit("toolbar_left_click", _type);
       this.s_header_dropdown_open = false;
-    },
-    handleClose(e) {
-      this.s_img_dropdown_open = false;
     }
   }
 };

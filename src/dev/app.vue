@@ -5,12 +5,10 @@
         class="item"
     >
       <halo-editor
-          ref=md
+          ref="md"
           :autofocus="autofocus"
           :boxShadow="true"
-          :editable="editable"
           :externalLink="external_link"
-          :imageFilter="image_filter"
           :ishljs="true"
           :scrollStyle="true"
           :shortCut="true"
@@ -29,6 +27,9 @@
           @subfieldtoggle="$subfieldtoggle"
       >
       </halo-editor>
+
+      <button @click="handleImgTest">test</button>
+
       <button
           ref="diy"
           aria-hidden="true"
@@ -75,7 +76,6 @@ export default {
       },
       autofocus: true,
       subfield: true,
-      editable: true,
       toolbarsFlag: true,
       img_file: {},
       external_link: {
@@ -116,11 +116,6 @@ export default {
         /* 1.4.2 */
         navigation: true // 导航目录
       },
-      image_filter: function ($files) {
-        console.log("image_filter files:", $files);
-        // console.log('here for you', $files);
-        return true;
-      },
       imageClick: function (file) {
         console.log(file);
       },
@@ -144,6 +139,9 @@ export default {
     // console.log(toolbar_left)
   },
   methods: {
+    handleImgTest() {
+      this.$refs.md.$insertText(0, "http://www.baidu.com/img/bd_logo1.png");
+    },
     clearCache() {
       this.$refs.md.$emptyHistory();
     },
