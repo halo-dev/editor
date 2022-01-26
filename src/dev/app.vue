@@ -28,8 +28,6 @@
       >
       </halo-editor>
 
-      <button @click="handleImgTest">test</button>
-
       <button
           ref="diy"
           aria-hidden="true"
@@ -139,9 +137,6 @@ export default {
     // console.log(toolbar_left)
   },
   methods: {
-    handleImgTest() {
-      this.$refs.md.$insertText(0, "http://www.baidu.com/img/bd_logo1.png");
-    },
     clearCache() {
       this.$refs.md.$emptyHistory();
     },
