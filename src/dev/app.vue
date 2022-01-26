@@ -152,13 +152,7 @@ export default {
       delete this.img_file[pos];
     },
     sizeToStatus() {
-      if (window.matchMedia("(min-width:768px)").matches) {
-        // > 768
-        this.screen_phone = false;
-      } else {
-        // <  768
-        this.screen_phone = true;
-      }
+      this.screen_phone = !window.matchMedia("(min-width:768px)").matches;
     },
     saveone(val, render) {
       alert("save one");

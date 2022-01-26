@@ -7,3 +7,4 @@ git-debug.log
 .ftpconfig
 *.swp
 dist
+*.log

@@ -1,17 +1,24 @@
 import hljsLangs from '../core/hljs/lang.hljs.js'
-import {
-    loadScript
-} from '../core/extra-function.js'
+import {loadScript} from '../core/extra-function.js'
+import escape from 'lodash.escape'
+import mermaid from "mermaid/dist/mermaid.esm.min.mjs";
 
 const markdown_config = {
     html: true, // Enable HTML tags in source
     xhtmlOut: true, // Use '/' to close single tags (<br />).
     breaks: true, // Convert '\n' in paragraphs into <br>
-    langPrefix: 'language-', // CSS language prefix for fenced blocks. Can be
-    linkify: true, // 自动识别url
+    linkify: true,
     typographer: true,
-    quotes: '“”‘’'
+    quotes: '“”‘’',
+    highlight(str, lang) {
+        if (['mermaid', 'plantuml'].includes(lang)) {
+            return `<pre class="${lang}"><code>${escape(str)}</code></pre>`
+        } else {
+            return `<pre><code class="language-${lang}">${escape(str)}</code></pre>`
+        }
+    }
 };
+
 const markdown = require('markdown-it')(markdown_config);
 // 表情
 const markdownItEmoji = require('markdown-it-emoji');
@@ -29,7 +36,6 @@ const markdownItIns = require('markdown-it-ins');
 const markdownItTaskLists = require('markdown-it-task-lists');
 const markdownItAnchor = require('markdown-it-anchor').default;
 const markdownItTableOfContents = require('markdown-it-table-of-contents');
-// const markdownItMermaidPlus = require('markdown-it-mermaid-plus').default;
 // add target="_blank" to all link
 const defaultRender = markdown.renderer.rules.link_open || function (tokens, idx, options, env, self) {
     return self.renderToken(tokens, idx, options);
@@ -49,7 +55,7 @@ markdown.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     // pass token to default renderer.
     return defaultRender(tokens, idx, options, env, self);
 };
-const markdownItHighlightJSExternal = require('markdown-it-highlightjs-external');
+// const markdownItHighlightJSExternal = require('markdown-it-highlightjs-external');
 // math katex
 const markdownItKatexExternal = require('markdown-it-katex-external');
 const markdownItImagesPreview = require('markdown-it-images-preview');
@@ -65,7 +71,7 @@ const hljs_opts = {
         }
     }
 };
-markdown.use(markdownItHighlightJSExternal, hljs_opts)
+markdown
     .use(markdownItEmoji)
     .use(markdownItSup)
     .use(markdownItSub)
@@ -80,7 +86,6 @@ markdown.use(markdownItHighlightJSExternal, hljs_opts)
         markerPattern: /^\[TOC\]/im
     })
     .use(markdownItAnchor)
-    // .use(markdownItMermaidPlus)
 
 export default {
     data() {
@@ -117,6 +122,18 @@ export default {
                         func(res);
                     }
                 })
+            }
+        },
+        renderMermaidDiagrams() {
+            const mermaids = document.querySelectorAll('.v-show-content pre.mermaid > code')
+            if (!mermaids.length) {
+                return
+            }
+            for (let i = 0; i < mermaids.length; i++) {
+                const mermaidDef = mermaids[i].innerText
+                const mmElm = document.createElement('div')
+                mmElm.innerHTML = `<div id="mermaid-id-${i}">${mermaid.render(`mermaid-id-${i}`, mermaidDef)}</div>`
+                mermaids[i].parentElement.replaceWith(mmElm)
             }
         }
     },

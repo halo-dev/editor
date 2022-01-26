@@ -55,7 +55,7 @@
       <!--编辑区-->
       <div
           ref="vNoteEdit"
-          :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle && !s_preview_switch && !s_html_code, 'single-edit': !s_preview_switch && !s_html_code, 'single-show': (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code), 'transition': transition}"
+          :class="{'scroll-style': scrollStyle, 'scroll-style-border-radius': scrollStyle && !s_preview_switch && !s_html_code, 'single-edit': !s_preview_switch && !s_html_code, 'single-show': (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code), 'transition': transition}"
           class="v-note-edit divarea-wrapper"
           @click="textAreaFocus"
           @scroll="$v_edit_scroll"
@@ -86,7 +86,7 @@
         <div
             v-show="!s_html_code"
             ref="vShowContent"
-            :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}"
+            :class="{'scroll-style': scrollStyle, 'scroll-style-border-radius': scrollStyle}"
             :style="{'background-color': previewBackground}"
             class="v-show-content"
             v-html="d_render"
@@ -94,7 +94,7 @@
         </div>
         <div
             v-show="s_html_code"
-            :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}"
+            :class="{'scroll-style': scrollStyle, 'scroll-style-border-radius': scrollStyle}"
             :style="{'background-color': previewBackground}"
             class="v-show-content-html"
         >
@@ -118,7 +118,7 @@
           </div>
           <div
               ref="navigationContent"
-              :class="{'scroll-style': s_scrollStyle}"
+              :class="{'scroll-style': scrollStyle}"
               class="v-note-navigation-content"
           >
           </div>
@@ -179,6 +179,7 @@ import {toolbar_left_addlink, toolbar_left_click} from "./lib/toolbar_left_click
 import {toolbar_right_click} from "./lib/toolbar_right_click.js";
 import {CONFIG} from "./lib/config.js";
 import markdown from "./lib/mixins/markdown.js";
+import mermaid from 'mermaid'
 
 import md_toolbar_left from "./components/md-toolbar-left.vue";
 import md_toolbar_right from "./components/md-toolbar-right.vue";
@@ -308,9 +309,6 @@ export default {
       s_navigation: (() => {
         return this.navigation;
       })(),
-      s_scrollStyle: (() => {
-        return this.scrollStyle;
-      })(), // props 是否渲染滚动条样式
       d_value: "", // props 文本内容
       d_render: "", // props 文本内容render
       s_preview_switch: (() => {
@@ -395,9 +393,6 @@ export default {
     this.loadExternalLink("hljs_js", "js", function () {
       $vm.iRender(true);
     });
-  },
-  getMarkdownIt() {
-    return this.mixins[0].data().markdownIt;
   },
   methods: {
     loadExternalLink(name, type, callback) {
@@ -546,8 +541,8 @@ export default {
     toolbar_left_click(_type) {
       toolbar_left_click(_type, this);
     },
-    toolbar_left_addlink(_type, text, link) {
-      toolbar_left_addlink(_type, text, link, this);
+    toolbar_left_addlink(text, link) {
+      toolbar_left_addlink(text, link, this);
     },
     toolbar_right_click(_type) {
       toolbar_right_click(_type, this);
@@ -669,6 +664,9 @@ export default {
       this.$render($vm.d_value, function (res) {
         // render
         $vm.d_render = res;
+        $vm.$nextTick(() => {
+          $vm.renderMermaidDiagrams()
+        })
         // change回调  toggleChange == false 时候触发change回调
         if (!toggleChange) {
           if ($vm.change) $vm.change($vm.d_value, $vm.d_render);

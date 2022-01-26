@@ -54,9 +54,9 @@ function $toolbar_left_remove_line_click($vm) {
     $vm.removeLine()
 }
 // 直接添加链接
-export const toolbar_left_addlink = (type, text, link, $vm) => {
+export const toolbar_left_addlink = (text, link, $vm) => {
     let insert_text = {
-        prefix: type === 'link' ? `[${text}](` : `![${text}](`,
+        prefix: `[${text}](`,
         subfix: ')',
         str: link
     };

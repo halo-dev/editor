@@ -3,26 +3,26 @@
     <slot name="left-toolbar-before"/>
     <button
         v-if="toolbars.bold"
-        :title="`粗体 (Ctrl+B)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-bold"
+        title="粗体 (Ctrl+B)"
         type="button"
         @click="$clicks('bold')"
     ></button>
     <button
         v-if="toolbars.italic"
-        :title="`斜体 (Ctrl+I)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-italic"
+        title="斜体 (Ctrl+I)"
         type="button"
         @click="$clicks('italic')"
     ></button>
     <div
         v-if="toolbars.header"
         :class="{'selected': s_header_dropdown_open}"
-        :title="`标题 (Ctrl+H)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-header dropdown dropdown-wrapper"
+        title="标题 (Ctrl+H)"
         type="button"
         @mouseenter="$mouseenter_header_dropdown"
         @mouseleave="$mouseleave_header_dropdown"
@@ -74,33 +74,33 @@
     ></span>
     <button
         v-if="toolbars.underline"
-        :title="`下划线 (Ctrl+U)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-underline"
+        title="下划线 (Ctrl+U)"
         type="button"
         @click="$clicks('underline')"
     ></button>
     <button
         v-if="toolbars.strikethrough"
-        :title="`中划线 (Ctrl+Shift+D)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-strikethrough"
+        title="中划线 (Ctrl+Shift+D)"
         type="button"
         @click="$clicks('strikethrough')"
     ></button>
     <button
         v-if="toolbars.superscript"
-        :title="`上角标 (Ctrl+Alt+S)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-superscript"
+        title="上角标 (Ctrl+Alt+S)"
         type="button"
         @click="$clicks('superscript')"
     ></button>
     <button
         v-if="toolbars.subscript"
-        :title="`下角标 (Ctrl+Shift+S)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-subscript"
+        title="下角标 (Ctrl+Shift+S)"
         type="button"
         @click="$clicks('subscript')"
     ></button>
@@ -110,25 +110,25 @@
     ></span>
     <button
         v-if="toolbars.quote"
-        :title="`段落引用 (Ctrl+Q)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-quote-left"
+        title="段落引用 (Ctrl+Q)"
         type="button"
         @click="$clicks('quote')"
     ></button>
     <button
         v-if="toolbars.ol"
-        :title="`有序列表 (Ctrl+O)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-list-ol"
+        title="有序列表 (Ctrl+O)"
         type="button"
         @click="$clicks('ol')"
     ></button>
     <button
         v-if="toolbars.ul"
-        :title="`无序列表 (Ctrl+Alt+U)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-list-ul"
+        title="无序列表 (Ctrl+Alt+U)"
         type="button"
         @click="$clicks('ul')"
     ></button>
@@ -138,11 +138,11 @@
     ></span>
     <button
         v-if="toolbars.link"
-        :title="`链接 (Ctrl+L)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-link"
+        title="链接 (Ctrl+L)"
         type="button"
-        @click.stop="$toggle_imgLinkAdd('link')"
+        @click.stop="handleOpenLinkAddModal('link')"
     ></button>
     <button
         v-if="toolbars.imagelink"
@@ -153,17 +153,17 @@
     ></button>
     <button
         v-if="toolbars.code"
-        :title="`代码块 (Ctrl+Alt+C)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-code"
+        title="代码块 (Ctrl+Alt+C)"
         type="button"
         @click="$clicks('code')"
     ></button>
     <button
         v-if="toolbars.table"
-        :title="`表格 (Ctrl+Alt+T)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-table"
+        title="表格 (Ctrl+Alt+T)"
         type="button"
         @click="$clicks('table')"
     ></button>
@@ -173,33 +173,33 @@
     ></span>
     <button
         v-if="toolbars.undo"
-        :title="`上一步 (Ctrl+Z)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-undo"
+        title="上一步 (Ctrl+Z)"
         type="button"
         @click="$clicks('undo')"
     ></button>
     <button
         v-if="toolbars.redo"
-        :title="`下一步 (Ctrl+Y)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-repeat"
+        title="下一步 (Ctrl+Y)"
         type="button"
         @click="$clicks('redo')"
     ></button>
     <button
         v-if="toolbars.trash"
-        :title="`清空 (Ctrl+BreakSpace)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-trash-o"
+        title="清空 (Ctrl+BreakSpace)"
         type="button"
         @click="$clicks('trash')"
     ></button>
     <button
         v-if="toolbars.save"
-        :title="`保存 (Ctrl+S)`"
         aria-hidden="true"
         class="op-icon fa fa-halo-floppy-o"
+        title="保存 (Ctrl+S)"
         type="button"
         @click="$clicks('save')"
     ></button>
@@ -217,19 +217,19 @@
               class="fa fa-halo-times"
               @click.stop.prevent="s_img_link_open = false"
           ></i>
-          <h3 class="title">{{ link_type === 'link' ? '添加链接' : '添加图片' }}</h3>
+          <h3 class="title">添加链接</h3>
           <div class="link-text input-wrapper">
             <input
                 ref="linkTextInput"
                 v-model="link_text"
-                :placeholder="link_type === 'link' ? '链接描述' : '图片描述'"
+                placeholder="链接描述"
                 type="text"
             >
           </div>
           <div class="link-addr input-wrapper">
             <input
                 v-model="link_addr"
-                :placeholder="link_type === 'link' ? '链接地址' : '图片链接'"
+                placeholder="链接地址"
                 type="text"
             >
           </div>
@@ -240,7 +240,7 @@
           </div>
           <div
               class="op-btn sure"
-              @click.stop="$imgLinkAdd()"
+              @click.stop="handleAddLink()"
           >确定
           </div>
         </div>
@@ -273,25 +273,22 @@ export default {
       trigger: null,
       num: 0,
       link_text: "",
-      link_addr: "",
-      link_type: "link"
+      link_addr: ""
     };
   },
   methods: {
     handleOpenImagePicker() {
       this.$emit("openImagePicker");
     },
-    $imgLinkAdd() {
+    handleAddLink() {
       this.$emit(
           "toolbar_left_addlink",
-          this.link_type,
           this.link_text,
           this.link_addr
       );
       this.s_img_link_open = false;
     },
-    $toggle_imgLinkAdd(type) {
-      this.link_type = type;
+    handleOpenLinkAddModal(type) {
       this.link_text = this.link_addr = "";
       this.s_img_link_open = true;
       this.$nextTick(() => {
