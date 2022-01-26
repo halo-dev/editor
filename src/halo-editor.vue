@@ -489,9 +489,8 @@ export default {
     },
     $imgAdd(pos, $file, isinsert) {
       if (isinsert === undefined) isinsert = true;
-      var $vm = this;
+      const $vm = this;
       if (this.__rFilter == null) {
-        // this.__rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
         this.__rFilter = /^image\//i;
       }
       this.__oFReader = new FileReader();
@@ -516,7 +515,7 @@ export default {
         }
       };
       if ($file) {
-        var oFile = $file;
+        const oFile = $file;
         if (this.__rFilter.test(oFile.type)) {
           this.__oFReader.readAsDataURL(oFile);
         }
