@@ -1,7 +1,5 @@
-import hljsLangs from '../core/hljs/lang.hljs.js'
-import {loadScript} from '../core/extra-function.js'
 import escape from 'lodash.escape'
-import mermaid from "mermaid/dist/mermaid.esm.min.mjs";
+import mermaid from "mermaid";
 
 const markdown_config = {
     html: true, // Enable HTML tags in source
@@ -55,22 +53,9 @@ markdown.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     // pass token to default renderer.
     return defaultRender(tokens, idx, options, env, self);
 };
-// const markdownItHighlightJSExternal = require('markdown-it-highlightjs-external');
 // math katex
 const markdownItKatexExternal = require('markdown-it-katex-external');
 const markdownItImagesPreview = require('markdown-it-images-preview');
-let missLangs = {};
-let needLangs = [];
-const hljs_opts = {
-    hljs: 'auto',
-    highlighted: true,
-    langCheck: function (lang) {
-        if (lang && hljsLangs[lang] && !missLangs[lang]) {
-            missLangs[lang] = 1;
-            needLangs.push(hljsLangs[lang])
-        }
-    }
-};
 markdown
     .use(markdownItEmoji)
     .use(markdownItSup)
@@ -93,36 +78,10 @@ export default {
             markdownIt: markdown
         }
     },
-    mounted() {
-        const $vm = this;
-        hljs_opts.highlighted = this.ishljs;
-    },
     methods: {
         $render(src, func) {
-            const $vm = this;
-            missLangs = {};
-            needLangs = [];
             const res = markdown.render(src);
-            if (this.ishljs) {
-                if (needLangs.length > 0) {
-                    $vm.$_render(src, func, res);
-                }
-            }
             func(res);
-        },
-        $_render(src, func, res) {
-            const $vm = this;
-            let deal = 0;
-            for (let i = 0; i < needLangs.length; i++) {
-                const url = $vm.p_external_link.hljs_lang(needLangs[i]);
-                loadScript(url, function () {
-                    deal = deal + 1;
-                    if (deal === needLangs.length) {
-                        res = markdown.render(src);
-                        func(res);
-                    }
-                })
-            }
         },
         renderMermaidDiagrams() {
             const mermaids = document.querySelectorAll('.v-show-content pre.mermaid > code')
@@ -135,11 +94,6 @@ export default {
                 mmElm.innerHTML = `<div id="mermaid-id-${i}">${mermaid.render(`mermaid-id-${i}`, mermaidDef)}</div>`
                 mermaids[i].parentElement.replaceWith(mmElm)
             }
-        }
-    },
-    watch: {
-        ishljs: function (val) {
-            hljs_opts.highlighted = val;
         }
     }
 };

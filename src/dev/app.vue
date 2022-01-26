@@ -9,7 +9,6 @@
           :autofocus="autofocus"
           :boxShadow="true"
           :externalLink="external_link"
-          :ishljs="true"
           :scrollStyle="true"
           :shortCut="true"
           :subfield="subfield"
@@ -77,15 +76,6 @@ export default {
       toolbarsFlag: true,
       img_file: {},
       external_link: {
-        hljs_js: function () {
-          return "/highlightjs/highlight.min.js";
-        },
-        hljs_css: function (css) {
-          return "/highlightjs/styles/" + css + ".min.css";
-        },
-        hljs_lang: function (lang) {
-          return "/highlightjs/languages/" + lang + ".min.js";
-        },
         katex_css: function () {
           return "/katex/katex.min.css";
         },

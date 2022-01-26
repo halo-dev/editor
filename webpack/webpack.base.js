@@ -145,9 +145,6 @@ module.exports = {
             canPrint: true
         }),
         new CopyWebpackPlugin([{
-            from: path.resolve(__dirname, '../resources/highlight.js-9.12.0'),
-            to: path.resolve(__dirname, '../dist/highlightjs')
-        }, {
             from: path.resolve(__dirname, '../node_modules/katex/dist'),
             to: path.resolve(__dirname, '../dist/katex')
         }])
