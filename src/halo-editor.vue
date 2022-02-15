@@ -1,49 +1,57 @@
 <template>
   <div
-    :class="[{ fullscreen: s_fullScreen, shadow: boxShadow }]"
-    :style="{ 'box-shadow': boxShadow ? boxShadowStyle : '' }"
-    class="v-note-wrapper markdown-body"
+      :class="[{ fullscreen: s_fullScreen, shadow: boxShadow }]"
+      :style="{ 'box-shadow': boxShadow ? boxShadowStyle : '' }"
+      class="v-note-wrapper markdown-body"
   >
     <!--工具栏-->
     <div
-      v-show="toolbarsFlag"
-      :style="{ background: toolbarsBackground }"
-      class="v-note-op"
+        v-show="toolbarsFlag"
+        :style="{ background: toolbarsBackground }"
+        class="v-note-op"
     >
       <v-md-toolbar-left
-        ref="toolbar_left"
-        :class="{ transition: transition }"
-        :toolbars="toolbars"
-        :transition="transition"
-        @imgAdd="$imgAdd"
-        @openImagePicker="openImagePicker"
-        @toolbar_left_addlink="toolbar_left_addlink"
-        @toolbar_left_click="toolbar_left_click"
+          ref="toolbar_left"
+          :class="{ transition: transition }"
+          :toolbars="toolbars"
+          :transition="transition"
+          @imgAdd="$imgAdd"
+          @openImagePicker="openImagePicker"
+          @toolbar_left_addlink="toolbar_left_addlink"
+          @toolbar_left_click="toolbar_left_click"
       >
-        <slot slot="left-toolbar-before" name="left-toolbar-before" />
-        <slot slot="left-toolbar-after" name="left-toolbar-after" />
+        <template #left-toolbar-before>
+          <slot name="left-toolbar-before"/>
+        </template>
+        <template #left-toolbar-after>
+          <slot name="left-toolbar-after"/>
+        </template>
       </v-md-toolbar-left>
       <v-md-toolbar-right
-        ref="toolbar_right"
-        :class="{ transition: transition }"
-        :s_fullScreen="s_fullScreen"
-        :s_html_code="s_html_code"
-        :s_navigation="s_navigation"
-        :s_preview_switch="s_preview_switch"
-        :s_subfield="s_subfield"
-        :toolbars="toolbars"
-        @toolbar_right_click="toolbar_right_click"
+          ref="toolbar_right"
+          :class="{ transition: transition }"
+          :s_fullScreen="s_fullScreen"
+          :s_html_code="s_html_code"
+          :s_navigation="s_navigation"
+          :s_preview_switch="s_preview_switch"
+          :s_subfield="s_subfield"
+          :toolbars="toolbars"
+          @toolbar_right_click="toolbar_right_click"
       >
-        <slot slot="right-toolbar-before" name="right-toolbar-before" />
-        <slot slot="right-toolbar-after" name="right-toolbar-after" />
+        <template #right-toolbar-before>
+          <slot name="right-toolbar-before"/>
+        </template>
+        <template #right-toolbar-after>
+          <slot name="right-toolbar-after"/>
+        </template>
       </v-md-toolbar-right>
     </div>
     <!--编辑展示区域-->
     <div class="v-note-panel">
       <!--编辑区-->
       <div
-        ref="vNoteEdit"
-        :class="{
+          ref="vNoteEdit"
+          :class="{
           'scroll-style': scrollStyle,
           'scroll-style-border-radius':
             scrollStyle && !s_preview_switch && !s_html_code,
@@ -52,55 +60,56 @@
             (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code),
           transition: transition,
         }"
-        class="v-note-edit divarea-wrapper"
-        @click="textAreaFocus"
-        @scroll="$v_edit_scroll"
+          class="v-note-edit divarea-wrapper"
+          @click="textAreaFocus"
+          @scroll="$v_edit_scroll"
       >
         <div
-          :style="{ 'background-color': editorBackground }"
-          class="content-input-wrapper"
+            :style="{ 'background-color': editorBackground }"
+            class="content-input-wrapper"
         >
           <!-- 双栏 -->
-          <v-autoTextarea
-            ref="vNoteTextarea"
-            v-model="d_value"
-            :fontSize="fontSize"
-            :placeholder="placeholder ? placeholder : '开始编辑...'"
-            :style="{ 'background-color': editorBackground }"
-            class="content-input"
-            fullHeight
-            lineHeight="1.5"
-          ></v-autoTextarea>
+          <!--          <v-autoTextarea-->
+          <!--            ref="vNoteTextarea"-->
+          <!--            v-model="d_value"-->
+          <!--            :fontSize="fontSize"-->
+          <!--            :placeholder="placeholder ? placeholder : '开始编辑...'"-->
+          <!--            :style="{ 'background-color': editorBackground }"-->
+          <!--            class="content-input"-->
+          <!--            fullHeight-->
+          <!--            lineHeight="1.5"-->
+          <!--          ></v-autoTextarea>-->
+          <textarea ref="vNoteTextarea"></textarea>
         </div>
       </div>
       <!--展示区-->
       <div
-        v-show="s_preview_switch || s_html_code"
-        :class="{
+          v-show="s_preview_switch || s_html_code"
+          :class="{
           'single-show':
             (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code),
         }"
-        class="v-note-show"
+          class="v-note-show"
       >
         <div
-          v-show="!s_html_code"
-          ref="vShowContent"
-          :class="{
+            v-show="!s_html_code"
+            ref="vShowContent"
+            :class="{
             'scroll-style': scrollStyle,
             'scroll-style-border-radius': scrollStyle,
           }"
-          :style="{ 'background-color': previewBackground }"
-          class="v-show-content"
-          v-html="d_render"
+            :style="{ 'background-color': previewBackground }"
+            class="v-show-content"
+            v-html="d_render"
         ></div>
         <div
-          v-show="s_html_code"
-          :class="{
+            v-show="s_html_code"
+            :class="{
             'scroll-style': scrollStyle,
             'scroll-style-border-radius': scrollStyle,
           }"
-          :style="{ 'background-color': previewBackground }"
-          class="v-show-content-html"
+            :style="{ 'background-color': previewBackground }"
+            class="v-show-content-html"
         >
           {{ d_render }}
         </div>
@@ -109,21 +118,21 @@
       <!--标题导航-->
       <transition name="slideTop">
         <div
-          v-show="s_navigation"
-          :class="{ transition: transition }"
-          class="v-note-navigation-wrapper"
+            v-show="s_navigation"
+            :class="{ transition: transition }"
+            class="v-note-navigation-wrapper"
         >
           <div class="v-note-navigation-title">
             导航目录<i
               aria-hidden="true"
               class="fa fa-halo-times v-note-navigation-close"
               @click="toolbar_right_click('navigation')"
-            ></i>
+          ></i>
           </div>
           <div
-            ref="navigationContent"
-            :class="{ 'scroll-style': scrollStyle }"
-            class="v-note-navigation-content"
+              ref="navigationContent"
+              :class="{ 'scroll-style': scrollStyle }"
+              class="v-note-navigation-content"
           ></div>
         </div>
       </transition>
@@ -131,31 +140,30 @@
     <!-- 预览图片 -->
     <transition name="fade">
       <div
-        v-if="d_preview_imgsrc"
-        class="v-note-img-wrapper"
-        @click="d_preview_imgsrc = null"
+          v-if="d_preview_imgsrc"
+          class="v-note-img-wrapper"
+          @click="d_preview_imgsrc = null"
       >
-        <img :src="d_preview_imgsrc" alt="none" />
+        <img :src="d_preview_imgsrc" alt="none"/>
       </div>
     </transition>
     <!--阅读模式-->
     <div
-      ref="vReadModel"
-      :class="{ show: s_readmodel }"
-      class="v-note-read-model scroll-style"
+        ref="vReadModel"
+        :class="{ show: s_readmodel }"
+        class="v-note-read-model scroll-style"
     >
       <div
-        ref="vNoteReadContent"
-        class="v-note-read-content"
-        v-html="d_render"
+          ref="vNoteReadContent"
+          class="v-note-read-content"
+          v-html="d_render"
       ></div>
     </div>
   </div>
 </template>
 
 <script>
-import { autoTextarea } from "auto-textarea";
-import { keydownListen } from "./lib/core/keydown-listen.js";
+import {keydownListen} from "./lib/core/keydown-listen.js";
 import {
   fullscreenchange,
   getNavigation,
@@ -171,13 +179,13 @@ import {
   scrollLink,
   unInsertTab
 } from "./lib/core/extra-function.js";
-import { stopEvent } from "./lib/util.js";
+import {stopEvent} from "./lib/util.js";
 import {
   toolbar_left_addlink,
   toolbar_left_click
 } from "./lib/toolbar_left_click.js";
-import { toolbar_right_click } from "./lib/toolbar_right_click.js";
-import { CONFIG } from "./lib/config.js";
+import {toolbar_right_click} from "./lib/toolbar_right_click.js";
+import {CONFIG} from "./lib/config.js";
 import markdown from "./lib/mixins/markdown.js";
 
 import md_toolbar_left from "./components/md-toolbar-left.vue";
@@ -185,8 +193,30 @@ import md_toolbar_right from "./components/md-toolbar-right.vue";
 import "./lib/font/css/fontello.css";
 import "github-markdown-css/github-markdown.css";
 
+// Code Mirror
+import CodeMirror from 'codemirror'
+import 'codemirror/lib/codemirror.css'
+
+// Language
+import 'codemirror/mode/markdown/markdown.js'
+
+// Addons
+import 'codemirror/addon/selection/active-line.js'
+import 'codemirror/addon/display/fullscreen.js'
+import 'codemirror/addon/display/fullscreen.css'
+import 'codemirror/addon/selection/mark-selection.js'
+import 'codemirror/addon/search/searchcursor.js'
+import 'codemirror/addon/hint/show-hint.js'
+import 'codemirror/addon/fold/foldcode.js'
+import 'codemirror/addon/fold/foldgutter.js'
+import 'codemirror/addon/fold/foldgutter.css'
+
 export default {
   mixins: [markdown],
+  components: {
+    "v-md-toolbar-left": md_toolbar_left,
+    "v-md-toolbar-right": md_toolbar_right
+  },
   props: {
     scrollStyle: {
       // 是否渲染滚动条样式(webkit)
@@ -219,7 +249,6 @@ export default {
       default: "#ffffff"
     },
     editorBackground: {
-      // TODO: 编辑栏背景色
       type: String,
       default: "#ffffff"
     },
@@ -286,9 +315,6 @@ export default {
   },
   data() {
     return {
-      s_right_click_menu_show: false,
-      right_click_menu_top: 0,
-      right_click_menu_left: 0,
       s_subfield: (() => {
         return this.subfield;
       })(),
@@ -320,91 +346,60 @@ export default {
       currentTimeout: "",
       d_image_file: [],
       d_preview_imgsrc: null, // 图片预览地址
-      s_external_link: {
-        katex_js: function () {
-          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.js";
-        },
-        katex_css: function () {
-          return "//cdn.jsdelivr.net/npm/katex@0.8.3/dist/katex.min.css";
-        }
-      },
-      p_external_link: {}
+      p_external_link: {},
+      cm: undefined
     };
   },
-  created() {
-    this.initExternalFuc();
-  },
   mounted() {
-    var $vm = this;
+    const _this = this;
     this.$el.addEventListener("paste", function (e) {
-      $vm.$paste(e);
+      _this.$paste(e);
     });
     this.$el.addEventListener("drop", function (e) {
-      $vm.$drag(e);
+      _this.$drag(e);
     });
     // 浏览器siz大小
     /* windowResize(this); */
     keydownListen(this);
     // 图片预览事件监听
     ImagePreviewListener(this);
-    // 设置默认焦点
-    if (this.autofocus) {
-      this.getTextareaDom().focus();
-    }
+    // TODO 设置默认焦点
     // fullscreen事件
     fullscreenchange(this);
+
     this.d_value = this.value;
-    this.loadExternalLink("katex_css", "css");
-    this.loadExternalLink("katex_js", "js", function () {
-      $vm.iRender(true);
-    });
+
+    this.$nextTick(() => {
+      this.handleInitEditor()
+    })
   },
   methods: {
-    loadExternalLink(name, type, callback) {
-      if (typeof this.p_external_link[name] !== "function") {
-        if (this.p_external_link[name] !== false) {
-          console.error(
-            "external_link." + name,
-            "is not a function, if you want to disabled this error log, set external_link." +
-              name,
-            "to function or false"
-          );
-        }
-        return;
-      }
-      var _obj = {
-        css: loadLink,
-        js: loadScript
-      };
-      if (_obj.hasOwnProperty(type)) {
-        _obj[type](this.p_external_link[name](), callback);
-      }
-    },
-    initExternalFuc() {
-      var $vm = this;
-      var _external_ = [
-        "katex_js",
-        "katex_css"
-      ];
-      var _type_ = typeof $vm.externalLink;
-      var _is_object = _type_ === "object";
-      var _is_boolean = _type_ === "boolean";
-      for (var i = 0; i < _external_.length; i++) {
-        if (
-          (_is_boolean && !$vm.externalLink) ||
-          (_is_object && $vm.externalLink[_external_[i]] === false)
-        ) {
-          $vm.p_external_link[_external_[i]] = false;
-        } else if (
-          _is_object &&
-          typeof $vm.externalLink[_external_[i]] === "function"
-        ) {
-          $vm.p_external_link[_external_[i]] = $vm.externalLink[_external_[i]];
-        } else {
-          $vm.p_external_link[_external_[i]] =
-            $vm.s_external_link[_external_[i]];
-        }
-      }
+    handleInitEditor() {
+      this.cm = CodeMirror.fromTextArea(this.$refs.vNoteTextarea, {
+        tabSize: 2,
+        mode: 'text/markdown',
+        // theme: 'idea',
+        lineNumbers: true,
+        lineWrapping: true,
+        line: true,
+        styleActiveLine: true,
+        highlightSelectionMatches: {
+          annotateScrollbar: true
+        },
+        viewportMargin: 50,
+        inputStyle: 'contenteditable',
+        allowDropFileTypes: ['image/jpg', 'image/png', 'image/svg', 'image/jpeg', 'image/gif'],
+        foldGutter: true,
+        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
+      })
+
+      // set default content
+      this.cm.setValue(this.d_value)
+
+      // listen change event
+      this.cm.on('change', c => {
+        this.d_value = c.getValue()
+      })
     },
     openImagePicker() {
       this.$emit("openImagePicker");
@@ -457,8 +452,8 @@ export default {
         if (isinsert === true) {
           // 去除特殊字符
           $file._name = $file.name.replace(
-            /[\[\]\(\)\+\{\}&\|\\\*^%$#@\-]/g,
-            ""
+              /[\[\]\(\)\+\{\}&\|\\\*^%$#@\-]/g,
+              ""
           );
 
           $vm.insertText($vm.getTextareaDom(), {
@@ -487,7 +482,7 @@ export default {
     },
     $img2Url(fileIndex, url) {
       var reg_str =
-        "/(!\\[[^\\[]*?\\](?=\\())\\(\\s*(" + fileIndex + ")\\s*\\)/g";
+          "/(!\\[[^\\[]*?\\](?=\\())\\(\\s*(" + fileIndex + ")\\s*\\)/g";
       var reg = eval(reg_str);
       this.d_value = this.d_value.replace(reg, "$1(" + url + ")");
       this.$refs.toolbar_left.$changeUrl(fileIndex, url);
@@ -564,10 +559,10 @@ export default {
       return this.$refs.vNoteTextarea.$refs.vTextarea;
     },
     // 工具栏插入内容
-    insertText(obj, { prefix, subfix, str, type }) {
+    insertText(obj, {prefix, subfix, str, type}) {
       // if (this.s_preview_switch) {
 
-      insertTextAtCaret(obj, { prefix, subfix, str, type }, this);
+      insertTextAtCaret(obj, {prefix, subfix, str, type}, this);
     },
     insertTab() {
       insertTab(this, this.tabSize);
@@ -648,20 +643,10 @@ export default {
       }
       return (this.s_preview_switch = default_open_ === "preview");
     }
-  },
-  components: {
-    "v-autoTextarea": autoTextarea,
-    "v-md-toolbar-left": md_toolbar_left,
-    "v-md-toolbar-right": md_toolbar_right
   }
 };
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
 @import 'lib/css/scroll.styl';
 @import 'lib/css/halo-editor.styl';
-</style>
-<style lang="css" scoped>
-.auto-textarea-wrapper {
-  height: 100%;
-}
 </style>

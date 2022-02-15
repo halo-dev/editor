@@ -8,7 +8,9 @@
         title="粗体 (Ctrl+B)"
         type="button"
         @click="$clicks('bold')"
-    ></button>
+    >
+
+    </button>
     <button
         v-if="toolbars.italic"
         aria-hidden="true"

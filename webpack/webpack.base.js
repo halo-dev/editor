@@ -26,27 +26,26 @@ const extractCSS = new ExtractTextPlugin('css/[name].css');
 module.exports = {
     module: {
         rules: [{
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    postcss: [
-                        require('autoprefixer')({
-                            browsers: ['last 10 Chrome versions', 'last 5 Firefox versions', 'Safari >= 6', 'ie > 8']
-                        })
-                    ]
-                }
-            },
+            test: /\.vue$/,
+            loader: 'vue-loader',
+            options: {
+                postcss: [
+                    require('autoprefixer')({
+                        browsers: ['last 10 Chrome versions', 'last 5 Firefox versions', 'Safari >= 6', 'ie > 8']
+                    })
+                ]
+            }
+        },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 // exclude: /.*node_modules((?!auto-textarea).)*$/
                 // exclude: /node_modules/
                 options: {
-                    presets: ['es2015',"stage-2"]
+                    presets: ['es2015', "stage-2"]
                 },
                 include: [
-                    path.resolve(__dirname, '../src'),
-                    fs.realpathSync('node_modules/auto-textarea')
+                    path.resolve(__dirname, '../src')
                 ]
             },
             {
@@ -71,8 +70,8 @@ module.exports = {
                 use: extractCSS.extract({
                     fallback: 'style-loader',
                     use: [{
-                            loader: 'css-loader'
-                        },
+                        loader: 'css-loader'
+                    },
                         {
                             loader: 'postcss-loader',
                             options: {
@@ -143,10 +142,6 @@ module.exports = {
                 }
             },
             canPrint: true
-        }),
-        new CopyWebpackPlugin([{
-            from: path.resolve(__dirname, '../node_modules/katex/dist'),
-            to: path.resolve(__dirname, '../dist/katex')
-        }])
+        })
     ]
 }

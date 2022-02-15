@@ -53,8 +53,6 @@ markdown.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     // pass token to default renderer.
     return defaultRender(tokens, idx, options, env, self);
 };
-// math katex
-const markdownItKatexExternal = require('markdown-it-katex-external');
 const markdownItImagesPreview = require('markdown-it-images-preview');
 markdown
     .use(markdownItEmoji)
@@ -64,7 +62,6 @@ markdown
     .use(markdownItFootnote)
     .use(markdownItIns)
     .use(markdownItImagesPreview)
-    .use(markdownItKatexExternal)
     .use(markdownItTaskLists)
     .use(markdownItTableOfContents, {
         includeLevel: [1, 2, 3, 4, 5, 6],
