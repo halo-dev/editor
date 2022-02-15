@@ -17,8 +17,8 @@
           :transition="transition"
           @imgAdd="$imgAdd"
           @openImagePicker="openImagePicker"
-          @toolbar_left_addlink="toolbar_left_addlink"
-          @toolbar_left_click="toolbar_left_click"
+          @insertLink="insertLink"
+          @clickCommands="clickCommands"
       >
         <template #left-toolbar-before>
           <slot name="left-toolbar-before"/>
@@ -170,10 +170,6 @@ import {
   scrollLink
 } from "./lib/core/extra-function.js";
 import {stopEvent} from "./lib/util.js";
-import {
-  toolbar_left_addlink,
-  toolbar_left_click
-} from "./lib/toolbar_left_click.js";
 import {toolbar_right_click} from "./lib/toolbar_right_click.js";
 import {CONFIG} from "./lib/config.js";
 import markdown from "./lib/mixins/markdown.js";
@@ -181,20 +177,21 @@ import markdown from "./lib/mixins/markdown.js";
 import md_toolbar_left from "./components/md-toolbar-left.vue";
 import md_toolbar_right from "./components/md-toolbar-right.vue";
 import "./lib/font/css/fontello.css";
-import "github-markdown-css/github-markdown.css";
 
+// libs
 import times from 'lodash.times'
 import flatten from 'lodash.flatten'
 import last from 'lodash.last'
+import "github-markdown-css/github-markdown.css";
 
-// Code Mirror
+// CodeMirror
 import CodeMirror from 'codemirror'
 import 'codemirror/lib/codemirror.css'
 
-// Language
+// CodeMirror Language
 import 'codemirror/mode/markdown/markdown.js'
 
-// Addons
+// CodeMirror Addons
 import 'codemirror/addon/selection/active-line.js'
 import 'codemirror/addon/display/fullscreen.js'
 import 'codemirror/addon/display/fullscreen.css'
@@ -239,6 +236,12 @@ const blocks = {
   },
   ul: {
     before: '- '
+  }
+}
+
+const newLines = {
+  table: {
+    content: '|column1|column2|column3|\n|-------|-------|-------|\n|content1|content2|content3|\n'
   }
 }
 
@@ -503,12 +506,27 @@ export default {
       }
     },
 
+    insertAfter(content) {
+      const curLine = this.cm.doc.getCursor('to').line
+      const lineLength = this.cm.doc.getLine(curLine).length
+      this.cm.doc.replaceRange('\n' + content, {line: curLine, ch: lineLength + 1})
+    },
+
+    insetAtCursor(content) {
+      const cursor = this.cm.doc.getCursor('head')
+      this.cm.doc.replaceRange(content, cursor)
+    },
+
     setFocus() {
       this.cm.focus()
     },
 
     openImagePicker() {
       this.$emit("openImagePicker");
+    },
+
+    insertLink(text, link) {
+      this.insetAtCursor(`[${text}](${link})`);
     },
 
     $drag($e) {
@@ -599,7 +617,7 @@ export default {
         }
       }
     },
-    toolbar_left_click(_type, options) {
+    clickCommands(_type, options) {
       if (markups[_type]) {
         this.setMarkup(markups[_type].start, markups[_type].end)
         return
@@ -608,13 +626,13 @@ export default {
         this.setEachLine(blocks[_type].before, blocks[_type].after)
         return
       }
+      if (newLines[_type]) {
+        this.insertAfter(newLines[_type].content)
+        return
+      }
       if (_type === 'header') {
         this.setHeading(options.level)
       }
-      // toolbar_left_click(_type, this);
-    },
-    toolbar_left_addlink(text, link) {
-      toolbar_left_addlink(text, link, this);
     },
     toolbar_right_click(_type) {
       toolbar_right_click(_type, this);

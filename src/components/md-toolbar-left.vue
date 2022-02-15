@@ -284,7 +284,7 @@ export default {
     },
     handleAddLink() {
       this.$emit(
-          "toolbar_left_addlink",
+          "insertLink",
           this.link_text,
           this.link_addr
       );
@@ -329,11 +329,11 @@ export default {
     },
     $clicks(_type) {
       // 让父节点来绑定事件并
-      this.$emit("toolbar_left_click", _type);
+      this.$emit("clickCommands", _type);
     },
     $click_header(_type, level) {
       // 让父节点来绑定事件并
-      this.$emit("toolbar_left_click", _type, {level});
+      this.$emit("clickCommands", _type, {level});
       this.s_header_dropdown_open = false;
     }
   }
