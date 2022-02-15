@@ -190,6 +190,7 @@ import 'codemirror/addon/hint/show-hint.js'
 import 'codemirror/addon/fold/foldcode.js'
 import 'codemirror/addon/fold/foldgutter.js'
 import 'codemirror/addon/fold/foldgutter.css'
+import "codemirror/addon/fold/markdown-fold.js"
 
 const markups = {
   bold: {
