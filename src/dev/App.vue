@@ -53,7 +53,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {haloEditor} from "../index";
 
 export default {
   name: "app",

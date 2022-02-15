@@ -1,5 +1,23 @@
 import escape from 'lodash.escape'
 import mermaid from "mermaid";
+import MarkdownIt from 'markdown-it'
+// 表情
+import markdownItEmoji from 'markdown-it-emoji';
+// 下标
+import markdownItSub from 'markdown-it-sub'
+// 上标
+import markdownItSup from 'markdown-it-sup';
+// <abbr/>
+import markdownItAbbr from 'markdown-it-abbr';
+// footnote
+import markdownItFootnote from 'markdown-it-footnote';
+// insert 带有下划线 样式 ++ ++
+import markdownItIns from 'markdown-it-ins';
+// taskLists
+import markdownItTaskLists from 'markdown-it-task-lists';
+import markdownItAnchor from 'markdown-it-anchor';
+import markdownItTableOfContents from 'markdown-it-table-of-contents';
+import markdownItImagesPreview from 'markdown-it-images-preview';
 
 const markdown_config = {
     html: true, // Enable HTML tags in source
@@ -17,23 +35,7 @@ const markdown_config = {
     }
 };
 
-const markdown = require('markdown-it')(markdown_config);
-// 表情
-const markdownItEmoji = require('markdown-it-emoji');
-// 下标
-const markdownItSub = require('markdown-it-sub');
-// 上标
-const markdownItSup = require('markdown-it-sup');
-// <abbr/>
-const markdownItAbbr = require('markdown-it-abbr');
-// footnote
-const markdownItFootnote = require('markdown-it-footnote');
-// insert 带有下划线 样式 ++ ++
-const markdownItIns = require('markdown-it-ins');
-// taskLists
-const markdownItTaskLists = require('markdown-it-task-lists');
-const markdownItAnchor = require('markdown-it-anchor').default;
-const markdownItTableOfContents = require('markdown-it-table-of-contents');
+const markdown = new MarkdownIt(markdown_config)
 // add target="_blank" to all link
 const defaultRender = markdown.renderer.rules.link_open || function (tokens, idx, options, env, self) {
     return self.renderToken(tokens, idx, options);
@@ -53,7 +55,6 @@ markdown.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     // pass token to default renderer.
     return defaultRender(tokens, idx, options, env, self);
 };
-const markdownItImagesPreview = require('markdown-it-images-preview');
 markdown
     .use(markdownItEmoji)
     .use(markdownItSup)

@@ -7,15 +7,14 @@
  * haloEditor
  * @author hinesboy
  */
-const haloEditor = require('./halo-editor.vue');
-const VueHaloEditor = {
+import haloEditor from './halo-editor.vue';
+
+const HaloEditor = {
     markdownIt: haloEditor.mixins[0].data().markdownIt,
-    haloEditor: haloEditor,
-    LeftToolbar: require('./components/md-toolbar-left'),
-    RightToolbar: require('./components/md-toolbar-right'),
-    install: function(Vue) {
+    editor: haloEditor,
+    install: function (Vue) {
         Vue.component('halo-editor', haloEditor);
     }
 };
 
-module.exports = VueHaloEditor;
+export default HaloEditor;

@@ -15,10 +15,10 @@
           :class="{ transition: transition }"
           :toolbars="toolbars"
           :transition="transition"
-          @imgAdd="$imgAdd"
-          @openImagePicker="openImagePicker"
-          @insertLink="insertLink"
           @clickCommands="clickCommands"
+          @imgAdd="$imgAdd"
+          @insertLink="insertLink"
+          @openImagePicker="openImagePicker"
       >
         <template #left-toolbar-before>
           <slot name="left-toolbar-before"/>
@@ -172,7 +172,7 @@ import "./lib/font/css/fontello.css";
 import times from 'lodash.times'
 import flatten from 'lodash.flatten'
 import last from 'lodash.last'
-import "github-markdown-css/github-markdown.css";
+import "github-markdown-css/github-markdown-light.css";
 
 // CodeMirror
 import CodeMirror from 'codemirror'
@@ -381,6 +381,7 @@ export default {
     value: function (val, oldVal) {
       if (val !== this.d_value) {
         this.d_value = val;
+        this.handleInitEditor();
       }
     },
     subfield: function (val, oldVal) {

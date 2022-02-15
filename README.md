@@ -5,33 +5,23 @@
 ## Project setup
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Compiles and hot-reloads for development
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ### Compiles and minifies for production
 
 ```bash
-npm run build
-```
-
-### Run your tests
-
-```bash
-npm run test
+pnpm build:lib
 ```
 
 ### Lints and fixes files
 
 ```bash
-npm run lint
+pnpm lint
 ```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
