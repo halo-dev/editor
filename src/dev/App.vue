@@ -23,15 +23,6 @@
         @subfieldtoggle="$subfieldtoggle"
       >
       </halo-editor>
-
-      <button
-        ref="diy"
-        aria-hidden="true"
-        class="op-icon fa fa-halo-align-left"
-        title="自定义"
-        type="button"
-        @click="$click('selftest')"
-      ></button>
     </div>
     <!--自定义-->
     <div v-if="screen_phone" class="item">

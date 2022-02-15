@@ -98,11 +98,9 @@
       <transition name="slideTop">
         <div v-show="s_navigation" :class="{ transition: transition }" class="v-note-navigation-wrapper">
           <div class="v-note-navigation-title">
-            导航目录<i
-              aria-hidden="true"
-              class="fa fa-halo-times v-note-navigation-close"
-              @click="toolbar_right_click('navigation')"
-            ></i>
+            导航目录<i class="v-note-navigation-close" @click="toolbar_right_click('navigation')">
+              <i-fa-times height="0.8rem" width="0.8rem" />
+            </i>
           </div>
           <div ref="navigationContent" :class="{ 'scroll-style': scrollStyle }" class="v-note-navigation-content"></div>
         </div>
@@ -136,7 +134,6 @@ import markdown from './lib/mixins/markdown.js'
 
 import md_toolbar_left from './components/md-toolbar-left.vue'
 import md_toolbar_right from './components/md-toolbar-right.vue'
-import './lib/font/css/fontello.css'
 
 // libs
 import times from 'lodash.times'

@@ -4,29 +4,34 @@
     <button
       v-if="toolbars.bold"
       aria-hidden="true"
-      class="op-icon fa fa-halo-bold"
+      class="op-icon"
       title="粗体 (Ctrl+B)"
       type="button"
       @click="$clicks('bold')"
-    ></button>
+    >
+      <i-fa-bold />
+    </button>
     <button
       v-if="toolbars.italic"
       aria-hidden="true"
-      class="op-icon fa fa-halo-italic"
+      class="op-icon"
       title="斜体 (Ctrl+I)"
       type="button"
       @click="$clicks('italic')"
-    ></button>
+    >
+      <i-fa-italic />
+    </button>
     <div
       v-if="toolbars.header"
       :class="{ selected: s_header_dropdown_open }"
       aria-hidden="true"
-      class="op-icon fa fa-halo-header dropdown dropdown-wrapper"
+      class="op-icon dropdown dropdown-wrapper"
       title="标题 (Ctrl+H)"
       type="button"
       @mouseenter="$mouseenter_header_dropdown"
       @mouseleave="$mouseleave_header_dropdown"
     >
+      <i-fa-hashtag />
       <transition name="fade">
         <div
           v-show="s_header_dropdown_open"
@@ -50,35 +55,43 @@
     <button
       v-if="toolbars.underline"
       aria-hidden="true"
-      class="op-icon fa fa-halo-underline"
+      class="op-icon"
       title="下划线 (Ctrl+U)"
       type="button"
       @click="$clicks('underline')"
-    ></button>
+    >
+      <i-fa-underline />
+    </button>
     <button
       v-if="toolbars.strikethrough"
       aria-hidden="true"
-      class="op-icon fa fa-halo-strikethrough"
+      class="op-icon"
       title="中划线 (Ctrl+Shift+D)"
       type="button"
       @click="$clicks('strikethrough')"
-    ></button>
+    >
+      <i-fa-strikethrough />
+    </button>
     <button
       v-if="toolbars.superscript"
       aria-hidden="true"
-      class="op-icon fa fa-halo-superscript"
+      class="op-icon"
       title="上角标 (Ctrl+Alt+S)"
       type="button"
       @click="$clicks('superscript')"
-    ></button>
+    >
+      <i-fa-superscript />
+    </button>
     <button
       v-if="toolbars.subscript"
       aria-hidden="true"
-      class="op-icon fa fa-halo-subscript"
+      class="op-icon"
       title="下角标 (Ctrl+Shift+S)"
       type="button"
       @click="$clicks('subscript')"
-    ></button>
+    >
+      <i-fa-subscript />
+    </button>
     <span
       v-if="toolbars.superscript || toolbars.subscript || toolbars.underline || toolbars.strikethrough"
       class="op-icon-divider"
@@ -86,91 +99,114 @@
     <button
       v-if="toolbars.quote"
       aria-hidden="true"
-      class="op-icon fa fa-halo-quote-left"
+      class="op-icon"
       title="段落引用 (Ctrl+Q)"
       type="button"
       @click="$clicks('quote')"
-    ></button>
+    >
+      <i-fa-quote-left />
+    </button>
     <button
       v-if="toolbars.ol"
       aria-hidden="true"
-      class="op-icon fa fa-halo-list-ol"
+      class="op-icon"
       title="有序列表 (Ctrl+O)"
       type="button"
       @click="$clicks('ol')"
-    ></button>
+    >
+      <i-fa-list-ol />
+    </button>
     <button
       v-if="toolbars.ul"
       aria-hidden="true"
-      class="op-icon fa fa-halo-list-ul"
+      class="op-icon"
       title="无序列表 (Ctrl+Alt+U)"
       type="button"
       @click="$clicks('ul')"
-    ></button>
+    >
+      <i-fa-list-ul />
+    </button>
     <span v-if="toolbars.ul || toolbars.ol || toolbars.quote" class="op-icon-divider"></span>
     <button
       v-if="toolbars.link"
       aria-hidden="true"
-      class="op-icon fa fa-halo-link"
+      class="op-icon"
       title="链接 (Ctrl+L)"
       type="button"
       @click.stop="handleOpenLinkAddModal('link')"
-    ></button>
+    >
+      <i-fa-link />
+    </button>
     <button
       v-if="toolbars.imagelink"
       aria-hidden="true"
-      class="op-icon fa fa-halo-picture-o"
+      class="op-icon"
       type="button"
       @click.stop="handleOpenImagePicker"
-    ></button>
+    >
+      <i-fa-picture-o />
+    </button>
     <button
       v-if="toolbars.code"
       aria-hidden="true"
-      class="op-icon fa fa-halo-code"
+      class="op-icon"
       title="代码块 (Ctrl+Alt+C)"
       type="button"
       @click="$clicks('code')"
-    ></button>
+    >
+      <i-fa-code />
+    </button>
     <button
       v-if="toolbars.table"
       aria-hidden="true"
-      class="op-icon fa fa-halo-table"
+      class="op-icon"
       title="表格 (Ctrl+Alt+T)"
       type="button"
       @click="$clicks('table')"
-    ></button>
+    >
+      <i-fa-table />
+    </button>
     <span v-if="toolbars.link || toolbars.imagelink || toolbars.code || toolbars.table" class="op-icon-divider"></span>
     <button
       v-if="toolbars.undo"
       aria-hidden="true"
-      class="op-icon fa fa-halo-undo"
+      class="op-icon"
       title="上一步 (Ctrl+Z)"
       type="button"
       @click="$clicks('undo')"
-    ></button>
+    >
+      <i-fa-undo />
+    </button>
     <button
       v-if="toolbars.redo"
       aria-hidden="true"
-      class="op-icon fa fa-halo-repeat"
+      class="op-icon"
       title="下一步 (Ctrl+Y)"
       type="button"
       @click="$clicks('redo')"
-    ></button>
+    >
+      <i-fa-repeat />
+    </button>
     <button
       v-if="toolbars.save"
       aria-hidden="true"
-      class="op-icon fa fa-halo-floppy-o"
+      class="op-icon"
       title="保存 (Ctrl+S)"
       type="button"
       @click="$clicks('save')"
-    ></button>
+    >
+      <i-fa-floppy-o />
+    </button>
+
     <slot name="left-toolbar-after" />
 
     <!-- 添加image链接 -->
     <transition name="fade">
       <div v-if="s_img_link_open" class="add-image-link-wrapper">
         <div class="add-image-link">
-          <i aria-hidden="true" class="fa fa-halo-times" @click.stop.prevent="s_img_link_open = false"></i>
+          <i @click.stop.prevent="s_img_link_open = false">
+            <i-fa-times height="1rem" width="1rem" />
+          </i>
           <h3 class="title">添加链接</h3>
           <div class="link-text input-wrapper">
             <input ref="linkTextInput" v-model="link_text" placeholder="链接描述" type="text" />
@@ -186,6 +222,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+
 export default {
   name: 's-md-toolbar-left',
   props: {

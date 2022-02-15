@@ -6,72 +6,88 @@
       v-show="!s_navigation"
       :title="`开启标题导航 (F8)`"
       aria-hidden="true"
-      class="op-icon fa fa-halo-bars"
+      class="op-icon"
       type="button"
       @click="$clicks('navigation')"
-    ></button>
+    >
+      <i-fa-bars />
+    </button>
     <button
       v-if="toolbars.navigation"
       v-show="s_navigation"
       :title="`关闭标题导航 (F8)`"
       aria-hidden="true"
-      class="op-icon fa fa-halo-bars selected"
+      class="op-icon selected"
       type="button"
       @click="$clicks('navigation')"
-    ></button>
+    >
+      <i-fa-bars />
+    </button>
     <button
       v-if="toolbars.preview"
       v-show="s_preview_switch"
       :title="`编辑 (F9)`"
       aria-hidden="true"
-      class="op-icon fa fa-halo-eye-slash selected"
+      class="op-icon selected"
       type="button"
       @click="$clicks('preview')"
-    ></button>
+    >
+      <i-fa-eye-slash />
+    </button>
     <button
       v-if="toolbars.preview"
       v-show="!s_preview_switch"
       :title="`预览 (F9)`"
       aria-hidden="true"
-      class="op-icon fa fa-halo-eye"
+      class="op-icon"
       type="button"
       @click="$clicks('preview')"
-    ></button>
+    >
+      <i-fa-eye />
+    </button>
     <button
       v-if="toolbars.fullscreen"
       v-show="!s_fullScreen"
       :title="`全屏编辑 (F10)`"
       aria-hidden="true"
-      class="op-icon fa fa-halo-arrows-alt"
+      class="op-icon"
       type="button"
       @click="$clicks('fullscreen')"
-    ></button>
+    >
+      <i-fa-arrows-alt />
+    </button>
     <button
       v-if="toolbars.fullscreen"
       v-show="s_fullScreen"
       :title="`退出全屏 (F10)`"
       aria-hidden="true"
-      class="op-icon fa fa-halo-compress selected"
+      class="op-icon selected"
       type="button"
       @click="$clicks('fullscreen')"
-    ></button>
+    >
+      <i-fa-compress />
+    </button>
     <button
       v-if="toolbars.readmodel"
       :title="`沉浸式阅读 (F11)`"
       aria-hidden="true"
-      class="op-icon fa fa-halo-window-maximize"
+      class="op-icon"
       type="button"
       @click="$clicks('read')"
-    ></button>
+    >
+      <i-fa-window-maximize />
+    </button>
     <button
       v-if="toolbars.subfield"
       :class="{ selected: s_subfield }"
       :title="`${s_subfield ? '单栏' : '双栏'} (F12)`"
       aria-hidden="true"
-      class="op-icon fa fa-halo-columns"
+      class="op-icon"
       type="button"
       @click="$clicks('subfield')"
-    ></button>
+    >
+      <i-fa-columns />
+    </button>
     <span
       v-if="toolbars.htmlcode && toolbars.readmodel && toolbars.fullscreen && toolbars.subfield && toolbars.navigation"
       class="op-icon-divider"
@@ -80,20 +96,24 @@
       v-if="toolbars.htmlcode"
       v-show="!s_html_code"
       aria-hidden="true"
-      class="op-icon fa fa-halo-code"
+      class="op-icon"
       title="查看 HTML 文本"
       type="button"
       @click="$clicks('html')"
-    ></button>
+    >
+      <i-fa-code />
+    </button>
     <button
       v-if="toolbars.htmlcode"
       v-show="s_html_code"
       aria-hidden="true"
-      class="op-icon fa fa-halo-code selected"
+      class="op-icon selected"
       title="返回 Markdown 文本"
       type="button"
       @click="$clicks('html')"
-    ></button>
+    >
+      <i-fa-code />
+    </button>
     <slot name="right-toolbar-after" />
   </div>
 </template>
