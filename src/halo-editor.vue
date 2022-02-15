@@ -61,7 +61,7 @@
           transition: transition,
         }"
           class="v-note-edit divarea-wrapper"
-          @click="textAreaFocus"
+          @click="setFocus"
           @scroll="$v_edit_scroll"
       >
         <div
@@ -70,16 +70,14 @@
         >
           <!-- 双栏 -->
           <!--          <v-autoTextarea-->
-          <!--            ref="vNoteTextarea"-->
+          <!--            ref="cmRef"-->
           <!--            v-model="d_value"-->
-          <!--            :fontSize="fontSize"-->
-          <!--            :placeholder="placeholder ? placeholder : '开始编辑...'"-->
           <!--            :style="{ 'background-color': editorBackground }"-->
           <!--            class="content-input"-->
           <!--            fullHeight-->
           <!--            lineHeight="1.5"-->
           <!--          ></v-autoTextarea>-->
-          <textarea ref="vNoteTextarea"></textarea>
+          <textarea ref="cmRef"></textarea>
         </div>
       </div>
       <!--展示区-->
@@ -168,16 +166,8 @@ import {
   fullscreenchange,
   getNavigation,
   ImagePreviewListener,
-  insertEnter,
-  insertOl,
-  insertTab,
   insertTextAtCaret,
-  insertUl,
-  loadLink,
-  loadScript,
-  removeLine,
-  scrollLink,
-  unInsertTab
+  scrollLink
 } from "./lib/core/extra-function.js";
 import {stopEvent} from "./lib/util.js";
 import {
@@ -192,6 +182,10 @@ import md_toolbar_left from "./components/md-toolbar-left.vue";
 import md_toolbar_right from "./components/md-toolbar-right.vue";
 import "./lib/font/css/fontello.css";
 import "github-markdown-css/github-markdown.css";
+
+import times from 'lodash.times'
+import flatten from 'lodash.flatten'
+import last from 'lodash.last'
 
 // Code Mirror
 import CodeMirror from 'codemirror'
@@ -210,6 +204,43 @@ import 'codemirror/addon/hint/show-hint.js'
 import 'codemirror/addon/fold/foldcode.js'
 import 'codemirror/addon/fold/foldgutter.js'
 import 'codemirror/addon/fold/foldgutter.css'
+
+const markups = {
+  bold: {
+    start: '**'
+  },
+  italic: {
+    start: '*'
+  },
+  underline: {
+    start: '++'
+  },
+  strikethrough: {
+    start: '~~'
+  },
+  superscript: {
+    start: '^'
+  },
+  subscript: {
+    start: '~'
+  },
+  code: {
+    start: '```\n',
+    end: '\n```'
+  }
+}
+
+const blocks = {
+  quote: {
+    before: '> '
+  },
+  ol: {
+    before: '1. '
+  },
+  ul: {
+    before: '- '
+  }
+}
 
 export default {
   mixins: [markdown],
@@ -237,11 +268,6 @@ export default {
       // 是否自动获取焦点
       type: Boolean,
       default: true
-    },
-    fontSize: {
-      // 字体大小
-      type: String,
-      default: "15px"
     },
     toolbarsBackground: {
       // 工具栏背景色
@@ -291,11 +317,6 @@ export default {
         return CONFIG.toolbars;
       }
     },
-    placeholder: {
-      // 编辑器默认内容
-      type: String,
-      default: null
-    },
     externalLink: {
       type: [Object, Boolean],
       default: true
@@ -343,10 +364,8 @@ export default {
         return temp_array;
       })(), // 编辑记录
       d_history_index: 0, // 编辑记录索引
-      currentTimeout: "",
       d_image_file: [],
       d_preview_imgsrc: null, // 图片预览地址
-      p_external_link: {},
       cm: undefined
     };
   },
@@ -363,7 +382,7 @@ export default {
     keydownListen(this);
     // 图片预览事件监听
     ImagePreviewListener(this);
-    // TODO 设置默认焦点
+
     // fullscreen事件
     fullscreenchange(this);
 
@@ -373,9 +392,30 @@ export default {
       this.handleInitEditor()
     })
   },
+
+  watch: {
+    d_value: function (val, oldVal) {
+      this.iRender();
+    },
+    value: function (val, oldVal) {
+      if (val !== this.d_value) {
+        this.d_value = val;
+      }
+    },
+    subfield: function (val, oldVal) {
+      this.s_subfield = val;
+    },
+    defaultOpen: function (val) {
+      let default_open_ = val;
+      if (!default_open_) {
+        default_open_ = this.subfield ? "preview" : "edit";
+      }
+      return (this.s_preview_switch = default_open_ === "preview");
+    }
+  },
   methods: {
     handleInitEditor() {
-      this.cm = CodeMirror.fromTextArea(this.$refs.vNoteTextarea, {
+      this.cm = CodeMirror.fromTextArea(this.$refs.cmRef, {
         tabSize: 2,
         mode: 'text/markdown',
         // theme: 'idea',
@@ -396,17 +436,81 @@ export default {
       // set default content
       this.cm.setValue(this.d_value)
 
+      // clear default content history
+      this.$nextTick(() => {
+        this.cm.clearHistory()
+      })
+
+      // set focus
+      if (this.autofocus) {
+        this.setFocus()
+      }
+
       // listen change event
       this.cm.on('change', c => {
         this.d_value = c.getValue()
       })
     },
+
+    setHeading(level) {
+      const curLine = this.cm.doc.getCursor('head').line
+      let lineContent = this.cm.doc.getLine(curLine)
+      const lineLength = lineContent.length
+      if (lineContent.startsWith('#')) {
+        lineContent = lineContent.replace(/^(#+ )/, '')
+      }
+      lineContent = times(level, () => '#').join('') + ' ' + lineContent
+      this.cm.doc.replaceRange(lineContent, {line: curLine, ch: 0}, {line: curLine, ch: lineLength})
+    },
+
+    setMarkup(start, end) {
+      if (!end) {
+        end = start
+      }
+      if (this.cm.doc.somethingSelected()) {
+        this.cm.doc.replaceSelections(this.cm.doc.getSelections().map(s => start + s + end))
+        return
+      }
+      // add markup to current line
+      const curLine = this.cm.doc.getCursor('head').line
+      let lineContent = this.cm.doc.getLine(curLine)
+      const lineLength = lineContent.length
+      this.cm.doc.replaceRange(start + '' + end, {line: curLine, ch: 0}, {line: curLine, ch: lineLength})
+    },
+
+    setEachLine(before, after) {
+      let lines = []
+      if (!this.cm.doc.somethingSelected()) {
+        lines.push(this.cm.doc.getCursor('head').line)
+      } else {
+        lines = flatten(this.cm.doc.listSelections().map(sl => {
+          const range = Math.abs(sl.anchor.line - sl.head.line) + 1
+          const lowestLine = (sl.anchor.line > sl.head.line) ? sl.head.line : sl.anchor.line
+          return times(range, l => l + lowestLine)
+        }))
+      }
+      lines.forEach(ln => {
+        let lineContent = this.cm.doc.getLine(ln)
+        const lineLength = lineContent.length
+        if (lineContent.startsWith(before)) {
+          lineContent = lineContent.substring(before.length)
+        }
+        this.cm.doc.replaceRange(before + lineContent, {line: ln, ch: 0}, {line: ln, ch: lineLength})
+      })
+      if (after) {
+        const lastLine = last(lines)
+        this.cm.doc.replaceRange(`\n${after}\n`, {line: lastLine, ch: this.cm.doc.getLine(lastLine).length + 1})
+      }
+    },
+
+    setFocus() {
+      this.cm.focus()
+    },
+
     openImagePicker() {
       this.$emit("openImagePicker");
     },
-    textAreaFocus() {
-      this.$refs.vNoteTextarea.$refs.vTextarea.focus();
-    },
+
     $drag($e) {
       var dataTransfer = $e.dataTransfer;
       if (dataTransfer) {
@@ -495,8 +599,19 @@ export default {
         }
       }
     },
-    toolbar_left_click(_type) {
-      toolbar_left_click(_type, this);
+    toolbar_left_click(_type, options) {
+      if (markups[_type]) {
+        this.setMarkup(markups[_type].start, markups[_type].end)
+        return
+      }
+      if (blocks[_type]) {
+        this.setEachLine(blocks[_type].before, blocks[_type].after)
+        return
+      }
+      if (_type === 'header') {
+        this.setHeading(options.level)
+      }
+      // toolbar_left_click(_type, this);
     },
     toolbar_left_addlink(text, link) {
       toolbar_left_addlink(text, link, this);
@@ -556,36 +671,13 @@ export default {
     },
     // 获取textarea dom节点
     getTextareaDom() {
-      return this.$refs.vNoteTextarea.$refs.vTextarea;
+      return this.$refs.cmRef.$refs.vTextarea;
     },
     // 工具栏插入内容
     insertText(obj, {prefix, subfix, str, type}) {
       // if (this.s_preview_switch) {
 
       insertTextAtCaret(obj, {prefix, subfix, str, type}, this);
-    },
-    insertTab() {
-      insertTab(this, this.tabSize);
-    },
-    insertOl() {
-      insertOl(this);
-    },
-    removeLine() {
-      removeLine(this);
-    },
-    insertUl() {
-      insertUl(this);
-    },
-    unInsertTab() {
-      unInsertTab(this, this.tabSize);
-    },
-    insertEnter(event) {
-      insertEnter(this, event);
-    },
-    saveHistory() {
-      this.d_history.splice(this.d_history_index + 1, this.d_history.length);
-      this.d_history.push(this.d_value);
-      this.d_history_index = this.d_history.length - 1;
     },
     iRender(toggleChange) {
       var $vm = this;
@@ -603,45 +695,7 @@ export default {
         if ($vm.s_navigation) getNavigation($vm, false);
         // v-model 语法糖
         $vm.$emit("input", $vm.d_value);
-        // 塞入编辑记录数组
-        if ($vm.d_value === $vm.d_history[$vm.d_history_index]) return;
-        window.clearTimeout($vm.currentTimeout);
-        $vm.currentTimeout = setTimeout(() => {
-          $vm.saveHistory();
-        }, 500);
       });
-    },
-    // 清空上一步 下一步缓存
-    $emptyHistory() {
-      this.d_history = [this.d_value]; // 编辑记录
-      this.d_history_index = 0; // 编辑记录索引
-    }
-  },
-  watch: {
-    d_value: function (val, oldVal) {
-      this.iRender();
-    },
-    value: function (val, oldVal) {
-      if (val !== this.d_value) {
-        this.d_value = val;
-      }
-    },
-    subfield: function (val, oldVal) {
-      this.s_subfield = val;
-    },
-    d_history_index() {
-      if (this.d_history_index > 20) {
-        this.d_history.shift();
-        this.d_history_index = this.d_history_index - 1;
-      }
-      this.d_value = this.d_history[this.d_history_index];
-    },
-    defaultOpen: function (val) {
-      let default_open_ = val;
-      if (!default_open_) {
-        default_open_ = this.subfield ? "preview" : "edit";
-      }
-      return (this.s_preview_switch = default_open_ === "preview");
     }
   }
 };

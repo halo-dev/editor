@@ -40,32 +40,32 @@
           <div
               class="dropdown-item"
               title="#"
-              @click.stop="$click_header('header1')"
+              @click.stop="$click_header('header',1)"
           ><span>一级标题</span></div>
           <div
               class="dropdown-item"
               title="## "
-              @click.stop="$click_header('header2')"
+              @click.stop="$click_header('header',2)"
           ><span>二级标题</span></div>
           <div
               class="dropdown-item"
               title="### "
-              @click.stop="$click_header('header3')"
+              @click.stop="$click_header('header',3)"
           ><span>三级标题</span></div>
           <div
               class="dropdown-item"
               title="#### "
-              @click.stop="$click_header('header4')"
+              @click.stop="$click_header('header',4)"
           ><span>四级标题</span></div>
           <div
               class="dropdown-item"
               title="##### "
-              @click.stop="$click_header('header5')"
+              @click.stop="$click_header('header',5)"
           ><span>五级标题</span></div>
           <div
               class="dropdown-item"
               title="###### "
-              @click.stop="$click_header('header6')"
+              @click.stop="$click_header('header',6)"
           ><span>六级标题</span></div>
         </div>
       </transition>
@@ -331,9 +331,9 @@ export default {
       // 让父节点来绑定事件并
       this.$emit("toolbar_left_click", _type);
     },
-    $click_header(_type) {
+    $click_header(_type, level) {
       // 让父节点来绑定事件并
-      this.$emit("toolbar_left_click", _type);
+      this.$emit("toolbar_left_click", _type, {level});
       this.s_header_dropdown_open = false;
     }
   }
