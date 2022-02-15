@@ -27,7 +27,6 @@ export const CONFIG = {
         'table': true,
         'undo': true,
         'redo': true,
-        'trash': true,
         'save': true,
         'navigation': true,
         'subfield': true,

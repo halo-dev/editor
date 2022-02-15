@@ -68,15 +68,6 @@
             :style="{ 'background-color': editorBackground }"
             class="content-input-wrapper"
         >
-          <!-- 双栏 -->
-          <!--          <v-autoTextarea-->
-          <!--            ref="cmRef"-->
-          <!--            v-model="d_value"-->
-          <!--            :style="{ 'background-color': editorBackground }"-->
-          <!--            class="content-input"-->
-          <!--            fullHeight-->
-          <!--            lineHeight="1.5"-->
-          <!--          ></v-autoTextarea>-->
           <textarea ref="cmRef"></textarea>
         </div>
       </div>
@@ -196,7 +187,6 @@ import 'codemirror/addon/selection/active-line.js'
 import 'codemirror/addon/display/fullscreen.js'
 import 'codemirror/addon/display/fullscreen.css'
 import 'codemirror/addon/selection/mark-selection.js'
-import 'codemirror/addon/search/searchcursor.js'
 import 'codemirror/addon/hint/show-hint.js'
 import 'codemirror/addon/fold/foldcode.js'
 import 'codemirror/addon/fold/foldgutter.js'
@@ -320,17 +310,13 @@ export default {
         return CONFIG.toolbars;
       }
     },
-    externalLink: {
-      type: [Object, Boolean],
-      default: true
-    },
     imageClick: {
       type: Function,
       default: null
     },
     tabSize: {
       type: Number,
-      default: 0
+      default: 2
     },
     shortCut: {
       type: Boolean,
@@ -419,7 +405,7 @@ export default {
   methods: {
     handleInitEditor() {
       this.cm = CodeMirror.fromTextArea(this.$refs.cmRef, {
-        tabSize: 2,
+        tabSize: this.tabSize,
         mode: 'text/markdown',
         // theme: 'idea',
         lineNumbers: true,
@@ -632,6 +618,14 @@ export default {
       }
       if (_type === 'header') {
         this.setHeading(options.level)
+        return
+      }
+      if (_type === 'undo') {
+        this.cm.doc.undo()
+        return;
+      }
+      if (_type === 'redo') {
+        this.cm.doc.redo()
       }
     },
     toolbar_right_click(_type) {

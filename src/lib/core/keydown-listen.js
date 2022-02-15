@@ -98,23 +98,12 @@ export const keydownListen = ($vm) => {
                     }
                     break;
                 }
-                case KEY_CODE.TAB: {
-                    // TAB
-                    if (!$vm.$refs.toolbar_left.s_img_link_open) {
-                        e.preventDefault()
-                        $vm.insertTab();
-                    }
-                    break;
-                }
                 case KEY_CODE.ENTER: {
                     // enter
                     if ($vm.$refs.toolbar_left.s_img_link_open) {
                         // 当添加外部链接的弹出层打开时， enter表示确定输入此链接
                         e.preventDefault()
-                        $vm.$refs.toolbar_left.$imgLinkAdd();
-                    } else {
-                        // 在文本框中输入enter
-                        $vm.insertEnter(e)
+                        $vm.$refs.toolbar_left.handleAddLink();
                     }
                     break;
                 }
@@ -125,139 +114,79 @@ export const keydownListen = ($vm) => {
                 case KEY_CODE.B: {
                     // B
                     e.preventDefault()
-                    $vm.toolbar_left_click('bold')
+                    $vm.clickCommands('bold')
                     break;
                 }
                 case KEY_CODE.I: {
                     // I
                     e.preventDefault()
-                    $vm.toolbar_left_click('italic')
+                    $vm.clickCommands('italic')
                     break;
                 }
                 case KEY_CODE.H: {
                     // H
                     e.preventDefault()
-                    $vm.toolbar_left_click('header')
+                    $vm.clickCommands('header', {level: 1})
                     break;
                 }
                 case KEY_CODE.U: {
                     // U
                     e.preventDefault()
-                    $vm.toolbar_left_click('underline')
-                    break;
-                }
-                case KEY_CODE.D: {
-                    // D
-                    e.preventDefault()
-                    $vm.toolbar_left_click('removeLine')
+                    $vm.clickCommands('underline')
                     break;
                 }
                 case KEY_CODE.Q: {
                     // Q
                     e.preventDefault()
-                    $vm.toolbar_left_click('quote')
+                    $vm.clickCommands('quote')
                     break;
                 }
                 case KEY_CODE.O: {
                     // O
                     e.preventDefault()
-                    $vm.toolbar_left_click('ol')
+                    $vm.clickCommands('ol')
                     break;
                 }
                 case KEY_CODE.L: {
                     // L
                     e.preventDefault()
-                    $vm.toolbar_left_click('link')
+                    $vm.insertLink('', '')
                     break;
                 }
-                case KEY_CODE.S: {
-                    // S
-                    e.preventDefault()
-                    $vm.toolbar_left_click('save')
-                    break;
-                }
-                case KEY_CODE.Z: {
-                    // Z
-                    e.preventDefault()
-                    $vm.toolbar_left_click('undo')
-                    break;
-                }
-                case KEY_CODE.Y: {
-                    // Y
-                    e.preventDefault()
-                    $vm.toolbar_left_click('redo')
-                    break;
-                }
-                case KEY_CODE.ONE: {
-                    // ONE
-                    e.preventDefault()
-                    $vm.toolbar_left_click('header1')
-                    break;
-                }
-                case KEY_CODE.TWO: {
-                    // TWO
-                    e.preventDefault()
-                    $vm.toolbar_left_click('header2')
-                    break;
-                }
-                case KEY_CODE.THREE: {
-                    // THREE
-                    e.preventDefault()
-                    $vm.toolbar_left_click('header3')
-                    break;
-                }
-                case KEY_CODE.FOUR: {
-                    // FOUR
-                    e.preventDefault()
-                    $vm.toolbar_left_click('header4')
-                    break;
-                }
-                case KEY_CODE.FIVE: {
-                    // FIVE
-                    e.preventDefault()
-                    $vm.toolbar_left_click('header5')
-                    break;
-                }
-                case KEY_CODE.SIX: {
-                    // SIX
-                    e.preventDefault()
-                    $vm.toolbar_left_click('header6')
-                    break;
-                }
+                case KEY_CODE.ONE:
                 case KEY_CODE._ONE: {
-                    // ONE
                     e.preventDefault()
-                    $vm.toolbar_left_click('header1')
+                    $vm.clickCommands('header', {level: 1})
                     break;
                 }
+                case KEY_CODE.TWO:
                 case KEY_CODE._TWO: {
-                    // TWO
                     e.preventDefault()
-                    $vm.toolbar_left_click('header2')
+                    $vm.clickCommands('header', {level: 2})
                     break;
                 }
+                case KEY_CODE.THREE:
                 case KEY_CODE._THREE: {
-                    // THREE
                     e.preventDefault()
-                    $vm.toolbar_left_click('header3')
+                    $vm.clickCommands('header', {level: 3})
                     break;
                 }
+                case KEY_CODE.FOUR:
                 case KEY_CODE._FOUR: {
-                    // FOUR
                     e.preventDefault()
-                    $vm.toolbar_left_click('header4')
+                    $vm.clickCommands('header', {level: 4})
                     break;
                 }
+                case KEY_CODE.FIVE:
                 case KEY_CODE._FIVE: {
-                    // FIVE
                     e.preventDefault()
-                    $vm.toolbar_left_click('header5')
+                    $vm.clickCommands('header', {level: 5})
                     break;
                 }
+                case KEY_CODE.SIX:
                 case KEY_CODE._SIX: {
-                    // SIX
                     e.preventDefault()
-                    $vm.toolbar_left_click('header6')
+                    $vm.clickCommands('header', {level: 6})
                     break;
                 }
             }
@@ -267,31 +196,31 @@ export const keydownListen = ($vm) => {
                 case KEY_CODE.S: {
                     // S
                     e.preventDefault()
-                    $vm.toolbar_left_click('superscript')
+                    $vm.clickCommands('superscript')
                     break;
                 }
                 case KEY_CODE.U: {
                     // U
                     e.preventDefault()
-                    $vm.toolbar_left_click('ul')
+                    $vm.clickCommands('ul')
                     break;
                 }
                 case KEY_CODE.L: {
                     // L
                     e.preventDefault()
-                    $vm.toolbar_left_click('imagelink')
+                    $vm.clickCommands('imagelink')
                     break;
                 }
                 case KEY_CODE.C: {
                     // C
                     e.preventDefault()
-                    $vm.toolbar_left_click('code')
+                    $vm.clickCommands('code')
                     break;
                 }
                 case KEY_CODE.T: {
                     // T
                     e.preventDefault()
-                    $vm.toolbar_left_click('table')
+                    $vm.clickCommands('table')
                     break;
                 }
             }
@@ -301,25 +230,13 @@ export const keydownListen = ($vm) => {
                 case KEY_CODE.S: {
                     // S
                     e.preventDefault()
-                    $vm.toolbar_left_click('subscript')
+                    $vm.clickCommands('subscript')
                     break;
                 }
                 case KEY_CODE.D: {
                     // D
                     e.preventDefault()
-                    $vm.toolbar_left_click('strikethrough')
-                    break;
-                }
-            }
-        } else if (!(e.ctrlKey || e.metaKey) && e.shiftKey && !e.altKey) {
-            // shift +
-            switch (e.keyCode) {
-                case KEY_CODE.TAB: {
-                    // TAB
-                    if (!$vm.$refs.toolbar_left.s_img_link_open) {
-                        e.preventDefault()
-                        $vm.unInsertTab();
-                    }
+                    $vm.clickCommands('strikethrough')
                     break;
                 }
             }

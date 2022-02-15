@@ -190,14 +190,6 @@
         @click="$clicks('redo')"
     ></button>
     <button
-        v-if="toolbars.trash"
-        aria-hidden="true"
-        class="op-icon fa fa-halo-trash-o"
-        title="清空 (Ctrl+BreakSpace)"
-        type="button"
-        @click="$clicks('trash')"
-    ></button>
-    <button
         v-if="toolbars.save"
         aria-hidden="true"
         class="op-icon fa fa-halo-floppy-o"
