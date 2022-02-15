@@ -10,29 +10,29 @@
  * @desc 初始化配置项
  */
 export const CONFIG = {
-    'toolbars': {
-        'bold': true,
-        'italic': true,
-        'header': true,
-        'underline': true,
-        'strikethrough': true,
-        'superscript': true,
-        'subscript': true,
-        'quote': true,
-        'ol': true,
-        'ul': true,
-        'link': true,
-        'imagelink': true,
-        'code': true,
-        'table': true,
-        'undo': true,
-        'redo': true,
-        'save': true,
-        'navigation': true,
-        'subfield': true,
-        'fullscreen': true,
-        'readmodel': true,
-        'htmlcode': true,
-        'preview': true
-    }
-};
+  toolbars: {
+    bold: true,
+    italic: true,
+    header: true,
+    underline: true,
+    strikethrough: true,
+    superscript: true,
+    subscript: true,
+    quote: true,
+    ol: true,
+    ul: true,
+    link: true,
+    imagelink: true,
+    code: true,
+    table: true,
+    undo: true,
+    redo: true,
+    save: true,
+    navigation: true,
+    subfield: true,
+    fullscreen: true,
+    readmodel: true,
+    htmlcode: true,
+    preview: true
+  }
+}

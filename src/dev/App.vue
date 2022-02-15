@@ -1,53 +1,42 @@
 <template>
   <div id="app">
-    <div
-        v-if="!screen_phone"
-        class="item"
-    >
+    <div v-if="!screen_phone" class="item">
       <halo-editor
-          ref="md"
-          :autofocus="autofocus"
-          :boxShadow="true"
-          :scrollStyle="true"
-          :shortCut="true"
-          :subfield="subfield"
-          :toolbarsFlag="toolbarsFlag"
-          :transition="true"
-          v-model="value"
-          box-shadow-style="0 2px 12px 0 rgba(0, 0, 0, 0.1)"
-          class="item-editor"
-          preview-background="#fbfbfb"
-          toolbars-background="#ffffff"
-          @change="change"
-          @imgAdd="$imgAdd"
-          @imgDel="$imgDel"
-          @previewtoggle="$previewtoggle"
-          @save="saveone"
-          @subfieldtoggle="$subfieldtoggle"
+        ref="md"
+        v-model="value"
+        :autofocus="autofocus"
+        :boxShadow="true"
+        :scrollStyle="true"
+        :shortCut="true"
+        :subfield="subfield"
+        :toolbarsFlag="toolbarsFlag"
+        :transition="true"
+        box-shadow-style="0 2px 12px 0 rgba(0, 0, 0, 0.1)"
+        class="item-editor"
+        preview-background="#fbfbfb"
+        toolbars-background="#ffffff"
+        @change="change"
+        @imgAdd="$imgAdd"
+        @imgDel="$imgDel"
+        @previewtoggle="$previewtoggle"
+        @save="saveone"
+        @subfieldtoggle="$subfieldtoggle"
       >
       </halo-editor>
 
       <button
-          ref="diy"
-          aria-hidden="true"
-          class="op-icon fa fa-halo-align-left"
-          title="自定义"
-          type="button"
-          @click="$click('selftest')"
+        ref="diy"
+        aria-hidden="true"
+        class="op-icon fa fa-halo-align-left"
+        title="自定义"
+        type="button"
+        @click="$click('selftest')"
       ></button>
     </div>
     <!--自定义-->
-    <div
-        v-if="screen_phone"
-        class="item"
-    >
-      <h2 class="item-header">
-      </h2>
-      <halo-editor
-          :toolbars="toolbars"
-          class="item-editor"
-          @save="savetwo"
-      ></halo-editor>
+    <div v-if="screen_phone" class="item">
+      <h2 class="item-header"></h2>
+      <halo-editor :toolbars="toolbars" class="item-editor" @save="savetwo"></halo-editor>
     </div>
   </div>
 </template>
@@ -55,7 +44,7 @@
 <script type="text/ecmascript-6">
 
 export default {
-  name: "app",
+  name: 'app',
   data() {
     return {
       screen_phone: false,
@@ -95,10 +84,10 @@ export default {
         /* 1.4.2 */
         navigation: true // 导航目录
       },
-      imageClick: function (file) {
-        console.log(file);
+      imageClick: function(file) {
+        console.log(file)
       },
-      imgName: "",
+      imgName: '',
       value: `---
 title: 在 Linux 环境部署
 description: 在Linux上快速安装Halo
@@ -114,7 +103,7 @@ description: 在Linux上快速安装Halo
 
 目前介绍两种 Linux 发行版的安装方式，均为 OpenJRE，不推荐 Oracle 版本。
 
-### CentOS <i class="mdi mdi-centos"></i>
+### CentOS <i class='mdi mdi-centos'></i>
 
 \`\`\`bash
 sudo yum install java-11-openjdk -y
@@ -134,7 +123,7 @@ OpenJDK Runtime Environment 18.9 (build 11.0.10+9-LTS)
 OpenJDK 64-Bit Server VM 18.9 (build 11.0.10+9-LTS, mixed mode, sharing)
 \`\`\`
 
-### Ubuntu <i class="mdi mdi-ubuntu"></i>
+### Ubuntu <i class='mdi mdi-ubuntu'></i>
 
 \`\`\`bash
 sudo apt-get install openjdk-11-jre -y
@@ -371,59 +360,59 @@ reverse_proxy 127.0.0.1:8090
 
 以上配置都可以在 <https://github.com/halo-dev/halo-common> 找到。
 `
-    };
+    }
   },
   created() {
-    var $vm = this;
-    this.sizeToStatus();
-    window.addEventListener("resize", function () {
+    var $vm = this
+    this.sizeToStatus()
+    window.addEventListener('resize', function() {
       // 媒介查询
-      $vm.sizeToStatus();
-    });
+      $vm.sizeToStatus()
+    })
   },
   mounted() {
-    var md = this.$refs.md;
-    var toolbar_left = md.$refs.toolbar_left;
-    var diy = this.$refs.diy;
-    toolbar_left.$el.append(diy);
+    var md = this.$refs.md
+    var toolbar_left = md.$refs.toolbar_left
+    var diy = this.$refs.diy
+    toolbar_left.$el.append(diy)
     // toolbar_left.$el.append(diy.$el)
     // console.log(toolbar_left)
   },
   methods: {
     clearCache() {
-      this.$refs.md.$emptyHistory();
+      this.$refs.md.$emptyHistory()
     },
     $click(val) {
-      console.log(val);
+      console.log(val)
     },
     $imgAdd(pos, $file) {
-      console.log("imgAdd", pos, $file);
-      this.img_file[pos] = $file;
+      console.log('imgAdd', pos, $file)
+      this.img_file[pos] = $file
     },
     $imgDel(pos) {
-      console.log("imgDel", pos);
-      delete this.img_file[pos];
+      console.log('imgDel', pos)
+      delete this.img_file[pos]
     },
     sizeToStatus() {
-      this.screen_phone = !window.matchMedia("(min-width:768px)").matches;
+      this.screen_phone = !window.matchMedia('(min-width:768px)').matches
     },
-    saveone(val, render) {
-      alert("save one");
+    saveone() {
+      alert('save one')
     },
-    savetwo(val, render) {
-      alert("save two");
+    savetwo() {
+      alert('save two')
     },
-    change(val, render) {
-      console.log(val);
+    change(val) {
+      console.log(val)
     },
-    $subfieldtoggle(flag, value) {
-      console.log("sufield toggle" + flag);
+    $subfieldtoggle(flag) {
+      console.log('sufield toggle' + flag)
     },
-    $previewtoggle(flag, value) {
-      console.log("preview toggle" + flag);
+    $previewtoggle(flag) {
+      console.log('preview toggle' + flag)
     }
   }
-};
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

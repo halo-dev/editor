@@ -3,10 +3,12 @@
   "private": true,
   "version": "2.8.4",
   "scripts": {
+    "prepare": "husky install",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "build:lib": "rimraf dist && vite build --config vite.lib.config.js"
+    "build:lib": "rimraf dist && vite build --config vite.lib.config.js",
+    "lint": "eslint --ext .js,vue --ignore-path .gitignore ."
   },
   "files": [
     "dist"
@@ -48,6 +50,12 @@
     "vue": "^2.6.14"
   },
   "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.3.0",
+    "husky": "^7.0.4",
+    "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "stylus": "^0.54.8",
     "vite": "^2.8.2",
