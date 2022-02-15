@@ -160,7 +160,6 @@ import {
   insertTextAtCaret,
   scrollLink
 } from "./lib/core/extra-function.js";
-import {stopEvent} from "./lib/util.js";
 import {toolbar_right_click} from "./lib/toolbar_right_click.js";
 import {CONFIG} from "./lib/config.js";
 import markdown from "./lib/mixins/markdown.js";
@@ -359,23 +358,15 @@ export default {
     };
   },
   mounted() {
-    const _this = this;
-    this.$el.addEventListener("paste", function (e) {
-      _this.$paste(e);
-    });
-    this.$el.addEventListener("drop", function (e) {
-      _this.$drag(e);
-    });
-    // 浏览器siz大小
-    /* windowResize(this); */
+    this.d_value = this.value;
+
     keydownListen(this);
+
     // 图片预览事件监听
     ImagePreviewListener(this);
 
     // fullscreen事件
     fullscreenchange(this);
-
-    this.d_value = this.value;
 
     this.$nextTick(() => {
       this.handleInitEditor()
@@ -419,7 +410,7 @@ export default {
         inputStyle: 'contenteditable',
         allowDropFileTypes: ['image/jpg', 'image/png', 'image/svg', 'image/jpeg', 'image/gif'],
         foldGutter: true,
-        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
+        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
       })
 
       // set default content
@@ -461,10 +452,7 @@ export default {
         return
       }
       // add markup to current line
-      const curLine = this.cm.doc.getCursor('head').line
-      let lineContent = this.cm.doc.getLine(curLine)
-      const lineLength = lineContent.length
-      this.cm.doc.replaceRange(start + '' + end, {line: curLine, ch: 0}, {line: curLine, ch: lineLength})
+      this.insetAtCursor(start + '' + end)
     },
 
     setEachLine(before, after) {
@@ -515,38 +503,6 @@ export default {
       this.insetAtCursor(`[${text}](${link})`);
     },
 
-    $drag($e) {
-      var dataTransfer = $e.dataTransfer;
-      if (dataTransfer) {
-        var files = dataTransfer.files;
-        if (files.length > 0) {
-          $e.preventDefault();
-          this.$refs.toolbar_left.$imgFilesAdd(files);
-        }
-      }
-    },
-    $paste($e) {
-      var clipboardData = $e.clipboardData;
-      if (clipboardData) {
-        var items = clipboardData.items;
-        if (!items) return;
-        var types = clipboardData.types || [];
-        var item = null;
-        for (var i = 0; i < types.length; i++) {
-          if (types[i] === "Files") {
-            item = items[i];
-            break;
-          }
-        }
-        if (item && item.kind === "file") {
-          // prevent filename being pasted parallel along
-          // with the image pasting process
-          stopEvent($e);
-          var oFile = item.getAsFile();
-          this.$refs.toolbar_left.$imgFilesAdd([oFile]);
-        }
-      }
-    },
     $imgAdd(pos, $file, isinsert) {
       if (isinsert === undefined) isinsert = true;
       const $vm = this;
