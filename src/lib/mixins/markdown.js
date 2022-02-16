@@ -19,6 +19,7 @@ import markdownItTableOfContents from 'markdown-it-table-of-contents'
 import markdownItImagesPreview from 'markdown-it-images-preview'
 import markdownItKatex from '@iktakahiro/markdown-it-katex'
 import markdownItMermaid from '@liradb2000/markdown-it-mermaid'
+import hljs from '../core/hljs'
 
 const markdown_config = {
   html: true, // Enable HTML tags in source
@@ -81,6 +82,11 @@ export default {
     $render(src, func) {
       const res = markdown.render(src)
       func(res)
+    },
+    renderHighlight() {
+      document.querySelectorAll('pre code').forEach(el => {
+        hljs.highlightElement(el)
+      })
     }
   }
 }

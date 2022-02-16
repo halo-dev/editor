@@ -607,6 +607,9 @@ export default {
       this.$render($vm.d_value, function (res) {
         // render
         $vm.d_render = res
+        $vm.$nextTick(() => {
+          $vm.renderHighlight()
+        })
         // change回调  toggleChange == false 时候触发change回调
         if (!toggleChange) {
           if ($vm.change) $vm.change($vm.d_value, $vm.d_render)

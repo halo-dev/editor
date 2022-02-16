@@ -11,6 +11,7 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-vue: ^8.4.1
   github-markdown-css: ^5.1.0
+  highlight.js: ^11.4.0
   husky: ^7.0.4
   katex: ^0.12.0
   lodash.escape: ^4.0.1
@@ -43,6 +44,7 @@ dependencies:
   '@liradb2000/markdown-it-mermaid': 0.4.4
   codemirror: 5.65.1
   github-markdown-css: 5.1.0
+  highlight.js: 11.4.0
   katex: 0.12.0
   lodash.escape: 4.0.1
   lodash.flatten: 4.4.0
@@ -2106,6 +2108,11 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
     dev: true
+
+  /highlight.js/11.4.0:
+    resolution: {integrity: sha512-nawlpCBCSASs7EdvZOYOYVkJpGmAOKMYZgZtUqSRqodZE0GRVcFKwo1RcpeOemqh9hyttTdd5wDBwHkuSyUfnA==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /html-tags/2.0.0:
     resolution: {integrity: sha1-ELMKOGCF9Dzt41PMj6fLDe7qZos=}
