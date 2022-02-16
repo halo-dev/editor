@@ -144,6 +144,7 @@ import 'github-markdown-css/github-markdown-light.css'
 // CodeMirror
 import CodeMirror from 'codemirror'
 import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/eclipse.css'
 
 // CodeMirror Language
 import 'codemirror/mode/markdown/markdown.js'
@@ -342,19 +343,19 @@ export default {
   },
 
   watch: {
-    d_value: function () {
+    d_value() {
       this.iRender()
     },
-    value: function (val) {
+    value(val) {
       if (val !== this.d_value) {
         this.d_value = val
         this.handleInitEditor()
       }
     },
-    subfield: function (val) {
+    subfield(val) {
       this.s_subfield = val
     },
-    defaultOpen: function (val) {
+    defaultOpen(val) {
       let default_open_ = val
       if (!default_open_) {
         default_open_ = this.subfield ? 'preview' : 'edit'
@@ -367,7 +368,7 @@ export default {
       this.cm = CodeMirror.fromTextArea(this.$refs.cmRef, {
         tabSize: this.tabSize,
         mode: 'text/markdown',
-        // theme: 'idea',
+        theme: 'eclipse',
         lineNumbers: true,
         lineWrapping: true,
         line: true,
@@ -377,7 +378,7 @@ export default {
         },
         viewportMargin: 50,
         inputStyle: 'contenteditable',
-        allowDropFileTypes: ['image/jpg', 'image/png', 'image/svg', 'image/jpeg', 'image/gif'],
+        allowDropFileTypes: ['image/jpg', 'image/png', 'image/svg', 'image/jpeg', 'image/gif', 'image/webp'],
         foldGutter: true,
         gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
       })
@@ -635,7 +636,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus">
 @import 'lib/css/scroll.styl';
 @import 'lib/css/halo-editor.styl';
 </style>

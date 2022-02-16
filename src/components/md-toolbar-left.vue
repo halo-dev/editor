@@ -221,8 +221,7 @@
     </transition>
   </div>
 </template>
-<script type="text/ecmascript-6">
-
+<script>
 export default {
   name: 's-md-toolbar-left',
   props: {
@@ -255,11 +254,7 @@ export default {
       this.$emit('openImagePicker')
     },
     handleAddLink() {
-      this.$emit(
-        'insertLink',
-        this.link_text,
-        this.link_addr
-      )
+      this.$emit('insertLink', this.link_text, this.link_addr)
       this.s_img_link_open = false
     },
     handleOpenLinkAddModal() {
@@ -295,7 +290,7 @@ export default {
     },
     $mouseleave_header_dropdown() {
       let vm = this
-      this.header_timer = setTimeout(function() {
+      this.header_timer = setTimeout(function () {
         vm.s_header_dropdown_open = false
       }, 200)
     },
@@ -311,7 +306,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .op-icon.dropdown-wrapper.dropdown {
   position: relative;
 

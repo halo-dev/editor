@@ -117,7 +117,7 @@
     <slot name="right-toolbar-after" />
   </div>
 </template>
-<script type="text/ecmascript-6">
+<script>
 export default {
   name: 's-md-toolbar-right',
   props: {
@@ -126,7 +126,10 @@ export default {
       type: Boolean,
       required: true
     },
-    toolbars: { type: Object, required: true },
+    toolbars: {
+      type: Object,
+      required: true
+    },
     s_preview_switch: { type: Boolean, required: true },
     s_fullScreen: { type: Boolean, required: true },
     s_html_code: { type: Boolean, required: true },

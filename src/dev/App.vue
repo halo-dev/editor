@@ -32,8 +32,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
-
+<script>
 export default {
   name: 'app',
   data() {
@@ -75,20 +74,11 @@ export default {
         /* 1.4.2 */
         navigation: true // 导航目录
       },
-      imageClick: function(file) {
+      imageClick: function (file) {
         console.log(file)
       },
       imgName: '',
-      value: `---
-title: 在 Linux 环境部署
-description: 在Linux上快速安装Halo
----
-
-:::info
-在继续操作之前，我们推荐您先阅读[《写在前面》](/getting-started/prepare)，这可以快速帮助你了解 Halo。
-:::
-
-## 依赖检查
+      value: `## 依赖检查
 
 目前运行 Halo 的最低依赖要求为 JRE 11，请务必确保在进行下面操作之前已经正确安装了 JRE。
 
@@ -356,7 +346,7 @@ reverse_proxy 127.0.0.1:8090
   created() {
     var $vm = this
     this.sizeToStatus()
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
       // 媒介查询
       $vm.sizeToStatus()
     })
