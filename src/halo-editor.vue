@@ -5,7 +5,7 @@
     class="v-note-wrapper markdown-body"
   >
     <!--工具栏-->
-    <div v-show="toolbarsFlag" :style="{ background: toolbarsBackground }" class="v-note-op">
+    <div v-if="toolbarsFlag" :style="{ background: toolbarsBackground }" class="v-note-op">
       <v-md-toolbar-left
         ref="toolbar_left"
         :class="{ transition: transition }"
@@ -15,14 +15,7 @@
         @imgAdd="$imgAdd"
         @insertLink="insertLink"
         @openImagePicker="openImagePicker"
-      >
-        <template #left-toolbar-before>
-          <slot name="left-toolbar-before" />
-        </template>
-        <template #left-toolbar-after>
-          <slot name="left-toolbar-after" />
-        </template>
-      </v-md-toolbar-left>
+      />
       <v-md-toolbar-right
         ref="toolbar_right"
         :class="{ transition: transition }"
@@ -33,14 +26,7 @@
         :s_subfield="s_subfield"
         :toolbars="toolbars"
         @toolbar_right_click="toolbar_right_click"
-      >
-        <template #right-toolbar-before>
-          <slot name="right-toolbar-before" />
-        </template>
-        <template #right-toolbar-after>
-          <slot name="right-toolbar-after" />
-        </template>
-      </v-md-toolbar-right>
+      />
     </div>
     <!--编辑展示区域-->
     <div class="v-note-panel">
@@ -140,6 +126,7 @@ import times from 'lodash.times'
 import flatten from 'lodash.flatten'
 import last from 'lodash.last'
 import 'github-markdown-css/github-markdown-light.css'
+import 'katex/dist/katex.min.css'
 
 // CodeMirror
 import CodeMirror from 'codemirror'
@@ -620,9 +607,6 @@ export default {
       this.$render($vm.d_value, function (res) {
         // render
         $vm.d_render = res
-        $vm.$nextTick(() => {
-          $vm.renderMermaidDiagrams()
-        })
         // change回调  toggleChange == false 时候触发change回调
         if (!toggleChange) {
           if ($vm.change) $vm.change($vm.d_value, $vm.d_render)

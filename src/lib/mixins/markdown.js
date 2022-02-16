@@ -1,5 +1,4 @@
 import escape from 'lodash.escape'
-import mermaid from 'mermaid'
 import MarkdownIt from 'markdown-it'
 // 表情
 import markdownItEmoji from 'markdown-it-emoji'
@@ -18,6 +17,8 @@ import markdownItTaskLists from 'markdown-it-task-lists'
 import markdownItAnchor from 'markdown-it-anchor'
 import markdownItTableOfContents from 'markdown-it-table-of-contents'
 import markdownItImagesPreview from 'markdown-it-images-preview'
+import markdownItKatex from '@iktakahiro/markdown-it-katex'
+import markdownItMermaid from '@liradb2000/markdown-it-mermaid'
 
 const markdown_config = {
   html: true, // Enable HTML tags in source
@@ -27,11 +28,7 @@ const markdown_config = {
   typographer: true,
   quotes: '“”‘’',
   highlight(str, lang) {
-    if (['mermaid', 'plantuml'].includes(lang)) {
-      return `<pre class="${lang}"><code>${escape(str)}</code></pre>`
-    } else {
-      return `<pre><code class="language-${lang}">${escape(str)}</code></pre>`
-    }
+    return `<pre><code class="language-${lang}">${escape(str)}</code></pre>`
   }
 }
 
@@ -66,11 +63,13 @@ markdown
   .use(markdownItIns)
   .use(markdownItImagesPreview)
   .use(markdownItTaskLists)
+  .use(markdownItAnchor)
+  .use(markdownItKatex)
   .use(markdownItTableOfContents, {
     includeLevel: [1, 2, 3, 4, 5, 6],
     markerPattern: /^\[TOC\]/im
   })
-  .use(markdownItAnchor)
+  .use(markdownItMermaid)
 
 export default {
   data() {
@@ -82,18 +81,6 @@ export default {
     $render(src, func) {
       const res = markdown.render(src)
       func(res)
-    },
-    renderMermaidDiagrams() {
-      const mermaids = document.querySelectorAll('.v-show-content pre.mermaid > code')
-      if (!mermaids.length) {
-        return
-      }
-      for (let i = 0; i < mermaids.length; i++) {
-        const mermaidDef = mermaids[i].innerText
-        const mmElm = document.createElement('div')
-        mmElm.innerHTML = `<div id='mermaid-id-${i}'>${mermaid.render(`mermaid-id-${i}`, mermaidDef)}</div>`
-        mermaids[i].parentElement.replaceWith(mmElm)
-      }
     }
   }
 }

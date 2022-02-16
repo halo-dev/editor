@@ -1,6 +1,5 @@
 <template>
   <div class="v-right-item">
-    <slot name="right-toolbar-before" />
     <button
       v-if="toolbars.navigation"
       v-show="!s_navigation"
@@ -114,7 +113,6 @@
     >
       <i-fa-code />
     </button>
-    <slot name="right-toolbar-after" />
   </div>
 </template>
 <script>

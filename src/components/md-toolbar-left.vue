@@ -1,6 +1,5 @@
 <template>
   <div class="v-left-item">
-    <slot name="left-toolbar-before" />
     <button
       v-if="toolbars.bold"
       aria-hidden="true"
@@ -198,9 +197,6 @@
       <i-fa-floppy-o />
     </button>
 
-    <slot name="left-toolbar-after" />
-
-    <!-- 添加image链接 -->
     <transition name="fade">
       <div v-if="s_img_link_open" class="add-image-link-wrapper">
         <div class="add-image-link">

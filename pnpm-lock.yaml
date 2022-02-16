@@ -3,13 +3,16 @@ lockfileVersion: 5.3
 specifiers:
   '@iconify-icons/fa-solid': ^1.2.1
   '@iconify-json/fa': ^1.1.0
+  '@iktakahiro/markdown-it-katex': ^4.0.1
+  '@liradb2000/markdown-it-mermaid': ^0.4.4
   codemirror: ^5.65.1
   eslint: ^7.32.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
-  eslint-plugin-vue: ^8.3.0
+  eslint-plugin-vue: ^8.4.1
   github-markdown-css: ^5.1.0
   husky: ^7.0.4
+  katex: ^0.12.0
   lodash.escape: ^4.0.1
   lodash.flatten: ^4.4.0
   lodash.last: ^3.0.0
@@ -25,20 +28,22 @@ specifiers:
   markdown-it-sup: ^1.0.0
   markdown-it-table-of-contents: ^0.4.4
   markdown-it-task-lists: ^2.1.1
-  mermaid: ^8.14.0
   prettier: ^2.5.1
   rimraf: ^3.0.2
   stylus: ^0.54.8
   unplugin-icons: ^0.13.1
   unplugin-vue-components: ^0.17.18
-  vite: ^2.8.2
+  vite: ^2.8.3
   vite-plugin-vue2: ^1.9.3
   vue: ^2.6.14
   vue-template-compiler: ^2.6.14
 
 dependencies:
+  '@iktakahiro/markdown-it-katex': 4.0.1
+  '@liradb2000/markdown-it-mermaid': 0.4.4
   codemirror: 5.65.1
   github-markdown-css: 5.1.0
+  katex: 0.12.0
   lodash.escape: 4.0.1
   lodash.flatten: 4.4.0
   lodash.last: 3.0.0
@@ -54,7 +59,6 @@ dependencies:
   markdown-it-sup: 1.0.0
   markdown-it-table-of-contents: 0.4.4
   markdown-it-task-lists: 2.1.1
-  mermaid: 8.14.0
   vue: 2.6.14
 
 devDependencies:
@@ -68,10 +72,10 @@ devDependencies:
   prettier: 2.5.1
   rimraf: 3.0.2
   stylus: 0.54.8
-  unplugin-icons: 0.13.1_16041625e4cfaf0c936d4ef9d487ab8b
-  unplugin-vue-components: 0.17.18_vite@2.8.2+vue@2.6.14
-  vite: 2.8.2_stylus@0.54.8
-  vite-plugin-vue2: 1.9.3_16041625e4cfaf0c936d4ef9d487ab8b
+  unplugin-icons: 0.13.1_4a64a6997abc8f34d3c385a8150b900d
+  unplugin-vue-components: 0.17.18_vite@2.8.3+vue@2.6.14
+  vite: 2.8.3_stylus@0.54.8
+  vite-plugin-vue2: 1.9.3_4a64a6997abc8f34d3c385a8150b900d
   vue-template-compiler: 2.6.14
 
 packages:
@@ -502,6 +506,12 @@ packages:
       - supports-color
     dev: true
 
+  /@iktakahiro/markdown-it-katex/4.0.1:
+    resolution: {integrity: sha512-kGFooO7fIOgY34PSG8ZNVsUlKhhNoqhzW2kq94TNGa8COzh73PO4KsEoPOsQVG1mEAe8tg7GqG0FoVao0aMHaw==}
+    dependencies:
+      katex: 0.12.0
+    dev: false
+
   /@jridgewell/resolve-uri/3.0.5:
     resolution: {integrity: sha512-VPeQ7+wH0itvQxnG+lIzWgkysKIr3L9sslimFW55rHMdGu/qCQ5z5h9zq4gI8uBtqkpHhsF4Z/OwExufUCThew==}
     engines: {node: '>=6.0.0'}
@@ -517,6 +527,13 @@ packages:
       '@jridgewell/resolve-uri': 3.0.5
       '@jridgewell/sourcemap-codec': 1.4.11
     dev: true
+
+  /@liradb2000/markdown-it-mermaid/0.4.4:
+    resolution: {integrity: sha512-i+SM6nz+eeGbtAaUFJveF9+/DtCnf6L9fycQEbwK0e+pgDVHPJ1EW3eKZBpWfY54TfiOqIltN77dKngYDoLJYQ==}
+    dependencies:
+      mermaid: 8.14.0
+      npm: 7.24.2
+    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2244,6 +2261,13 @@ packages:
       graceful-fs: 4.2.9
     dev: true
 
+  /katex/0.12.0:
+    resolution: {integrity: sha512-y+8btoc/CK70XqcHqjxiGWBOeIL8upbS0peTPXTvgrh21n1RiWWcIpSWM+4uXq+IAgNh9YYQWdc7LVDPDAEEAg==}
+    hasBin: true
+    dependencies:
+      commander: 2.20.3
+    dev: false
+
   /khroma/1.4.1:
     resolution: {integrity: sha512-+GmxKvmiRuCcUYDgR7g5Ngo0JEDeOsGdNONdU2zsiBQaK4z19Y2NvXqfEDE0ZiIrg45GTZyAnPLVsLZZACYm3Q==}
     dev: false
@@ -2484,6 +2508,83 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
+
+  /npm/7.24.2:
+    resolution: {integrity: sha512-120p116CE8VMMZ+hk8IAb1inCPk4Dj3VZw29/n2g6UI77urJKVYb7FZUDW8hY+EBnfsjI/2yrobBgFyzo7YpVQ==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dev: false
+    bundledDependencies:
+      - '@isaacs/string-locale-compare'
+      - '@npmcli/arborist'
+      - '@npmcli/ci-detect'
+      - '@npmcli/config'
+      - '@npmcli/map-workspaces'
+      - '@npmcli/package-json'
+      - '@npmcli/run-script'
+      - abbrev
+      - ansicolors
+      - ansistyles
+      - archy
+      - cacache
+      - chalk
+      - chownr
+      - cli-columns
+      - cli-table3
+      - columnify
+      - fastest-levenshtein
+      - glob
+      - graceful-fs
+      - hosted-git-info
+      - ini
+      - init-package-json
+      - is-cidr
+      - json-parse-even-better-errors
+      - libnpmaccess
+      - libnpmdiff
+      - libnpmexec
+      - libnpmfund
+      - libnpmhook
+      - libnpmorg
+      - libnpmpack
+      - libnpmpublish
+      - libnpmsearch
+      - libnpmteam
+      - libnpmversion
+      - make-fetch-happen
+      - minipass
+      - minipass-pipeline
+      - mkdirp
+      - mkdirp-infer-owner
+      - ms
+      - node-gyp
+      - nopt
+      - npm-audit-report
+      - npm-install-checks
+      - npm-package-arg
+      - npm-pick-manifest
+      - npm-profile
+      - npm-registry-fetch
+      - npm-user-validate
+      - npmlog
+      - opener
+      - pacote
+      - parse-conflict-json
+      - qrcode-terminal
+      - read
+      - read-package-json
+      - read-package-json-fast
+      - readdir-scoped-modules
+      - rimraf
+      - semver
+      - ssri
+      - tar
+      - text-table
+      - tiny-relative-date
+      - treeverse
+      - validate-npm-package-name
+      - which
+      - write-file-atomic
 
   /once/1.4.0:
     resolution: {integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=}
@@ -2912,7 +3013,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /unplugin-icons/0.13.1_16041625e4cfaf0c936d4ef9d487ab8b:
+  /unplugin-icons/0.13.1_4a64a6997abc8f34d3c385a8150b900d:
     resolution: {integrity: sha512-Y7ZOjTUvLdY4qUQNDo4OmkxjCh2coNbcAeWfFW66EZW7cJiBI6vU8j4cBAsyqUEwMdFL3q/kwowCRgD6BAaRyQ==}
     peerDependencies:
       '@svgr/core': '>=5.5.0'
@@ -2935,7 +3036,7 @@ packages:
       debug: 4.3.3
       kolorist: 1.5.1
       local-pkg: 0.4.1
-      unplugin: 0.3.2_vite@2.8.2
+      unplugin: 0.3.2_vite@2.8.3
       vue-template-compiler: 2.6.14
     transitivePeerDependencies:
       - esbuild
@@ -2945,7 +3046,7 @@ packages:
       - webpack
     dev: true
 
-  /unplugin-vue-components/0.17.18_vite@2.8.2+vue@2.6.14:
+  /unplugin-vue-components/0.17.18_vite@2.8.3+vue@2.6.14:
     resolution: {integrity: sha512-4wvJnSShTXCnZpO1G6h0DlHjBXap0JqzFyU84guMT6EH0shUZZ3TAta4pDa8nNeWAtcJVTF9uQswePq1elhpKQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -2967,7 +3068,7 @@ packages:
       magic-string: 0.25.7
       minimatch: 3.1.1
       resolve: 1.22.0
-      unplugin: 0.3.2_vite@2.8.2
+      unplugin: 0.3.2_vite@2.8.3
       vue: 2.6.14
     transitivePeerDependencies:
       - esbuild
@@ -2977,7 +3078,7 @@ packages:
       - webpack
     dev: true
 
-  /unplugin/0.3.2_vite@2.8.2:
+  /unplugin/0.3.2_vite@2.8.3:
     resolution: {integrity: sha512-5d0DMYNKZU+S9eZUiBfw6Co32eRg8myUgBPoWSqG/wDFCUE/WznfSsJnZWi1P9l69x4uLJqt2qVq1xW/AsXFrw==}
     peerDependencies:
       esbuild: '>=0.13'
@@ -2994,7 +3095,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      vite: 2.8.2_stylus@0.54.8
+      vite: 2.8.3_stylus@0.54.8
       webpack-virtual-modules: 0.4.3
     dev: true
 
@@ -3017,7 +3118,7 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /vite-plugin-vue2/1.9.3_16041625e4cfaf0c936d4ef9d487ab8b:
+  /vite-plugin-vue2/1.9.3_4a64a6997abc8f34d3c385a8150b900d:
     resolution: {integrity: sha512-0KhHSEeht0VHJtt4Z2cJ9bWBq4dP3HoXpapqAHV+f+cUa6KywYdOd+z6sSGLpuGjN8F9YinrFIo8dfVmMOpc8Q==}
     peerDependencies:
       vite: ^2.0.0-beta.23
@@ -3042,15 +3143,15 @@ packages:
       rollup: 2.67.2
       slash: 3.0.0
       source-map: 0.7.3
-      vite: 2.8.2_stylus@0.54.8
+      vite: 2.8.3_stylus@0.54.8
       vue-template-compiler: 2.6.14
       vue-template-es2015-compiler: 1.9.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite/2.8.2_stylus@0.54.8:
-    resolution: {integrity: sha512-zawfykcPVPYva4KusIWORNLr324Qx86/3NpfQSIOJdjnL5pYhwDoImLYMOh4lFLcP/7//tNuWM2vx2F5OSVC9w==}
+  /vite/2.8.3_stylus@0.54.8:
+    resolution: {integrity: sha512-967klrEiG7HEsN7fQYYVETs5495Iu6GpI7YyxoO5yVTJCRxjV8HhWgNWKgrbazjoOB9DQuztL53/nUoNqHNsWg==}
     engines: {node: '>=12.2.0'}
     hasBin: true
     peerDependencies:

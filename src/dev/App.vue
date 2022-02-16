@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="!screen_phone" class="item">
+    <div class="item">
       <halo-editor
         ref="md"
         v-model="value"
@@ -19,15 +19,9 @@
         @imgAdd="$imgAdd"
         @imgDel="$imgDel"
         @previewtoggle="$previewtoggle"
-        @save="saveone"
         @subfieldtoggle="$subfieldtoggle"
       >
       </halo-editor>
-    </div>
-    <!--自定义-->
-    <div v-if="screen_phone" class="item">
-      <h2 class="item-header"></h2>
-      <halo-editor :toolbars="toolbars" class="item-editor" @save="savetwo"></halo-editor>
     </div>
   </div>
 </template>
@@ -37,7 +31,6 @@ export default {
   name: 'app',
   data() {
     return {
-      screen_phone: false,
       toolbars: {
         underline: true, // 下划线
         strikethrough: true, // 中划线
@@ -343,26 +336,7 @@ reverse_proxy 127.0.0.1:8090
 `
     }
   },
-  created() {
-    var $vm = this
-    this.sizeToStatus()
-    window.addEventListener('resize', function () {
-      // 媒介查询
-      $vm.sizeToStatus()
-    })
-  },
-  mounted() {
-    var md = this.$refs.md
-    var toolbar_left = md.$refs.toolbar_left
-    var diy = this.$refs.diy
-    toolbar_left.$el.append(diy)
-    // toolbar_left.$el.append(diy.$el)
-    // console.log(toolbar_left)
-  },
   methods: {
-    clearCache() {
-      this.$refs.md.$emptyHistory()
-    },
     $click(val) {
       console.log(val)
     },
@@ -373,15 +347,6 @@ reverse_proxy 127.0.0.1:8090
     $imgDel(pos) {
       console.log('imgDel', pos)
       delete this.img_file[pos]
-    },
-    sizeToStatus() {
-      this.screen_phone = !window.matchMedia('(min-width:768px)').matches
-    },
-    saveone() {
-      alert('save one')
-    },
-    savetwo() {
-      alert('save two')
     },
     change(val) {
       console.log(val)
