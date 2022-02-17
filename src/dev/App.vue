@@ -479,11 +479,7 @@ body {
 
   .item-editor {
     width: 100%;
-    height: 700px;
-
-    @media only screen and (max-width: 1600px) {
-      height: 550px;
-    }
+    height: 900px;
   }
 }
 </style>
