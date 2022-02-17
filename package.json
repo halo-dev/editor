@@ -31,6 +31,7 @@
   "dependencies": {
     "@iktakahiro/markdown-it-katex": "^4.0.1",
     "@liradb2000/markdown-it-mermaid": "^0.4.4",
+    "@susisu/mte-kernel": "^2.1.1",
     "codemirror": "^5.65.1",
     "github-markdown-css": "^5.1.0",
     "highlight.js": "^11.4.0",

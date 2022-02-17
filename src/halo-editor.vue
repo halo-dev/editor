@@ -147,6 +147,9 @@ import 'codemirror/addon/fold/foldgutter.js'
 import 'codemirror/addon/fold/foldgutter.css'
 import 'codemirror/addon/fold/markdown-fold.js'
 
+// mte-kernel
+import { TextEditorInterface } from './lib/core/mte-kernel/mte'
+
 const markups = {
   bold: {
     start: '**'
@@ -387,6 +390,10 @@ export default {
       this.cm.on('change', c => {
         this.d_value = c.getValue()
       })
+
+      // mte-kernel
+      const textEditorInterface = new TextEditorInterface(this.cm)
+      textEditorInterface.init()
     },
 
     setHeading(level) {

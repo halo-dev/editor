@@ -5,6 +5,7 @@ specifiers:
   '@iconify-json/fa': ^1.1.0
   '@iktakahiro/markdown-it-katex': ^4.0.1
   '@liradb2000/markdown-it-mermaid': ^0.4.4
+  '@susisu/mte-kernel': ^2.1.1
   codemirror: ^5.65.1
   eslint: ^7.32.0
   eslint-config-prettier: ^8.3.0
@@ -42,6 +43,7 @@ specifiers:
 dependencies:
   '@iktakahiro/markdown-it-katex': 4.0.1
   '@liradb2000/markdown-it-mermaid': 0.4.4
+  '@susisu/mte-kernel': 2.1.1
   codemirror: 5.65.1
   github-markdown-css: 5.1.0
   highlight.js: 11.4.0
@@ -565,6 +567,12 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
+
+  /@susisu/mte-kernel/2.1.1:
+    resolution: {integrity: sha512-i2lucPD0BOUNIY6P0MGIUbJ/piV8iNzwB8QU1fdkRLls85rq8NJa75oeZVWo2PLrUWjN64+3oD85kZFsx3ovyA==}
+    dependencies:
+      meaw: 5.0.0
+    dev: false
 
   /@types/throttle-debounce/2.1.0:
     resolution: {integrity: sha512-5eQEtSCoESnh2FsiLTxE121IiE60hnMqcb435fShf4bpLRjEu1Eoekht23y6zXS9Ts3l+Szu3TARnTsA0GkOkQ==}
@@ -2418,6 +2426,11 @@ packages:
 
   /mdurl/1.0.1:
     resolution: {integrity: sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=}
+    dev: false
+
+  /meaw/5.0.0:
+    resolution: {integrity: sha512-yaK9Pnj6JrLcQGEqDUS0WGUEiaFg9Q215isi8mzcDVOjeGr5oS863hu+/ZS49g+azKPo5Wbpk3tgkP2+YOyZZw==}
+    engines: {node: '>=10.0.0'}
     dev: false
 
   /merge-source-map/1.1.0:
