@@ -1,6 +1,6 @@
 {
   "name": "@halo-dev/editor",
-  "private": true,
+  "private": false,
   "version": "2.8.4",
   "scripts": {
     "prepare": "husky install",
