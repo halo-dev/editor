@@ -12,7 +12,6 @@
         :toolbars="toolbars"
         :transition="transition"
         @clickCommands="clickCommands"
-        @imgAdd="$imgAdd"
         @insertLink="insertLink"
         @openImagePicker="openImagePicker"
       />
@@ -305,7 +304,6 @@ export default {
         return temp_array
       })(), // 编辑记录
       d_history_index: 0, // 编辑记录索引
-      d_image_file: [],
       d_preview_imgsrc: null, // 图片预览地址
       cm: undefined
     }
@@ -463,58 +461,6 @@ export default {
       this.insetAtCursor(`[${text}](${link})`)
     },
 
-    $imgAdd(pos, $file, isinsert) {
-      if (isinsert === undefined) isinsert = true
-      const $vm = this
-      if (this.__rFilter == null) {
-        this.__rFilter = /^image\//i
-      }
-      this.__oFReader = new FileReader()
-      this.__oFReader.onload = function (oFREvent) {
-        $vm.markdownIt.image_add(pos, oFREvent.target.result)
-        $file.miniurl = oFREvent.target.result
-        if (isinsert === true) {
-          // 去除特殊字符
-          // $file._name = $file.name.replace(/[\[\](\)\+\{\}&\|\\\*^%$#@\-]/g, '')
-
-          $vm.insertText($vm.getTextareaDom(), {
-            prefix: '![' + $file._name + '](' + pos + ')',
-            subfix: '',
-            str: ''
-          })
-          $vm.$nextTick(function () {
-            $vm.$emit('imgAdd', pos, $file)
-          })
-        }
-      }
-      if ($file) {
-        const oFile = $file
-        if (this.__rFilter.test(oFile.type)) {
-          this.__oFReader.readAsDataURL(oFile)
-        }
-      }
-    },
-    $imgUpdateByUrl(pos, url) {
-      var $vm = this
-      this.markdownIt.image_add(pos, url)
-      this.$nextTick(function () {
-        $vm.d_render = this.markdownIt.render(this.d_value)
-      })
-    },
-    $img2Url(fileIndex, url) {
-      var reg_str = '/(!\\[[^\\[]*?\\](?=\\())\\(\\s*(' + fileIndex + ')\\s*\\)/g'
-      var reg = eval(reg_str)
-      this.d_value = this.d_value.replace(reg, '$1(' + url + ')')
-      this.$refs.toolbar_left.$changeUrl(fileIndex, url)
-      this.iRender()
-    },
-    $imglst2Url(imglst) {
-      if (imglst instanceof Array) {
-        for (var i = 0; i < imglst.length; i++) {
-          this.$img2Url(imglst[i][0], imglst[i][1])
-        }
-      }
-    },
     clickCommands(_type, options) {
       if (markups[_type]) {
         this.setMarkup(markups[_type].start, markups[_type].end)

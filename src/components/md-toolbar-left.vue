@@ -198,9 +198,9 @@
     </button>
 
     <transition name="fade">
-      <div v-if="s_img_link_open" class="add-image-link-wrapper">
+      <div v-if="s_link_open" class="add-image-link-wrapper">
         <div class="add-image-link">
-          <i @click.stop.prevent="s_img_link_open = false">
+          <i @click.stop.prevent="s_link_open = false">
             <i-fa-times height="1rem" width="1rem" />
           </i>
           <h3 class="title">添加链接</h3>
@@ -210,7 +210,7 @@
           <div class="link-addr input-wrapper">
             <input v-model="link_addr" placeholder="链接地址" type="text" />
           </div>
-          <div class="op-btn cancel" @click.stop="s_img_link_open = false">取消</div>
+          <div class="op-btn cancel" @click.stop="s_link_open = false">取消</div>
           <div class="op-btn sure" @click.stop="handleAddLink()">确定</div>
         </div>
       </div>
@@ -233,12 +233,9 @@ export default {
   },
   data() {
     return {
-      // [index, file]
-      img_file: [[0, null]],
       header_timer: null,
-      s_img_dropdown_open: false,
       s_header_dropdown_open: false,
-      s_img_link_open: false,
+      s_link_open: false,
       trigger: null,
       num: 0,
       link_text: '',
@@ -262,34 +259,14 @@ export default {
     },
     handleAddLink() {
       this.$emit('insertLink', this.link_text, this.link_addr)
-      this.s_img_link_open = false
+      this.s_link_open = false
     },
     handleOpenLinkAddModal() {
       this.link_text = this.link_addr = ''
-      this.s_img_link_open = true
+      this.s_link_open = true
       this.$nextTick(() => {
         this.$refs.linkTextInput.focus()
       })
-      this.s_img_dropdown_open = false
-    },
-    $changeUrl(index, url) {
-      this.img_file[index][0] = url
-    },
-    $imgFileAdd($file) {
-      this.img_file.push([++this.num, $file])
-      this.$emit('imgAdd', this.num, $file)
-      this.s_img_dropdown_open = false
-    },
-    $imgFilesAdd($files) {
-      for (let i = 0; i < $files.length; i++) {
-        if ($files[i].type.match(/^image\//i)) {
-          this.$imgFileAdd($files[i])
-        }
-      }
-    },
-    $imgAdd($e) {
-      this.$imgFilesAdd($e.target.files)
-      $e.target.value = '' // 初始化
     },
     $mouseenter_header_dropdown() {
       clearTimeout(this.header_timer)
