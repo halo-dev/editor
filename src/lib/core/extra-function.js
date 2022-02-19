@@ -10,68 +10,6 @@
  */
 
 /**
- * Created by zhy on 2017/4/24.
- */
-/**
- * textarea 插入内容
- */
-export const insertTextAtCaret = (obj, { prefix, subfix, str }, $vm) => {
-  obj.focus()
-  if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number') {
-    var startPos = obj.selectionStart
-    var endPos = obj.selectionEnd
-    var tmpStr = obj.value
-    if (startPos === endPos) {
-      // 直接插入
-      obj.value = tmpStr.substring(0, startPos) + prefix + str + subfix + tmpStr.substring(endPos, tmpStr.length)
-      obj.selectionStart = startPos + prefix.length
-      obj.selectionEnd = startPos + (str.length + prefix.length)
-    } else {
-      // 存在选中区域
-      if (
-        tmpStr.substring(startPos - prefix.length, startPos) === prefix &&
-        tmpStr.substring(endPos, endPos + subfix.length) === subfix &&
-        judgeItalicAndBold(prefix, subfix, tmpStr, startPos, endPos)
-      ) {
-        // 取消
-        obj.value =
-          tmpStr.substring(0, startPos - prefix.length) +
-          tmpStr.substring(startPos, endPos) +
-          tmpStr.substring(endPos + subfix.length, tmpStr.length)
-        obj.selectionStart = startPos - prefix.length
-        obj.selectionEnd = endPos - prefix.length
-      } else {
-        // 确定
-        obj.value =
-          tmpStr.substring(0, startPos) +
-          prefix +
-          tmpStr.substring(startPos, endPos) +
-          subfix +
-          tmpStr.substring(endPos, tmpStr.length)
-        obj.selectionStart = startPos + prefix.length
-        obj.selectionEnd = startPos + (endPos - startPos + prefix.length)
-      }
-    }
-  } else {
-    alert('Error: Browser version is too low')
-    // obj.value += str;
-  }
-  // 触发change事件
-  $vm.d_value = obj.value
-  obj.focus()
-}
-
-// 处理粗体与斜体冲突问题
-function judgeItalicAndBold(prefix, subfix, tmpStr, startPos, endPos) {
-  if (prefix === '*' && subfix === '*') {
-    if (tmpStr.substring(startPos - 2, startPos - 1) === '*' && tmpStr.substring(endPos + 1, endPos + 2) === '*') {
-      return false
-    }
-  }
-  return true
-}
-
-/**
  * 生成导航目录
  */
 export const getNavigation = $vm => {

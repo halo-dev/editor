@@ -19,7 +19,8 @@ export default defineConfig({
     outDir: path.resolve(__dirname, 'dist/lib'),
     lib: {
       entry: path.resolve(__dirname, 'src/index.js'),
-      name: 'HaloEditor'
+      name: 'HaloEditor',
+      fileName: format => `halo-editor.${format}.js`
     },
     rollupOptions: {
       external: ['vue'],
@@ -29,6 +30,6 @@ export default defineConfig({
         }
       }
     },
-    sourcemap: false
+    sourcemap: true
   }
 })

@@ -107,13 +107,7 @@
 
 <script>
 import { keydownListen } from './lib/core/keydown-listen.js'
-import {
-  fullscreenchange,
-  getNavigation,
-  ImagePreviewListener,
-  insertTextAtCaret,
-  scrollLink
-} from './lib/core/extra-function.js'
+import { fullscreenchange, getNavigation, ImagePreviewListener, scrollLink } from './lib/core/extra-function.js'
 import { toolbar_right_click } from './lib/toolbar_right_click.js'
 import { CONFIG } from './lib/config.js'
 import markdown from './lib/mixins/markdown.js'
@@ -604,10 +598,9 @@ export default {
       return this.$refs.cmRef.$refs.vTextarea
     },
     // 工具栏插入内容
-    insertText(obj, { prefix, subfix, str, type }) {
+    insertText() {
       // if (this.s_preview_switch) {
-
-      insertTextAtCaret(obj, { prefix, subfix, str, type }, this)
+      // insertTextAtCaret(obj, { prefix, subfix, str, type }, this)
     },
     iRender(toggleChange) {
       var $vm = this

@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "dev:lib": "vite build --config vite.lib.config.js --watch",
     "build:lib": "rimraf dist && vite build --config vite.lib.config.js",
     "lint": "eslint --ext .js,vue --ignore-path .gitignore ."
   },
