@@ -2,9 +2,9 @@
   <div class="v-left-item">
     <button
       v-if="toolbars.bold"
+      :title="`粗体 (${ctrlKeyName} + B)`"
       aria-hidden="true"
       class="op-icon"
-      title="粗体 (Ctrl+B)"
       type="button"
       @click="$clicks('bold')"
     >
@@ -12,9 +12,9 @@
     </button>
     <button
       v-if="toolbars.italic"
+      :title="`斜体 (${ctrlKeyName} + I)`"
       aria-hidden="true"
       class="op-icon"
-      title="斜体 (Ctrl+I)"
       type="button"
       @click="$clicks('italic')"
     >
@@ -23,9 +23,9 @@
     <div
       v-if="toolbars.header"
       :class="{ selected: s_header_dropdown_open }"
+      :title="`标题 (${ctrlKeyName} + H)`"
       aria-hidden="true"
       class="op-icon dropdown dropdown-wrapper"
-      title="标题 (Ctrl+H)"
       type="button"
       @mouseenter="$mouseenter_header_dropdown"
       @mouseleave="$mouseleave_header_dropdown"
@@ -53,9 +53,9 @@
     <span v-if="toolbars.header || toolbars.italic || toolbars.bold" class="op-icon-divider"></span>
     <button
       v-if="toolbars.underline"
+      :title="`下划线 (${ctrlKeyName} + U)`"
       aria-hidden="true"
       class="op-icon"
-      title="下划线 (Ctrl+U)"
       type="button"
       @click="$clicks('underline')"
     >
@@ -63,9 +63,9 @@
     </button>
     <button
       v-if="toolbars.strikethrough"
+      :title="`中划线 (${ctrlKeyName} + Shift + D)`"
       aria-hidden="true"
       class="op-icon"
-      title="中划线 (Ctrl+Shift+D)"
       type="button"
       @click="$clicks('strikethrough')"
     >
@@ -73,9 +73,9 @@
     </button>
     <button
       v-if="toolbars.superscript"
+      :title="`上角标 (${ctrlKeyName} + ${altKeyName} + S)`"
       aria-hidden="true"
       class="op-icon"
-      title="上角标 (Ctrl+Alt+S)"
       type="button"
       @click="$clicks('superscript')"
     >
@@ -83,9 +83,9 @@
     </button>
     <button
       v-if="toolbars.subscript"
+      :title="`下角标 (${ctrlKeyName} + ${altKeyName} + S)`"
       aria-hidden="true"
       class="op-icon"
-      title="下角标 (Ctrl+Shift+S)"
       type="button"
       @click="$clicks('subscript')"
     >
@@ -97,9 +97,9 @@
     ></span>
     <button
       v-if="toolbars.quote"
+      :title="`段落引用 (${ctrlKeyName} + Q)`"
       aria-hidden="true"
       class="op-icon"
-      title="段落引用 (Ctrl+Q)"
       type="button"
       @click="$clicks('quote')"
     >
@@ -107,9 +107,9 @@
     </button>
     <button
       v-if="toolbars.ol"
+      :title="`有序列表 (${ctrlKeyName} + O)`"
       aria-hidden="true"
       class="op-icon"
-      title="有序列表 (Ctrl+O)"
       type="button"
       @click="$clicks('ol')"
     >
@@ -117,9 +117,9 @@
     </button>
     <button
       v-if="toolbars.ul"
+      :title="`无序列表 (${ctrlKeyName} + ${altKeyName} + U)`"
       aria-hidden="true"
       class="op-icon"
-      title="无序列表 (Ctrl+Alt+U)"
       type="button"
       @click="$clicks('ul')"
     >
@@ -128,9 +128,9 @@
     <span v-if="toolbars.ul || toolbars.ol || toolbars.quote" class="op-icon-divider"></span>
     <button
       v-if="toolbars.link"
+      :title="`链接 (${ctrlKeyName} + L)`"
       aria-hidden="true"
       class="op-icon"
-      title="链接 (Ctrl+L)"
       type="button"
       @click.stop="handleOpenLinkAddModal('link')"
     >
@@ -147,9 +147,9 @@
     </button>
     <button
       v-if="toolbars.code"
+      :title="`代码块 (${ctrlKeyName} + ${altKeyName} + C)`"
       aria-hidden="true"
       class="op-icon"
-      title="代码块 (Ctrl+Alt+C)"
       type="button"
       @click="$clicks('code')"
     >
@@ -157,9 +157,9 @@
     </button>
     <button
       v-if="toolbars.table"
+      :title="`表格 (${ctrlKeyName} + ${altKeyName} + T)`"
       aria-hidden="true"
       class="op-icon"
-      title="表格 (Ctrl+Alt+T)"
       type="button"
       @click="$clicks('table')"
     >
@@ -168,9 +168,9 @@
     <span v-if="toolbars.link || toolbars.imagelink || toolbars.code || toolbars.table" class="op-icon-divider"></span>
     <button
       v-if="toolbars.undo"
+      :title="`上一步 (${ctrlKeyName} + Z)`"
       aria-hidden="true"
       class="op-icon"
-      title="上一步 (Ctrl+Z)"
       type="button"
       @click="$clicks('undo')"
     >
@@ -178,9 +178,9 @@
     </button>
     <button
       v-if="toolbars.redo"
+      :title="`下一步 (${ctrlKeyName} + Y)`"
       aria-hidden="true"
       class="op-icon"
-      title="下一步 (Ctrl+Y)"
       type="button"
       @click="$clicks('redo')"
     >
@@ -188,9 +188,9 @@
     </button>
     <button
       v-if="toolbars.save"
+      :title="`保存 (${ctrlKeyName} + S)`"
       aria-hidden="true"
       class="op-icon"
-      title="保存 (Ctrl+S)"
       type="button"
       @click="$clicks('save')"
     >
@@ -243,6 +243,17 @@ export default {
       num: 0,
       link_text: '',
       link_addr: ''
+    }
+  },
+  computed: {
+    ctrlKeyName() {
+      return this.isMacPlatform ? 'Cmd' : 'Ctrl'
+    },
+    altKeyName() {
+      return this.isMacPlatform ? 'Option' : 'Alt'
+    },
+    isMacPlatform() {
+      return /Mac/.test(navigator.platform)
     }
   },
   methods: {
