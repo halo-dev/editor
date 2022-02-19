@@ -389,6 +389,8 @@ export default {
 
       this.cm.on('paste', this.onCmPaste)
 
+      this.cm.on('drop', this.onCmDrop)
+
       // mte-kernel
       const textEditorInterface = new TextEditorInterface(this.cm)
       textEditorInterface.init()
@@ -506,6 +508,24 @@ export default {
           if (file.size === 0) {
             return
           }
+          const { path, name } = await this.uploadRequest(file)
+          this.insetAtCursor(`![${name}](${path})`)
+        }
+      }
+    },
+
+    async onCmDrop(cm, e) {
+      const files = e.dataTransfer.files
+      if (files.length === 0) {
+        return
+      }
+      for (let file of files) {
+        if (file.size === 0) {
+          return
+        }
+        if (file.type.startsWith('image/')) {
+          e.preventDefault()
+          e.stopPropagation()
           const { path, name } = await this.uploadRequest(file)
           this.insetAtCursor(`![${name}](${path})`)
         }
