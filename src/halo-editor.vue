@@ -272,6 +272,10 @@ export default {
     shortCut: {
       type: Boolean,
       default: true
+    },
+    uploadRequest: {
+      type: Function,
+      default: null
     }
   },
   data() {
@@ -383,6 +387,8 @@ export default {
         this.d_value = c.getValue()
       })
 
+      this.cm.on('paste', this.onCmPaste)
+
       // mte-kernel
       const textEditorInterface = new TextEditorInterface(this.cm)
       textEditorInterface.init()
@@ -486,6 +492,26 @@ export default {
         this.cm.doc.redo()
       }
     },
+
+    async onCmPaste(cm, e) {
+      const clipboardItems = e.clipboardData.items
+      if (clipboardItems.length === 0) {
+        return
+      }
+      for (let item of clipboardItems) {
+        if (item.type.startsWith('image/')) {
+          e.preventDefault()
+          e.stopPropagation()
+          const file = item.getAsFile()
+          if (file.size === 0) {
+            return
+          }
+          const { path, name } = await this.uploadRequest(file)
+          this.insetAtCursor(`![${name}](${path})`)
+        }
+      }
+    },
+
     toolbar_right_click(_type) {
       toolbar_right_click(_type, this)
     },
