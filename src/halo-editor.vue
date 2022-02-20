@@ -545,8 +545,24 @@ export default {
     },
 
     onCmScroll(cm) {
-      console.log(cm)
-      // todo
+      const scroller = cm.getScrollerElement()
+      const { scrollTop, scrollHeight, clientHeight } = scroller
+      const percent = scrollTop / scrollHeight
+      const previewDom = this.$refs.vShowContent
+
+      if (scrollTop <= 0) {
+        this.setPreviewScrollTop(0)
+        return
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        previewDom.scrollTop = previewDom.scrollHeight
+        return
+      }
+      this.setPreviewScrollTop(previewDom.scrollHeight * percent)
+    },
+
+    setPreviewScrollTop(scrollTop) {
+      this.$refs.vShowContent.scrollTop = scrollTop
     },
 
     toolbar_right_click(_type) {
