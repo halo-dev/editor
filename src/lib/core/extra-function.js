@@ -58,28 +58,6 @@ export const getNavigation = $vm => {
 }
 
 /**
- * 滚动条联动
- */
-export const scrollLink = ($event, $vm) => {
-  let element = $event.srcElement ? $event.srcElement : $event.target
-  let ratio = element.scrollTop / (element.scrollHeight - element.offsetHeight)
-  if (
-    $vm.edit_scroll_height >= 0 &&
-    element.scrollHeight !== $vm.edit_scroll_height &&
-    element.scrollHeight - element.offsetHeight - element.scrollTop <= 30
-  ) {
-    // star 内容变化 导致 高度增加  且滚动条距离底部小于25px  自动滚动到底部
-    $vm.$refs.vNoteEdit.scrollTop = element.scrollHeight - element.offsetHeight
-    ratio = 1
-  }
-  $vm.edit_scroll_height = element.scrollHeight
-  // end ----
-  if ($vm.$refs.vShowContent.scrollHeight > $vm.$refs.vShowContent.offsetHeight) {
-    $vm.$refs.vShowContent.scrollTop =
-      ($vm.$refs.vShowContent.scrollHeight - $vm.$refs.vShowContent.offsetHeight) * ratio
-  }
-}
-/**
  * 监听浏览器fullscreen
  * @param $vm
  */

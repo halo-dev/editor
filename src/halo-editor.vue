@@ -41,7 +41,6 @@
         }"
         class="v-note-edit divarea-wrapper"
         @click="setFocus"
-        @scroll="$v_edit_scroll"
       >
         <div :style="{ 'background-color': editorBackground }" class="content-input-wrapper">
           <textarea ref="cmRef"></textarea>
@@ -106,7 +105,7 @@
 
 <script>
 import { keydownListen } from './lib/core/keydown-listen.js'
-import { fullscreenchange, getNavigation, ImagePreviewListener, scrollLink } from './lib/core/extra-function.js'
+import { fullscreenchange, getNavigation, ImagePreviewListener } from './lib/core/extra-function.js'
 import { toolbar_right_click } from './lib/toolbar_right_click.js'
 import { CONFIG } from './lib/config.js'
 import markdown from './lib/mixins/markdown.js'
@@ -300,15 +299,7 @@ export default {
       })(), // props true 展示编辑 false展示预览
       s_fullScreen: false, // 全屏编辑标志
       s_html_code: false, // 分栏情况下查看html
-      edit_scroll_height: -1,
       s_readmodel: false,
-      s_table_enter: false, // 回车事件是否在表格中执行
-      d_history: (() => {
-        let temp_array = []
-        temp_array.push(this.value)
-        return temp_array
-      })(), // 编辑记录
-      d_history_index: 0, // 编辑记录索引
       d_preview_imgsrc: null, // 图片预览地址
       cm: undefined
     }
@@ -571,11 +562,7 @@ export default {
     getNavigation($vm, full) {
       return getNavigation($vm, full)
     },
-    // @event
-    // 修改数据触发 （val ， val_render）
-    change(val, render) {
-      this.$emit('change', val, render)
-    },
+
     // 切换全屏触发 （status , val）
     fullscreen(status, val) {
       this.$emit('fullScreen', status, val)
@@ -613,26 +600,15 @@ export default {
         this.getNavigation(this, true)
       }
     },
-    // ---------------------------------------
-    // 滚动条联动
-    $v_edit_scroll($event) {
-      scrollLink($event, this)
-    },
-    iRender: debounce(function (toggleChange) {
+    iRender: debounce(function () {
       const _this = this
       _this.$render(_this.d_value, function (res) {
         // render
         _this.d_render = res
         _this.$nextTick(() => {
           _this.renderHighlight()
+          if (_this.s_navigation) getNavigation(_this, false)
         })
-        // change回调  toggleChange == false 时候触发change回调
-        if (!toggleChange) {
-          if (_this.change) _this.change(_this.d_value, _this.d_render)
-        }
-        // 改变标题导航
-        if (_this.s_navigation) getNavigation(_this, false)
-        // v-model 语法糖
         _this.$emit('input', _this.d_value)
       })
     }, 300)

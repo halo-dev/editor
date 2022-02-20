@@ -225,7 +225,7 @@ export const keydownListen = $vm => {
         }
       }
     } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && !e.altKey) {
-      // ctrl + shift
+      // Ctrl + Shift or Command + Shift
       switch (e.keyCode) {
         case KEY_CODE.S: {
           // S
