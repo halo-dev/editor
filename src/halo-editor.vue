@@ -118,6 +118,7 @@ import md_toolbar_right from './components/md-toolbar-right.vue'
 import times from 'lodash.times'
 import flatten from 'lodash.flatten'
 import last from 'lodash.last'
+import debounce from 'lodash.debounce'
 import 'github-markdown-css/github-markdown-light.css'
 import 'katex/dist/katex.min.css'
 
@@ -363,7 +364,6 @@ export default {
           annotateScrollbar: true
         },
         viewportMargin: 50,
-        inputStyle: 'contenteditable',
         allowDropFileTypes: ['image/jpg', 'image/png', 'image/svg', 'image/jpeg', 'image/gif', 'image/webp'],
         foldGutter: true,
         gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
@@ -390,6 +390,8 @@ export default {
       this.cm.on('paste', this.onCmPaste)
 
       this.cm.on('drop', this.onCmDrop)
+
+      this.cm.on('scroll', this.onCmScroll)
 
       // mte-kernel
       const textEditorInterface = new TextEditorInterface(this.cm)
@@ -496,20 +498,30 @@ export default {
     },
 
     async onCmPaste(cm, e) {
-      const clipboardItems = e.clipboardData.items
-      if (clipboardItems.length === 0) {
+      let { clipboardData } = e
+      if (!clipboardData) {
+        clipboardData = window.clipboardData
+      }
+      const { items } = clipboardData
+      if (items.length === 0) {
         return
       }
-      for (let item of clipboardItems) {
-        if (item.type.startsWith('image/')) {
-          e.preventDefault()
-          e.stopPropagation()
+
+      const types = clipboardData.types || []
+
+      for (let i = 0; i < types.length; i++) {
+        const item = items[i]
+        if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
           const file = item.getAsFile()
+
           if (file.size === 0) {
             return
           }
           const { path, name } = await this.uploadRequest(file)
           this.insetAtCursor(`![${name}](${path})`)
+
+          e.preventDefault()
+          e.stopPropagation()
         }
       }
     },
@@ -530,6 +542,11 @@ export default {
           this.insetAtCursor(`![${name}](${path})`)
         }
       }
+    },
+
+    onCmScroll(cm) {
+      console.log(cm)
+      // todo
     },
 
     toolbar_right_click(_type) {
@@ -585,33 +602,24 @@ export default {
     $v_edit_scroll($event) {
       scrollLink($event, this)
     },
-    // 获取textarea dom节点
-    getTextareaDom() {
-      return this.$refs.cmRef.$refs.vTextarea
-    },
-    // 工具栏插入内容
-    insertText() {
-      // if (this.s_preview_switch) {
-      // insertTextAtCaret(obj, { prefix, subfix, str, type }, this)
-    },
-    iRender(toggleChange) {
-      var $vm = this
-      this.$render($vm.d_value, function (res) {
+    iRender: debounce(function (toggleChange) {
+      const _this = this
+      _this.$render(_this.d_value, function (res) {
         // render
-        $vm.d_render = res
-        $vm.$nextTick(() => {
-          $vm.renderHighlight()
+        _this.d_render = res
+        _this.$nextTick(() => {
+          _this.renderHighlight()
         })
         // change回调  toggleChange == false 时候触发change回调
         if (!toggleChange) {
-          if ($vm.change) $vm.change($vm.d_value, $vm.d_render)
+          if (_this.change) _this.change(_this.d_value, _this.d_render)
         }
         // 改变标题导航
-        if ($vm.s_navigation) getNavigation($vm, false)
+        if (_this.s_navigation) getNavigation(_this, false)
         // v-model 语法糖
-        $vm.$emit('input', $vm.d_value)
+        _this.$emit('input', _this.d_value)
       })
-    }
+    }, 300)
   }
 }
 </script>

@@ -37,6 +37,7 @@
     "github-markdown-css": "^5.1.0",
     "highlight.js": "^11.4.0",
     "katex": "^0.12.0",
+    "lodash.debounce": "^4.0.8",
     "lodash.escape": "^4.0.1",
     "lodash.flatten": "^4.4.0",
     "lodash.last": "^3.0.0",
