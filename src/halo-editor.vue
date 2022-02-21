@@ -605,6 +605,10 @@ export default {
       _this.$render(_this.d_value, function (res) {
         // render
         _this.d_render = res
+        _this.$emit('change', {
+          originalContent: _this.d_value,
+          renderContent: res
+        })
         _this.$nextTick(() => {
           _this.renderHighlight()
           if (_this.s_navigation) getNavigation(_this, false)
