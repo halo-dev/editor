@@ -18,7 +18,7 @@ import markdownItAnchor from 'markdown-it-anchor'
 import markdownItTableOfContents from 'markdown-it-table-of-contents'
 import markdownItImagesPreview from 'markdown-it-images-preview'
 import markdownItKatex from '@iktakahiro/markdown-it-katex'
-// import markdownItMermaid from '@liradb2000/markdown-it-mermaid'
+import markdownItMermaid from '../core/mermaid/index'
 import hljs from '../core/hljs'
 
 const markdown_config = {
@@ -56,6 +56,7 @@ markdown.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   return defaultRender(tokens, idx, options, env, self)
 }
 markdown
+  .use(markdownItMermaid)
   .use(markdownItEmoji)
   .use(markdownItSup)
   .use(markdownItSub)
@@ -70,7 +71,6 @@ markdown
     includeLevel: [1, 2, 3, 4, 5, 6],
     markerPattern: /^\[TOC\]/im
   })
-// .use(markdownItMermaid)
 
 export default {
   data() {

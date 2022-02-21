@@ -4,7 +4,6 @@ specifiers:
   '@iconify-icons/fa-solid': ^1.2.1
   '@iconify-json/fa': ^1.1.0
   '@iktakahiro/markdown-it-katex': ^4.0.1
-  '@liradb2000/markdown-it-mermaid': ^0.4.4
   '@susisu/mte-kernel': ^2.1.1
   codemirror: ^5.65.1
   eslint: ^7.32.0
@@ -31,6 +30,7 @@ specifiers:
   markdown-it-sup: ^1.0.0
   markdown-it-table-of-contents: ^0.4.4
   markdown-it-task-lists: ^2.1.1
+  mermaid: ^8.14.0
   prettier: ^2.5.1
   rimraf: ^3.0.2
   stylus: ^0.54.8
@@ -43,7 +43,6 @@ specifiers:
 
 dependencies:
   '@iktakahiro/markdown-it-katex': 4.0.1
-  '@liradb2000/markdown-it-mermaid': 0.4.4
   '@susisu/mte-kernel': 2.1.1
   codemirror: 5.65.1
   github-markdown-css: 5.1.0
@@ -65,6 +64,7 @@ dependencies:
   markdown-it-sup: 1.0.0
   markdown-it-table-of-contents: 0.4.4
   markdown-it-task-lists: 2.1.1
+  mermaid: 8.14.0
   vue: 2.6.14
 
 devDependencies:
@@ -533,13 +533,6 @@ packages:
       '@jridgewell/resolve-uri': 3.0.5
       '@jridgewell/sourcemap-codec': 1.4.11
     dev: true
-
-  /@liradb2000/markdown-it-mermaid/0.4.4:
-    resolution: {integrity: sha512-i+SM6nz+eeGbtAaUFJveF9+/DtCnf6L9fycQEbwK0e+pgDVHPJ1EW3eKZBpWfY54TfiOqIltN77dKngYDoLJYQ==}
-    dependencies:
-      mermaid: 8.14.0
-      npm: 7.24.2
-    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2534,83 +2527,6 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
-
-  /npm/7.24.2:
-    resolution: {integrity: sha512-120p116CE8VMMZ+hk8IAb1inCPk4Dj3VZw29/n2g6UI77urJKVYb7FZUDW8hY+EBnfsjI/2yrobBgFyzo7YpVQ==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dev: false
-    bundledDependencies:
-      - '@isaacs/string-locale-compare'
-      - '@npmcli/arborist'
-      - '@npmcli/ci-detect'
-      - '@npmcli/config'
-      - '@npmcli/map-workspaces'
-      - '@npmcli/package-json'
-      - '@npmcli/run-script'
-      - abbrev
-      - ansicolors
-      - ansistyles
-      - archy
-      - cacache
-      - chalk
-      - chownr
-      - cli-columns
-      - cli-table3
-      - columnify
-      - fastest-levenshtein
-      - glob
-      - graceful-fs
-      - hosted-git-info
-      - ini
-      - init-package-json
-      - is-cidr
-      - json-parse-even-better-errors
-      - libnpmaccess
-      - libnpmdiff
-      - libnpmexec
-      - libnpmfund
-      - libnpmhook
-      - libnpmorg
-      - libnpmpack
-      - libnpmpublish
-      - libnpmsearch
-      - libnpmteam
-      - libnpmversion
-      - make-fetch-happen
-      - minipass
-      - minipass-pipeline
-      - mkdirp
-      - mkdirp-infer-owner
-      - ms
-      - node-gyp
-      - nopt
-      - npm-audit-report
-      - npm-install-checks
-      - npm-package-arg
-      - npm-pick-manifest
-      - npm-profile
-      - npm-registry-fetch
-      - npm-user-validate
-      - npmlog
-      - opener
-      - pacote
-      - parse-conflict-json
-      - qrcode-terminal
-      - read
-      - read-package-json
-      - read-package-json-fast
-      - readdir-scoped-modules
-      - rimraf
-      - semver
-      - ssri
-      - tar
-      - text-table
-      - tiny-relative-date
-      - treeverse
-      - validate-npm-package-name
-      - which
-      - write-file-atomic
 
   /once/1.4.0:
     resolution: {integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=}
