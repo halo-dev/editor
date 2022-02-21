@@ -463,6 +463,10 @@ export default {
     },
 
     clickCommands(_type, options) {
+      if (_type === 'save') {
+        this.$emit('save')
+        return
+      }
       if (markups[_type]) {
         this.setMarkup(markups[_type].start, markups[_type].end)
         return
@@ -502,7 +506,10 @@ export default {
 
       for (let i = 0; i < types.length; i++) {
         const item = items[i]
-        if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
+        if (item && item.kind === 'file' && item.type.startsWith('image/')) {
+          e.preventDefault()
+          e.stopPropagation()
+
           const file = item.getAsFile()
 
           if (file.size === 0) {
@@ -510,9 +517,6 @@ export default {
           }
           const { path, name } = await this.uploadRequest(file)
           this.insetAtCursor(`![${name}](${path})`)
-
-          e.preventDefault()
-          e.stopPropagation()
         }
       }
     },
