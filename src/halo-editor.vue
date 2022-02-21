@@ -305,7 +305,7 @@ export default {
     }
   },
   mounted() {
-    this.d_value = this.value
+    this.d_value = this.value || ''
 
     keydownListen(this)
 
@@ -326,7 +326,7 @@ export default {
     },
     value(val) {
       if (val !== this.d_value) {
-        this.d_value = val
+        this.d_value = val || ''
         this.handleInitEditor()
       }
     },
@@ -375,7 +375,7 @@ export default {
 
       // listen change event
       this.cm.on('change', c => {
-        this.d_value = c.getValue()
+        this.d_value = c.getValue() || ''
       })
 
       this.cm.on('paste', this.onCmPaste)
@@ -606,7 +606,7 @@ export default {
     },
     iRender: debounce(function () {
       const _this = this
-      _this.$render(_this.d_value, function (res) {
+      _this.$render(_this.d_value || '', function (res) {
         // render
         _this.d_render = res
         _this.$emit('change', {
