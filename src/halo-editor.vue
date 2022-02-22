@@ -139,6 +139,9 @@ import 'codemirror/addon/fold/foldcode.js'
 import 'codemirror/addon/fold/foldgutter.js'
 import 'codemirror/addon/fold/foldgutter.css'
 import 'codemirror/addon/fold/markdown-fold.js'
+import 'codemirror/addon/fold/xml-fold'
+import 'codemirror/addon/edit/matchtags'
+import 'codemirror/addon/edit/closetag'
 
 // mte-kernel
 import { TextEditorInterface } from './lib/core/mte-kernel/mte'
@@ -357,7 +360,9 @@ export default {
         viewportMargin: 50,
         allowDropFileTypes: ['image/jpg', 'image/png', 'image/svg', 'image/jpeg', 'image/gif', 'image/webp'],
         foldGutter: true,
-        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
+        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+        matchTags: { bothTags: true },
+        autoCloseTags: true
       })
 
       // set default content
