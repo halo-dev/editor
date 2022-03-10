@@ -270,7 +270,7 @@ export default {
     },
     tabSize: {
       type: Number,
-      default: 2
+      default: 4
     },
     shortCut: {
       type: Boolean,
