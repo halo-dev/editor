@@ -138,6 +138,7 @@
     </button>
     <button
       v-if="toolbars.imagelink"
+      :title="`选择图片 (${ctrlKeyName} + Shift + I)`"
       aria-hidden="true"
       class="op-icon"
       type="button"

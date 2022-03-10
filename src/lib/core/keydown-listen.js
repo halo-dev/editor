@@ -239,6 +239,12 @@ export const keydownListen = $vm => {
           $vm.clickCommands('strikethrough')
           break
         }
+        case KEY_CODE.I: {
+          // I
+          e.preventDefault()
+          $vm.openImagePicker()
+          break
+        }
       }
     }
   })
