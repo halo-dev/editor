@@ -142,6 +142,7 @@ import 'codemirror/addon/fold/markdown-fold.js'
 import 'codemirror/addon/fold/xml-fold'
 import 'codemirror/addon/edit/matchtags'
 import 'codemirror/addon/edit/closetag'
+import 'codemirror/addon/edit/continuelist'
 
 // mte-kernel
 import { TextEditorInterface } from './lib/core/mte-kernel/mte'
@@ -576,10 +577,12 @@ export default {
     fullscreen(status, val) {
       this.$emit('fullScreen', status, val)
     },
+
     // 打开阅读模式触发（status , val）
     readmodel(status, val) {
       this.$emit('readModel', status, val)
     },
+
     // 切换阅读编辑触发 （status , val）
     previewtoggle(status, val) {
       this.$emit('previewToggle', status, val)
@@ -609,6 +612,7 @@ export default {
         this.getNavigation(this, true)
       }
     },
+
     iRender: debounce(function () {
       const _this = this
       _this.$render(_this.d_value || '', function (res) {

@@ -215,7 +215,7 @@ class TextEditorInterface extends ITextEditor {
       if (active) {
         _this.editor.setOption('extraKeys', keyMap)
       } else {
-        _this.editor.setOption('extraKeys', null)
+        _this.editor.setOption('extraKeys', { Enter: 'newlineAndIndentContinueMarkdownList' })
         tableEditor.resetSmartCursor()
       }
     }
