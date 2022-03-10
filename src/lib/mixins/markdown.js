@@ -17,6 +17,8 @@ import markdownItTaskLists from 'markdown-it-task-lists'
 import markdownItAnchor from 'markdown-it-anchor'
 import markdownItTableOfContents from 'markdown-it-table-of-contents'
 import markdownItImagesPreview from 'markdown-it-images-preview'
+import markdownItAttrs from 'markdown-it-attrs'
+import markdownItMark from 'markdown-it-mark'
 import markdownItKatex from '@iktakahiro/markdown-it-katex'
 import markdownItMermaid from '../core/mermaid/index'
 import hljs from '../core/hljs'
@@ -66,6 +68,8 @@ markdown
   .use(markdownItImagesPreview)
   .use(markdownItTaskLists)
   .use(markdownItAnchor)
+  .use(markdownItAttrs)
+  .use(markdownItMark)
   .use(markdownItKatex)
   .use(markdownItTableOfContents, {
     includeLevel: [1, 2, 3, 4, 5, 6],
