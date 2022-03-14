@@ -1,47 +1,14 @@
-import escape from 'lodash.escape'
-import MarkdownIt from 'markdown-it'
-// 表情
-import markdownItEmoji from 'markdown-it-emoji'
-// 下标
-import markdownItSub from 'markdown-it-sub'
-// 上标
-import markdownItSup from 'markdown-it-sup'
-// <abbr/>
-import markdownItAbbr from 'markdown-it-abbr'
-// footnote
-import markdownItFootnote from 'markdown-it-footnote'
-// insert 带有下划线 样式 ++ ++
-import markdownItIns from 'markdown-it-ins'
-// taskLists
-import markdownItTaskLists from 'markdown-it-task-lists'
-import markdownItAnchor from 'markdown-it-anchor'
-import markdownItTableOfContents from 'markdown-it-table-of-contents'
-import markdownItImagesPreview from 'markdown-it-images-preview'
-import markdownItAttrs from 'markdown-it-attrs'
-import markdownItMark from 'markdown-it-mark'
-import markdownItKatex from '@iktakahiro/markdown-it-katex'
-import markdownItMermaid from '../core/mermaid/index'
+import { markdownIt as markdown } from '@halo-dev/markdown-renderer'
+
 import hljs from '../core/hljs'
 
-const markdown_config = {
-  html: true, // Enable HTML tags in source
-  xhtmlOut: true, // Use '/' to close single tags (<br />).
-  breaks: true, // Convert '\n' in paragraphs into <br>
-  linkify: true,
-  typographer: true,
-  quotes: '“”‘’',
-  highlight(str, lang) {
-    return `<pre><code class="language-${lang}">${escape(str)}</code></pre>`
-  }
-}
-
-const markdown = new MarkdownIt(markdown_config)
 // add target="_blank" to all link
 const defaultRender =
   markdown.renderer.rules.link_open ||
   function (tokens, idx, options, env, self) {
     return self.renderToken(tokens, idx, options)
   }
+
 markdown.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   const hIndex = tokens[idx].attrIndex('href')
   if (tokens[idx].attrs[hIndex][1].startsWith('#')) return defaultRender(tokens, idx, options, env, self)
@@ -57,24 +24,6 @@ markdown.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   // pass token to default renderer.
   return defaultRender(tokens, idx, options, env, self)
 }
-markdown
-  .use(markdownItMermaid)
-  .use(markdownItEmoji)
-  .use(markdownItSup)
-  .use(markdownItSub)
-  .use(markdownItAbbr)
-  .use(markdownItFootnote)
-  .use(markdownItIns)
-  .use(markdownItImagesPreview)
-  .use(markdownItTaskLists)
-  .use(markdownItAnchor)
-  .use(markdownItAttrs)
-  .use(markdownItMark)
-  .use(markdownItKatex)
-  .use(markdownItTableOfContents, {
-    includeLevel: [1, 2, 3, 4, 5, 6],
-    markerPattern: /^\[TOC\]/im
-  })
 
 export default {
   data() {
