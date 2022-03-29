@@ -350,6 +350,7 @@ export default {
       this.cm = CodeMirror.fromTextArea(this.$refs.cmRef, {
         tabSize: this.tabSize,
         mode: 'text/markdown',
+        inputStyle: 'textarea',
         theme: 'eclipse',
         lineNumbers: true,
         lineWrapping: true,

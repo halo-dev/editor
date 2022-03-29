@@ -145,6 +145,11 @@ textarea:disabled
         height 100%
         font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
           "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        
+      // see https://github.com/codemirror/CodeMirror/issues/4089
+      // see https://github.com/weseek/growi/pull/4335/files#diff-78ff15df4aed531ef623f1eabbf0b948ff74f96a31ffc605b12c4bd8b73ed344R51
+      .CodeMirror-wrap > div > textarea
+        font-size: 1.42857rem;
     .v-note-show
       flex 0 0 50%
       width 50%
