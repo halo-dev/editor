@@ -31,26 +31,9 @@ export const getNavigation = $vm => {
       node.style.display = 'none'
     } else {
       node.onclick = function () {
-        let vShowContent = $vm.$refs.vShowContent
-        let vNoteEdit = $vm.$refs.vNoteEdit
-        if ($vm.s_subfield) {
-          // 双栏
-          if ($vm.s_preview_switch) {
-            // 编辑预览
-            vNoteEdit.scrollTop =
-              (vShowContent.children[i].offsetTop * (vNoteEdit.scrollHeight - vNoteEdit.offsetHeight)) /
-              (vShowContent.scrollHeight - vShowContent.offsetHeight)
-          } else {
-            // todo 编辑
-          }
-        } else {
-          // 单栏
-          if ($vm.s_preview_switch) {
-            // 预览
-            vShowContent.scrollTop = vShowContent.children[i].offsetTop
-          } else {
-            // todo 编辑
-          }
+        const vShowContent = $vm.$refs.vShowContent
+        if ($vm.s_preview_switch && vShowContent) {
+          vShowContent.scrollTop = vShowContent.children[i].offsetTop
         }
       }
     }
