@@ -347,6 +347,9 @@ export default {
   },
   methods: {
     handleInitEditor() {
+      if (this.cm) {
+        this.cm.toTextArea()
+      }
       this.cm = CodeMirror.fromTextArea(this.$refs.cmRef, {
         tabSize: this.tabSize,
         mode: 'text/markdown',
