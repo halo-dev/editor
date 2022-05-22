@@ -32,7 +32,7 @@
   "dependencies": {
     "@halo-dev/markdown-renderer": "^1.0.0",
     "@susisu/mte-kernel": "^2.1.1",
-    "codemirror": "^5.65.3",
+    "codemirror": "^5.65.4",
     "github-markdown-css": "^5.1.0",
     "highlight.js": "^11.5.1",
     "katex": "^0.12.0",
@@ -55,7 +55,7 @@
     "stylus": "^0.54.8",
     "unplugin-icons": "^0.13.4",
     "unplugin-vue-components": "^0.17.21",
-    "vite": "^2.9.8",
+    "vite": "^2.9.9",
     "vite-plugin-inspect": "^0.4.3",
     "vite-plugin-vue2": "^1.9.3",
     "vue-template-compiler": "^2.6.14"
