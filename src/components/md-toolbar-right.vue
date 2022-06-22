@@ -25,7 +25,7 @@
     <button
       v-if="toolbars.preview"
       v-show="s_preview_switch"
-      :title="`编辑 (F9)`"
+      :title="`关闭预览 (F9)`"
       aria-hidden="true"
       class="op-icon selected"
       type="button"
@@ -36,7 +36,7 @@
     <button
       v-if="toolbars.preview"
       v-show="!s_preview_switch"
-      :title="`预览 (F9)`"
+      :title="`开启预览 (F9)`"
       aria-hidden="true"
       class="op-icon"
       type="button"
